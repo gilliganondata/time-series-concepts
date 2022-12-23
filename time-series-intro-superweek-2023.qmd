@@ -1,0 +1,62 @@
+---
+title: "Time-Series Basics"
+subtitle: "Superweek 2023"
+author: "Tim Wilson"
+format:
+  revealjs: 
+    theme: moon
+title-slide-attributes:
+  data-background-image: /images/saliris.jpeg
+  data-background-size: cover
+  data-background-opacity: "0.2"
+editor: visual
+---
+
+```{r setup}
+#| echo: false
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse,
+                scales,
+                lubridate)
+
+```
+
+## Stationarity
+
+Define stationarity
+
+Show scenarios: varying mean, varying variance
+
+## First Differences
+
+Spurious correlations abound
+
+```{r}
+#| echo: false
+
+ggplot(cars, aes(x = speed, y = dist)) +
+  geom_point() +
+  theme_minimal()
+
+
+```
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+
+## Bullets
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
