@@ -22,8 +22,9 @@ source("includes/setup.R")
 
 ggplot(get_ts(), aes(x = date, y = values)) +
   geom_line() +
-  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1)) +
-  theme_minimal()
+  labs(y = "Sessions") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main
   
 
 ```

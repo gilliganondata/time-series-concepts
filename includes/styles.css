@@ -1,7 +1,22 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+
 p {
   color: red;
+  font-family: Montserrat, sans-serif;
 }
 
-h2 {
-  font-family: serif;
-}
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #eee8d5;
+  font-family: Montserrat, sans-serif;
+  line-height: 0.9em;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-shadow: none; }
