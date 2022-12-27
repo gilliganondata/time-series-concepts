@@ -17,25 +17,24 @@ showtext_auto()
 
 
 # Config settings for styling
-s_bgrnd <- "yellow"
+s_bgrnd <- "transparent"
+s_labels <- "gray80"
 s_line_1 <- "red"
 s_line_2 <- "blue"
 
 # The main theme
 theme_main <- theme_minimal() +
   theme(plot.title.position = "plot",
-        plot.background = element_rect(fill = s_bgrnd),
-        panel.background = element_rect(fill = s_bgrnd),
-        panel.border = element_rect(fill = NA, colour = NULL),
+        plot.background = element_rect(fill = s_bgrnd, color = NA),
         panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(color = "gray80"),
+        panel.grid.major.y = element_line(color = "gray60"),
         panel.grid.minor.y = element_blank(),
         axis.title.x = element_blank(),
-        axis.text.x = element_text(family = "s_font", size = 13, colour = "gray30"),
-        axis.line.x = element_line(color = "gray20"),
-        axis.title.y = element_text(family = "s_font", size = 14, colour = "gray30"),
-        axis.text.y = element_text(family = "s_font", size = 13, colour = "gray30"),
+        axis.text.x = element_text(family = "s_font", size = 13, colour = s_labels),
+        axis.line.x = element_line(color = s_labels),
+        axis.title.y = element_text(family = "s_font", size = 14, colour = s_labels),
+        axis.text.y = element_text(family = "s_font", size = 13, colour = s_labels),
         axis.line.y = element_blank()
   )
 

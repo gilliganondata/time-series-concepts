@@ -7,8 +7,26 @@ p {
   font-family: Montserrat, sans-serif;
 }
 
-.reveal h1,
-.reveal h2,
+.reveal h1 {
+  margin: 0 0 20px 0;
+  font-size: 1.6em;
+  color: #eee8d5;
+  font-family: Montserrat, sans-serif;
+  line-height: 0.9em;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-shadow: none; }
+
+.reveal h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.2em;
+  color: #eee8d5;
+  font-family: Montserrat, sans-serif;
+  line-height: 0.9em;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-shadow: none; }
+  
 .reveal h3,
 .reveal h4,
 .reveal h5,

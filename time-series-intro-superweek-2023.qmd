@@ -10,18 +10,21 @@ title-slide-attributes:
   data-background-image: /images/saliris.jpeg
   data-background-size: cover
   data-background-opacity: "0.2"
+execute:
+  echo: false
+  dev: "png"
 editor: visual
 ---
 
 ## All (Most) of Our Data Is Time-Series
 
 ```{r setup}
-#| echo: false
+#| dev.args: !expr 'list(bg="transparent")'
 
 source("includes/setup.R")
 
 ggplot(get_ts(), aes(x = date, y = values)) +
-  geom_line() +
+  geom_line(color = s_line_1) +
   labs(y = "Sessions") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main
