@@ -18,17 +18,31 @@ editor: visual
 
 ## All (Most) of Our Data Is Time-Series
 
+Pick your metric and then look at it over time.
+
 ```{r setup}
 #| dev.args: !expr 'list(bg="transparent")'
 
 source("includes/setup.R")
 
 ggplot(get_ts(), aes(x = date, y = values)) +
-  geom_line(color = s_line_1) +
+  geom_line(color = s_line_1, size = 1.1) +
   labs(y = "Sessions") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main
-  
+
+```
+
+## Data can trend over time
+
+```{r trending}
+#| dev.args: !expr 'list(bg="transparent")'
+
+ggplot(get_ts(base = 1000, trend = -0.5, noise_level = 0.5), aes(x = date, y = values)) +
+  geom_line(color = s_line_1, size = 1.1) +
+  labs(y = "Sessions") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main
 
 ```
 

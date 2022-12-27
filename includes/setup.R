@@ -44,19 +44,35 @@ get_ts <- function(start = Sys.Date()-90,
                    increment = "day",
                    seasonality = 7,
                    base = 10000, # base/starting number
-                   trend = 0,  # -1 to 1; 1 is steepest positive trend
+                   trend = 0,    # The % change between the base and the final value
                    noise_level = 0.1,  # 0 = no noise; 1 = max noise
                    intervention_date = NA,
                    intervention_effect = NA # -1 to 1
 ){
   
+  # A bit of a hack, but a base of 0 is messy, so, if it's set to 0, make it close to 0
+  if(base == 0) base <- 0.01
+  
+  # Set up the basic data frame
   dates = seq.Date(start, end, increment)
-  values = runif(length(dates),
+  base_values = runif(length(dates),
                  base * (1 - noise_level),
                  base * (1 + noise_level)) |> 
     round()
   
   df <- data.frame(date = dates,
-                   values = values)
+                   values = base_values)
+  
+  # Add the seasonality
+  
+  # Add the trending element. If it's 0, we want it to be flat. Otherwise
+  # it's the % increase/decrease between the base (the starting point) and the
+  # end point
+  trend_end <- base * (1 + trend)
+  trend_multiples <- seq(base, trend_end, length.out = length(dates)) / base
+  df$values = df$values * trend_multiples
+  
+  df
+  
 }
 
