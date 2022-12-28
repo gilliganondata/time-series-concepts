@@ -42,12 +42,12 @@ theme_main <- theme_minimal() +
 get_ts <- function(start = Sys.Date()-90, 
                    end = Sys.Date() - 1,
                    increment = "day",
-                   seasonality = 7,
+                   week_season = FALSE,   # Only if increment is "day"; gives weekend dips
                    base = 10000, # base/starting number
                    trend = 0,    # The % change between the base and the final value
                    noise_level = 0.1,  # 0 = no noise; 1 = max noise
                    intervention_date = NA,
-                   intervention_effect = NA # -1 to 1
+                   intervention_effect = NA # The % increase/decrease from the base expressed as a decimal
 ){
   
   # A bit of a hack, but a base of 0 is messy, so, if it's set to 0, make it close to 0
@@ -61,16 +61,42 @@ get_ts <- function(start = Sys.Date()-90,
     round()
   
   df <- data.frame(date = dates,
-                   values = base_values)
+                   value = base_values)
   
-  # Add the seasonality
+  # Add the seasonality. This could get a lot more involved, but, for now, will
+  # just:
+  #   - Make Saturday and Sunday 10% of the base value
+  #   - Make Monday and Friday 80% of the base value
+  #   - Make Tuesday and Thursday 90% of the base value
+  if(increment == "day" & week_season == TRUE){
+    df <- df |> 
+      mutate(value = case_when(
+        weekdays(date) == "Sunday" ~ value * 0.1,
+        weekdays(date) == "Monday" ~ value * 0.8,
+        weekdays(date) == "Tuesday" ~ value * 0.9,
+        weekdays(date) == "Wednesday" ~ value,
+        weekdays(date) == "Thursday" ~ value * 0.8,
+        weekdays(date) == "Friday" ~ value * 0.7,
+        TRUE ~ value * 0.1
+      ))
+  }
   
   # Add the trending element. If it's 0, we want it to be flat. Otherwise
   # it's the % increase/decrease between the base (the starting point) and the
   # end point
   trend_end <- base * (1 + trend)
   trend_multiples <- seq(base, trend_end, length.out = length(dates)) / base
-  df$values = df$values * trend_multiples
+  df$value = df$value * trend_multiples
+  
+  # Add the intervention effect. This requires both an intervention date and
+  # an effect of the intervention, which is the % increase or decrease from
+  # the base value (adjusted by all of the previous criteria)
+  if(!is.na(intervention_date) & !is.na(intervention_effect)){
+    df <- df |> 
+      mutate(value = if_else(date > as.Date(intervention_date),
+                             value * (1 + intervention_effect),
+                             value))
+  }
   
   df
   
