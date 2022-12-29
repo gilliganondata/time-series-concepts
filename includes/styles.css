@@ -1,30 +1,47 @@
 
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+/* To change the font, update both the family in the @import url() call AND
+    the prez_font value */
+@import url('https://fonts.googleapis.com/css?family=Dosis&display=swap');
 
+:root {
+  --prez_font: Dosis;
+}
+/* ------- */
 
 p {
-  font-family: Montserrat, sans-serif;
+  font-family: var(--prez_font), sans-serif;
   font-size: 0.9em;
   color: white;
 }
 
 .reveal h1 {
   margin: 0 0 20px 0;
-  font-family: Montserrat, sans-serif;
+  font-family: var(--prez_font), sans-serif;
   font-size: 1.6em;
   color: #eee8d5;
-  line-height: 0.9em;
-  letter-spacing: 0.02em;
+  line-height: 1.1em;
   text-transform: none;
   text-shadow: none; }
 
 .reveal h2 {
   margin: 0 0 20px 0;
   font-size: 1.2em;
-  font-family: Montserrat, sans-serif;
+  font-family: var(--prez_font), sans-serif;
   color: #eee8d5;
-  line-height: 0.9em;
-  letter-spacing: 0.02em;
+  line-height: 1em;
   text-transform: none;
   text-shadow: none; 
+}
+
+.reveal .slide figure>figcaption {
+  margin: 0 0 20px 0;
+  font-size: 0.5em;
+  font-family: var(--prez_font), sans-serif;
+  font-style: italic;
+
+}
+
+.reveal .footer > * {
+  margin: 0 20px 0 0;
+  text-align: right;
 }

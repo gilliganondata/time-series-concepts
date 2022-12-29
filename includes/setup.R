@@ -4,24 +4,24 @@ set.seed(61705)
 # Packages
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse,
+               tsibble,      # Use time-series tibbles
                scales,
                lubridate,
                showtext      # For using a custom font
-               )
+)
 
 # See https://r-graph-gallery.com/custom-fonts-in-R-and-ggplot2.html
 # The first argument can be changed to any Google font. The second argument
 # should not be changed.
-font_add_google("Montserrat", family = "s_font")
+font_add_google("Dosis", family = "s_font")
 showtext_auto()
-
 
 # Config settings for styling
 s_bgrnd <- "transparent"
 s_labels <- "gray80"
 s_line_1 <- "red"
 s_line_2 <- "blue"
-
+      
 # The main theme
 theme_main <- theme_minimal() +
   theme(plot.title.position = "plot",
@@ -38,7 +38,8 @@ theme_main <- theme_minimal() +
         axis.line.y = element_blank()
   )
 
-# Function to generate time-series with different characteristics
+# Function to generate time-series with different characteristics and return a tsibble object.
+# It could have just returned a data frame, but might as well get all tidy-proper
 get_ts <- function(start = Sys.Date()-90, 
                    end = Sys.Date() - 1,
                    increment = "day",
@@ -54,14 +55,38 @@ get_ts <- function(start = Sys.Date()-90,
   if(base == 0) base <- 0.01
   
   # Set up the basic data frame
-  dates = seq.Date(start, end, increment)
+  dates = seq.Date(start, end, increment) 
+  # Convert to the appropriate tsibble-friendly format
+  if(increment == "day") {
+    intervention_date <- as.Date(intervention_date)
+  }
+  if(increment == "week") {
+    dates <- yearweek(dates)
+    intervention_date <- yearweek(intervention_date)
+  }
+  if(increment == "month") {
+    dates <-yearmonth(dates)
+    intervention_date <- yearmonth(intervention_date)
+  }
+  if(increment == "quarter") {
+    dates <-yearquarter(dates)
+    intervention_date <- yearquarter(intervention_date)
+  }
+  if(increment == "year") {
+    dates <-year(dates)
+    intervention_date <- year(intervention_date)
+  }
+  
+  # Set the base values. This is a "stationary with some noise" series of values
+  # that get modified as needed based on the other arguments
   base_values = runif(length(dates),
-                 base * (1 - noise_level),
-                 base * (1 + noise_level)) |> 
+                      base * (1 - noise_level),
+                      base * (1 + noise_level)) |> 
     round()
   
-  df <- data.frame(date = dates,
-                   value = base_values)
+  df <- tsibble(date = dates,
+               value = base_values,
+               index = date)
   
   # Add the seasonality. This could get a lot more involved, but, for now, will
   # just:
@@ -75,8 +100,8 @@ get_ts <- function(start = Sys.Date()-90,
         weekdays(date) == "Monday" ~ value * 0.8,
         weekdays(date) == "Tuesday" ~ value * 0.9,
         weekdays(date) == "Wednesday" ~ value,
-        weekdays(date) == "Thursday" ~ value * 0.8,
-        weekdays(date) == "Friday" ~ value * 0.7,
+        weekdays(date) == "Thursday" ~ value * 0.9,
+        weekdays(date) == "Friday" ~ value * 0.8,
         TRUE ~ value * 0.1
       ))
   }
@@ -93,7 +118,7 @@ get_ts <- function(start = Sys.Date()-90,
   # the base value (adjusted by all of the previous criteria)
   if(!is.na(intervention_date) & !is.na(intervention_effect)){
     df <- df |> 
-      mutate(value = if_else(date > as.Date(intervention_date),
+      mutate(value = if_else(date > intervention_date,
                              value * (1 + intervention_effect),
                              value))
   }
