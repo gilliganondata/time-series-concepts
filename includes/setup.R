@@ -7,7 +7,8 @@ pacman::p_load(tidyverse,
                tsibble,      # Use time-series tibbles
                scales,
                lubridate,
-               showtext      # For using a custom font
+               showtext,     # For using a custom font
+               patchwork     # Chart layout
 )
 
 # See https://r-graph-gallery.com/custom-fonts-in-R-and-ggplot2.html
@@ -17,14 +18,16 @@ font_add_google("Dosis", family = "s_font")
 showtext_auto()
 
 # Config settings for styling
+# Palette from: https://www.learnui.design/tools/data-color-picker.html
 s_bgrnd <- "transparent"
 s_labels <- "gray80"
-s_line_1 <- "red"
-s_line_2 <- "blue"
+s_line_1 <- "#ffa600"
+s_line_2 <- "#bc5090"
       
 # The main theme
 theme_main <- theme_minimal() +
   theme(plot.title.position = "plot",
+        plot.title = element_text(family = "s_font", size = 16, colour = s_labels),
         plot.background = element_rect(fill = s_bgrnd, color = NA),
         panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
@@ -89,19 +92,16 @@ get_ts <- function(start = Sys.Date()-90,
                index = date)
   
   # Add the seasonality. This could get a lot more involved, but, for now, will
-  # just:
-  #   - Make Saturday and Sunday 10% of the base value
-  #   - Make Monday and Friday 80% of the base value
-  #   - Make Tuesday and Thursday 90% of the base value
+  # just doing a "typical" weekend dip
   if(increment == "day" & week_season == TRUE){
     df <- df |> 
       mutate(value = case_when(
         weekdays(date) == "Sunday" ~ value * 0.1,
-        weekdays(date) == "Monday" ~ value * 0.8,
-        weekdays(date) == "Tuesday" ~ value * 0.9,
+        weekdays(date) == "Monday" ~ value * 0.87,
+        weekdays(date) == "Tuesday" ~ value * 0.93,
         weekdays(date) == "Wednesday" ~ value,
-        weekdays(date) == "Thursday" ~ value * 0.9,
-        weekdays(date) == "Friday" ~ value * 0.8,
+        weekdays(date) == "Thursday" ~ value * 0.93,
+        weekdays(date) == "Friday" ~ value * 0.87,
         TRUE ~ value * 0.1
       ))
   }

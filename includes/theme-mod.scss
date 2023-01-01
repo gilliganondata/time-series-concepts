@@ -1,0 +1,51 @@
+
+/* To change the font, update both the family in the @import url() call AND
+    the prez_font value */
+@import url('https://fonts.googleapis.com/css?family=Dosis&display=swap');
+
+:root {
+  --prez_font: Dosis;
+}
+
+/* SCSS theme details: https://quarto.org/docs/presentations/revealjs/themes.html */
+
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-sans-serif: var(--prez_font), sans-serif !default;
+$presentation-heading-color: #eee8d5;
+$presentation-heading-line-height: 1.1;
+$presentation-heading-letter-spacing: 0.02em;
+$presentation-heading-font-weight: 400;
+$presentation-heading-text-transform: none;
+$presentation-heading-text-shadow: none;
+$presentation-h1-font-size: 1.6em;
+$presentation-h2-font-size: 1.2em;
+$body-color: #fff;
+$link-color: #42affa;
+
+/*-- scss:rules --*/
+
+.reveal p {
+  font-family: var(--prez_font), sans-serif;
+  font-size: 0.9em;
+  color: white;
+}
+
+.reveal h1 {
+  margin: 0 0 20px 0;
+}
+
+.reveal h2 {
+}
+
+.reveal .slide figure>figcaption {
+  margin: 0 0 20px 0;
+  font-size: 0.5em;
+  font-style: italic;
+}
+
+.reveal .footer > * {
+  margin: 0 20px 0 0;
+  text-align: right;
+}
