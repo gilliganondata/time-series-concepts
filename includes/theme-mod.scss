@@ -26,6 +26,10 @@ $link-color: #42affa;
 
 /*-- scss:rules --*/
 
+.reveal body > div.reveal.focused.has-vertical-slides.has-horizontal-slides.ready.zoom > div.backgrounds > div.slide-background.title-slide.slide.level1.center.present > div {
+  background-image: "images/saliris.jpeg";
+}
+
 .reveal p {
   font-family: var(--prez_font), sans-serif;
   font-size: 0.9em;

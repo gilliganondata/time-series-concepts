@@ -2,24 +2,27 @@
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
-#| fig.height: 2.5
 
-s1 <- get_ts(base = 10000, noise = 0.1, start = Sys.Date() - 45, trend = 0.5)
-s2 <- get_ts(base = 50000, noise = 0.05, start = Sys.Date() - 45, trend = 0.9)
+s1 <- get_ts(base = 10000, noise = 0.1, start = Sys.Date() - 45, trend = 0.5) |> 
+  mutate(value = round(value),
+         metric = "orders")
+s2 <- get_ts(base = 6000, noise = 0.1, start = Sys.Date() - 45, trend = 0.9) |> 
+  mutate(value = round(value),
+         metric = "social")
 
-ggplot(s1, aes(x = date, y = value)) +
-  geom_line(color = s_line_1, linewidth = 1.1) +
-  labs(title = "Orders") +
+# bind_rows() throws an error when trying to combine s1 and s2 as tsibbles
+df_first_diff <- bind_rows(as_tibble(s1), as_tibble(s2))
+
+ggplot(df_first_diff, aes(x = date, y = value, color = metric)) +
+  geom_line(linewidth = 1.1) +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  scale_color_manual(values = c(s_line_1, s_line_2), 
+                     labels = c("Orders", "Social Media Engagements")) +
   theme_main +
-  theme(axis.title.y = element_blank())
+  theme(legend.position = "top",
+        legend.title = element_blank(),
+        axis.title.y = element_blank())
 
-ggplot(s2, aes(x = date, y = value)) +
-  geom_line(color = s_line_1, linewidth = 1.1) +
-  labs(title = "Social Media Engagement") +
-  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
-  theme_main +
-  theme(axis.title.y = element_blank())
 ```
 
 ## A scatterplot, perhaps?
@@ -27,13 +30,46 @@ ggplot(s2, aes(x = date, y = value)) +
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
 
-fd_scatter <- s2 |> 
-  left_join(s1, by = c(date = "date"))
+df_fd_scatter <- df_first_diff |>
+  pivot_wider(names_from = metric, values_from = value)
 
-ggplot(fd_scatter, aes(x = value.x, y = value.y)) +
+ggplot(df_fd_scatter, aes(x = social, y = orders)) +
   geom_point(color = s_line_1, size = 2) +
-  labs(x = "Social Media Engagement",
+  scale_x_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05),
+                     label = comma) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05),
+                     label = comma) +
+  labs(x = "Social Media Engagements",
        y = "Orders") +
+  theme_main +
+  theme(axis.title.x = element_text(family = "s_font", size = s_axis_title_size,
+                                    face = "bold", colour = s_labels,
+                                    margin = margin(8, 0, 0, 0, "pt")))
+
+```
+
+. . .
+
+::: {.absolute top="185" left="170"}
+R^2^ = `r cor(df_fd_scatter$social, df_fd_scatter$orders)^2 |> round(2)`
+:::
+
+# If they're correlated, then when one *moves*, the other will *move similarly*
+
+## We can compare the *movements*
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Calculate first differences
+df_fd_scatter <- df_fd_scatter |> 
+  mutate(orders_diff = orders - lag(orders, 1),
+         social_diff = social - lag(social, 1))
+
+ggplot(df_fd_scatter, aes(x = social_diff, y = orders_diff)) +
+  geom_point(color = s_line_1, size = 2) +
+  labs(x = "Social Media Engagement First Difference",
+       y = "Orders First Difference") +
   scale_x_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05), 
                      label = comma) +
   scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05), 
@@ -47,8 +83,8 @@ ggplot(fd_scatter, aes(x = value.x, y = value.y)) +
 
 . . .
 
-:::{.absolute top=185 left=170}
-
-R^2^ = `r cor(fd_scatter$value.x, fd_scatter$value.y)^2 |> round(2)`
-
+::: {.absolute top="185" left="170"}
+R^2^ = `r cor(df_fd_scatter$orders_diff, df_fd_scatter$social_diff, use = "pairwise.complete.obs")^2 |> round(2)`
 :::
+
+# These are both moving with time (but not directly with each other)

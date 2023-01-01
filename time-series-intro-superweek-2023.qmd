@@ -7,6 +7,8 @@ format:
     theme: [moon, includes/theme-mod.scss]
     footer: \@tgwilson | timwilson7@gmail.com
     transition: zoom
+    parallax-background-image: images/bg-mallards.jpeg
+    parallax-background-size: "2100px 900px"
 title-slide-attributes:
   data-background-image: images/saliris.jpeg
   data-background-size: cover
@@ -33,7 +35,7 @@ We think it's about finding "the truth," but what is "the population?"
 
 ::: columns
 ::: {.column width="40%"}
-The Bowhead Whale Can Live for Up to 200 Years {.color: red;}
+[The Bowhead Whale Can Live for Up to 200 Years]{style="font-size: 1.8em;"}
 :::
 
 ::: {.column width="60%"}

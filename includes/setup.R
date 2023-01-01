@@ -42,7 +42,12 @@ theme_main <- theme_minimal() +
         axis.title.y = element_text(family = "s_font", size = s_axis_title_size, face = "bold", 
                                     colour = s_labels, margin = margin(0, 8, 0, 0, "pt")),
         axis.text.y = element_text(family = "s_font", size = s_axis_text_size, colour = s_labels),
-        axis.line.y = element_blank()
+        axis.line.y = element_blank(),
+        # Go ahead and style the legend, even though it will be off most of the time
+        legend.position = "none",
+        legend.title = element_blank(),
+        legend.text = element_text(family = "s_font", size = s_axis_title_size, 
+                                   colour = s_labels, margin = margin(0, 10, 0, 0, "pt"))
   )
 
 # Function to generate time-series with different characteristics and return a tsibble object.
