@@ -20,24 +20,28 @@ showtext_auto()
 # Config settings for styling
 # Palette from: https://www.learnui.design/tools/data-color-picker.html
 s_bgrnd <- "transparent"
-s_labels <- "gray80"
+s_labels <- "gray90"
 s_line_1 <- "#ffa600"
 s_line_2 <- "#bc5090"
+s_plot_title_size <- 18
+s_axis_title_size <- 16
+s_axis_text_size <- 14
       
 # The main theme
 theme_main <- theme_minimal() +
   theme(plot.title.position = "plot",
-        plot.title = element_text(family = "s_font", size = 16, colour = s_labels),
+        plot.title = element_text(family = "s_font", face = "bold", size = s_plot_title_size, colour = s_labels),
         plot.background = element_rect(fill = s_bgrnd, color = NA),
         panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.major.y = element_line(color = "gray60"),
         panel.grid.minor.y = element_blank(),
         axis.title.x = element_blank(),
-        axis.text.x = element_text(family = "s_font", size = 13, colour = s_labels),
+        axis.text.x = element_text(family = "s_font", size = s_axis_text_size, colour = s_labels),
         axis.line.x = element_line(color = s_labels),
-        axis.title.y = element_text(family = "s_font", size = 14, colour = s_labels),
-        axis.text.y = element_text(family = "s_font", size = 13, colour = s_labels),
+        axis.title.y = element_text(family = "s_font", size = s_axis_title_size, face = "bold", 
+                                    colour = s_labels, margin = margin(0, 8, 0, 0, "pt")),
+        axis.text.y = element_text(family = "s_font", size = s_axis_text_size, colour = s_labels),
         axis.line.y = element_blank()
   )
 
