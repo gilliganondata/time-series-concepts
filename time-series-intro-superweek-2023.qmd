@@ -1,14 +1,15 @@
 ---
 title: "Time-Series Analysis"
 subtitle: "Important Concepts, Handy Techniques, and Some Cautionary Tales"
-author: "Superweek 2023"
+author: "Tim Wilson<br>Superweek 2023"
 format:
   revealjs: 
     theme: [moon, includes/theme-mod.scss]
-    footer: \@tgwilson | timwilson7@gmail.com
+    footer: \@tgwilson | tim@gilliganondata.com
     transition: zoom
     parallax-background-image: images/bg-mallards.jpeg
     parallax-background-size: "2100px 900px"
+    background-transition: fade
 title-slide-attributes:
   data-background-image: images/saliris.jpeg
   data-background-size: cover
@@ -21,6 +22,18 @@ editor: visual
 
 # Let's think about time.
 
+## 
+
+::: columns
+::: {.column width="40%"}
+[The Bowhead Whale Can Live for Up to 200 Years]{style="font-size: 1.8em; text-align: right;"}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A bowhead whale with a long gray beard and spectacles, digital art"](images/whale-beard.png)
+:::
+:::
+
 # Let's think about statistics.
 
 # Statistics is all about estimating a population from a sample
@@ -30,18 +43,6 @@ editor: visual
 We think it's about finding "the truth," but what is "the population?"
 
 (Show diagram of time).
-
-## 
-
-::: columns
-::: {.column width="40%"}
-[The Bowhead Whale Can Live for Up to 200 Years]{style="font-size: 1.8em;"}
-:::
-
-::: {.column width="60%"}
-![DALL-E 2: "A bowhead whale with a long gray beard and spectacles, digital art"](images/whale-beard.png)
-:::
-:::
 
 ## All (Most) of Our Data Is Time-Series
 
@@ -87,52 +88,15 @@ ggplot(get_ts(base = 50000, week_season = TRUE, trend = 0.5), aes(x = date, y = 
   theme_main
 ```
 
-## Stationarity
+# "Time" is tricky.
 
-Define stationarity
+# But it's at the core of what we do.
 
-Show scenarios: varying mean, varying variance
-
-# First Differences
-
+{{< include _stationarity.qmd >}}
 {{< include _first-differences.qmd >}}
+{{< include _time-series-decomposition.qmd >}}
+{{< include _causal-impact.qmd >}}
 
-## First Differences
 
-Spurious correlations abound
 
-```{r}
-#| echo: false
 
-ggplot(cars, aes(x = speed, y = dist)) +
-  geom_point() +
-  theme_minimal()
-
-```
-
-## Time-Series Decomposition
-
-## Bayesian Structural Time-Series (CausalImpact)
-
-Basic...
-
-With covariates
-
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
-
-## Bullets
-
-When you click the **Render** button a document will be generated that includes:
-
--   Content authored with markdown
--   Output from executable code
-
-## Code
-
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```

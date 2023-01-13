@@ -54,9 +54,17 @@ ggplot(df_fd_scatter, aes(x = social, y = orders)) +
 R^2^ = `r cor(df_fd_scatter$social, df_fd_scatter$orders)^2 |> round(2)`
 :::
 
-# If they're correlated, then when one *moves*, the other will *move similarly*
+# If they're correlated, then when one *moves*, the other will *move similarly.*
 
-## We can compare the *movements*
+# When one metric increases, the other should increase similarly.
+
+# When one metric decreases, the other should decrease similarly.
+
+# Let's look at the movements rather than the actual values.
+
+# First Differences
+
+# This is called first differences. 
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -65,6 +73,16 @@ R^2^ = `r cor(df_fd_scatter$social, df_fd_scatter$orders)^2 |> round(2)`
 df_fd_scatter <- df_fd_scatter |> 
   mutate(orders_diff = orders - lag(orders, 1),
          social_diff = social - lag(social, 1))
+
+head(df_fd_scatter) |> gt()
+
+
+```
+
+--- 
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
 
 ggplot(df_fd_scatter, aes(x = social_diff, y = orders_diff)) +
   geom_point(color = s_line_1, size = 2) +

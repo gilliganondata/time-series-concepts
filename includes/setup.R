@@ -5,6 +5,7 @@ set.seed(61705)
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse,
                tsibble,      # Use time-series tibbles
+               gt,
                scales,
                lubridate,
                showtext,     # For using a custom font
@@ -23,9 +24,9 @@ s_bgrnd <- "transparent"
 s_labels <- "gray90"
 s_line_1 <- "#ffa600"
 s_line_2 <- "#bc5090"
-s_plot_title_size <- 18
-s_axis_title_size <- 16
-s_axis_text_size <- 14
+s_plot_title_size <- 24
+s_axis_title_size <- 20
+s_axis_text_size <- 18
       
 # The main theme
 theme_main <- theme_minimal() +

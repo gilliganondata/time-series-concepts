@@ -19,7 +19,7 @@ $presentation-heading-letter-spacing: 0.02em;
 $presentation-heading-font-weight: 400;
 $presentation-heading-text-transform: none;
 $presentation-heading-text-shadow: none;
-$presentation-h1-font-size: 1.6em;
+$presentation-h1-font-size: 1.8em;
 $presentation-h2-font-size: 1.2em;
 $body-color: #fff;
 $link-color: #42affa;
@@ -46,7 +46,6 @@ $link-color: #42affa;
 .reveal .slide figure>figcaption {
   margin: 0 0 20px 0;
   font-size: 0.5em;
-  font-style: italic;
 }
 
 .reveal .footer > * {
