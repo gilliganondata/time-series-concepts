@@ -9,13 +9,20 @@ pacman::p_load(tidyverse,
                scales,
                lubridate,
                showtext,     # For using a custom font
-               patchwork     # Chart layout
+               patchwork,     # Chart layout
+               xkcd   # For the time diagram. May or may not use more broadly
 )
 
 # See https://r-graph-gallery.com/custom-fonts-in-R-and-ggplot2.html
 # The first argument can be changed to any Google font. The second argument
 # should not be changed.
 font_add_google("Dosis", family = "s_font")
+showtext_auto()
+
+# Bring in the xkcd font, Humor Sans (it needs to be installed on the system)
+# The "how to actually do this" below is from:
+# https://stackoverflow.com/questions/55933524/r-can-not-find-fonts-to-be-used-in-plotting
+font_add("Humor Sans", "/Library/Fonts/Humor-Sans.ttf")
 showtext_auto()
 
 # Config settings for styling

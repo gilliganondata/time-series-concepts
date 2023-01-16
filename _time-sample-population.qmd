@@ -1,0 +1,161 @@
+
+## Our Data Exists Over Time.
+
+```{r base_timeline}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Set up data for the timeline. We basically have three segments:
+#     - "Beginning of time" to start of experiment
+#     - "Start of experiment to end of experiment" ("now")
+#     - "Now" to end of time (future) (dashed)
+# Can't get linetype to work, so manually drawing dashes!
+timeline_data <- data.frame(x = c(10, 18, 
+                                       20, 21, 22, 23, 24, 25, 26, 
+                                       20),
+                            xend = c(18, 20,
+                                     20.5, 21.5, 22.5, 23.5, 24.5, 25.5, 26.5, 
+                                     20),
+                            y = c(rep(10,9), 10.5),
+                            yend = c(rep(10,9), 9.5))
+labels_data <- data.frame(x = c(15, 20, 23),
+                          y = rep(15, 3),
+                          label = c("Past", "Present", "Future"))
+gg_base_timeline <- ggplot() +
+  xkcdline(data = timeline_data,
+           mapping = aes(x = x, xend = xend,
+                         y = y, yend = yend), 
+           yjitteramount = 0.2,
+           xjitteramount = 0.1,
+           arrow = arrow(length = unit(20, "cm"))) +
+  scale_y_continuous(limits = c(-2, 20)) +
+  scale_x_continuous(limits = c(9, 27)) +
+  geom_point(aes(x = 10, y = 10), size = 3, color = "white") +
+  geom_path(aes(x = c(26.5, 26.75), y = c(10,10)), arrow = arrow(), 
+            width = 2, color = "white") +
+  geom_text(data = labels_data,
+            mapping = aes(x = x , y = y, label = label),
+            family = "Humor Sans",
+            size = 8, color = "white") +
+  theme_void()
+gg_base_timeline
+
+```
+
+## So, what is our <span style = "text-decoration: underline;">population</span>?
+
+```{r base_timeline_2, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
+gg_base_timeline
+```
+
+
+## Is it the past to the present?
+
+```{r base_timeline_past_present, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(10, 10, 20),
+                            xend = c(10, 20, 20),
+                            y = c(8.5, 8, 8),
+                            yend = c(8, 8, 8.5))
+gg_base_timeline_past_present <- gg_base_timeline +
+  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+           data = data.frame(xmin = 10,
+                             ymin = 9,
+                             xmax = 20,
+                             ymax = 11),
+           fill = "blue",
+           alpha = .2) + 
+  xkcdline(mapping = aes(x = x, xend = xend,
+                         y = y, yend = yend),
+           data = bracket_lines,
+           yjitteramount = 0.5) +
+  geom_text(mapping = aes(x = 15, y = 7, label = "\"The Population\""),
+            family = "Humor Sans", size = 8)
+gg_base_timeline_past_present
+```
+
+# Maybe? Maybe not.
+
+## Maybe it's the past, present, and future?
+
+```{r base_timeline_alltime, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(10, 10, 26.75),
+                            xend = c(10, 26.75, 26.75),
+                            y = c(8.5, 8, 8),
+                            yend = c(8, 8, 8.5))
+gg_base_timeline_population <- gg_base_timeline +
+  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+           data = data.frame(xmin = 10,
+                             ymin = 9,
+                             xmax = 26.75,
+                             ymax = 11),
+           fill = "blue",
+           alpha = .2) + 
+  xkcdline(mapping = aes(x = x, xend = xend,
+                         y = y, yend = yend),
+           data = bracket_lines,
+           yjitteramount = 0.5) +
+  geom_text(mapping = aes(x = 18, y = 7, label = "\"The Population\""),
+            family = "Humor Sans", size = 8)
+gg_base_timeline_population
+```
+
+
+## Or...just the future?
+
+```{r base_timeline_future, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(20, 20, 26.75),
+                            xend = c(20, 26.75, 26.75),
+                            y = c(8.5, 8, 8),
+                            yend = c(8, 8, 8.5))
+gg_base_timeline_future <- gg_base_timeline +
+  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+           data = data.frame(xmin = 20,
+                             ymin = 9,
+                             xmax = 26.75,
+                             ymax = 11),
+           fill = "blue",
+           alpha = .2) + 
+  xkcdline(mapping = aes(x = x, xend = xend,
+                         y = y, yend = yend),
+           data = bracket_lines,
+           yjitteramount = 0.5) +
+  geom_text(mapping = aes(x = 23.375, y = 7, label = "\"The Population\""),
+            family = "Humor Sans", size = 8)
+gg_base_timeline_future
+```
+
+# So...what is our sample?
+
+## Our sample is a sample <span style="text-decoration: underline;">timeframe</span>.
+
+```{r base_timeline_sample, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(18, 18, 20),
+                            xend = c(18, 20, 20),
+                            y = c(8.5, 8, 8),
+                            yend = c(8, 8, 8.5))
+gg_base_timeline_population <- gg_base_timeline +
+  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+           data = data.frame(xmin = 18,
+                             ymin = 9,
+                             xmax = 20,
+                             ymax = 11),
+           fill = "#0000ff",
+           alpha = .2) + 
+  xkcdline(mapping = aes(x = x, xend = xend,
+                         y = y, yend = yend),
+           data = bracket_lines,
+           yjitteramount = 0.3) +
+  geom_text(mapping = aes(x = 19, y = 7, label = "Our Sample"),
+            family = "Humor Sans", size = 8)
+gg_base_timeline_population
+```
+
+
+## This is <span style="text-decoration: underline;">imperfect</span>.
+
+```{r base_timeline_sample_2, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
+gg_base_timeline_population
+```
