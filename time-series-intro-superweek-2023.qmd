@@ -26,17 +26,25 @@ editor: visual
 source("includes/setup.R")
 ```
 
-::: {.notes}
-Time is a broad and deep topic
-It can be both obvious and intuitive...and it can be deceptive
-
+::: notes
+Time is a broad and deep topic It can be both obvious and intuitive...and it can be deceptive
 :::
 
-## 
+# This presentation: 40 minutes
+
+# Superweek: 5 days
+
+# My last job: 5 years
+
+# My marriage: 28.75 years (and counting)
+
+# Worldwide life expectancy: 73 years
+
+# Foo
 
 ::: columns
 ::: {.column width="40%"}
-[The Bowhead Whale Can Live for Up to 200 Years]{style="font-size: 1.8em; text-align: right;"}
+[Bowhead Whale Lifespan: Up to 200 Years]{style="font-size: 1.8em; text-align: right;"}
 :::
 
 ::: {.column width="60%"}
@@ -44,28 +52,17 @@ It can be both obvious and intuitive...and it can be deceptive
 :::
 :::
 
-::: {.notes}
-This session will be 40 minutes.
-The worldwide life expectany is 73 years.
-The bowhead whale can live for 200 years.
-The duration of Yehoshua's intro feels infinite.
+::: notes
+This session will be 40 minutes. The worldwide life expectany is 73 years. The bowhead whale can live for 200 years. The duration of Yehoshua's intro feels infinite.
 
+As I was thinking about time I started thinking about lifetimes. Specifically...how long are lifetimes? Humans live for 80 years give or take. What lives longer? The Bowhead Whale. So, to spice things up a little bit in our discussion today, I thought I'd pull together some images of bowhead whales.
 
-As I was thinking about time I started thinking about lifetimes.
-Specifically...how long are lifetimes?
-Humans live for 80 years give or take.
-What lives longer?
-The Bowhead Whale. So, to spice things up a little bit in our discussion today, I thought I'd pull together some images of bowhead whales.
+What I'm going to attempt over the next 30 or so minutes is a whale-sized task. 1. First, we'll briefly consider why time matters so much 2. Second, we'll explore how time can make us see correlations where we're just seeing correlations with time rather than correlations between two metrics. And we'll look at how we can check for that. 3. Third, we'll talk about decomposing time. Don't worry, it doesn't smell! I realized this first blew my mind a few years ago, and I actually talked about it at Superweek over 5 years ago. It still blows my mind. 4. Finally, we'll look at Bayesian structural time-series, which, hopefully, will tie everything together.
 
-What I'm going to attempt over the next 30 or so minutes is a whale-sized task.
-1. First, we'll briefly consider why time matters so much
-2. Second, we'll explore how time can make us see correlations where we're just seeing correlations with time rather than correlations between two metrics. And we'll look at how we can check for that.
-3. Third, we'll talk about decomposing time. Don't worry, it doesn't smell! I realized this first blew my mind a few years ago, and I actually talked about it at Superweek over 5 years ago. It still blows my mind.
-4. Finally, we'll look at Bayesian structural time-series, which, hopefully, will tie everything together.
-
-Fundamentally, we are using data from the *past* to try to understand what we should do in *the future*.
-Let's start with that.
+Fundamentally, we are using data from the *past* to try to understand what we should do in *the future*. Let's start with that.
 :::
+
+# The speaker's perception of Yehoshua's intros: &infin;
 
 # Let's think about statistics.
 
@@ -80,7 +77,7 @@ We think it's about finding "the truth," but what is "the population?"
 ## All (Most) of Our Data Is Time-Series
 
 It rarely looks *quite* like this.
-
+ 
 ::: {data-id="plot1"}
 ```{r base-ts}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -121,17 +118,17 @@ ggplot(get_ts(base = 50000, week_season = TRUE, trend = 0.5), aes(x = date, y = 
   labs(y = "Sessions") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main
+
 ```
 
 # "Time" is tricky.
 
 # But it's at the core of what we do.
 
-{{< include _stationarity.qmd >}}
-{{< include _first-differences.qmd >}}
-{{< include _time-series-decomposition.qmd >}}
+{{< include _stationarity.qmd >}} 
+
+{{< include _first-differences.qmd >}} 
+
+{{< include _time-series-decomposition.qmd >}} 
+
 {{< include _causal-impact.qmd >}}
-
-
-
-

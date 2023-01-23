@@ -63,12 +63,14 @@ theme_main <- theme_minimal() +
 get_ts <- function(start = Sys.Date()-90, 
                    end = Sys.Date() - 1,
                    increment = "day",
-                   week_season = FALSE,   # Only if increment is "day"; gives weekend dips
-                   base = 10000, # base/starting number
-                   trend = 0,    # The % change between the base and the final value
-                   noise_level = 0.1,  # 0 = no noise; 1 = max noise
+                   week_season = FALSE,       # Only if increment is "day"; gives weekend dips
+                   base = 10000,              # base/starting number
+                   trend = 0,                 # The % change between the base and the final value
+                   noise_level = 0.1,         # 0 = no noise; 1 = max noise
+                   varying_variance = FALSE,  # How much the variance (noise level) varies over time
+                                              # FALSE = constant variance; TRUE = variation in variance
                    intervention_date = NA,
-                   intervention_effect = NA # The % increase/decrease from the base expressed as a decimal
+                   intervention_effect = NA   # The % increase/decrease from the base expressed as a decimal
 ){
   
   # A bit of a hack, but a base of 0 is messy, so, if it's set to 0, make it close to 0
@@ -107,6 +109,41 @@ get_ts <- function(start = Sys.Date()-90,
   df <- tsibble(date = dates,
                value = base_values,
                index = date)
+  
+  # Add varying variance. There's got to be a cleaner way to do this, but the
+  # approach here is to have a "magnifier" that "walks" between a max and a
+  # min threshold
+  if(varying_variance == TRUE){
+    
+    vary <- 0
+    start_vary <- 0
+    max_vary <- 1
+    dir <- "increasing"
+    
+    for(i in 2:nrow(df)){
+      
+      if(dir == "increasing"){
+        next_val = vary[[i-1]] + runif(1, -0.05, 0.15)
+      } else {
+        next_val = vary[[i-1]] - runif(1, -0.05, 0.15)
+        if(next_val < 0) next_val <- 0
+      }
+      
+      vary <- c(vary, next_val)
+      
+      if(next_val > max_vary) dir <- "decreasing"
+      if(next_val <= 0) dir <- "increasing"
+    }
+    
+    # Now apply that to the line
+    df$value_vary <- vary
+    df <- df |> 
+      mutate(value = if_else(value > base, value * (1 + value_vary),
+                             value * (1 - value_vary))) |> 
+      mutate(value = if_else(value < 0, 0, value)) |> 
+      select(-value_vary)
+    
+  }
   
   # Add the seasonality. This could get a lot more involved, but, for now, will
   # just doing a "typical" weekend dip
