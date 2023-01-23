@@ -1,1 +1,32 @@
-# Time-Series Decomposition {background-image="images/bg-heron.jpeg"}
+# Decomposition {background-image="images/bg-heron.jpeg"}
+
+# [Time-Series]{.underline} Decomposition, That Is {background-image="images/bg-heron.jpeg"}
+
+## Consider a fairly "clean" series {background-image="images/bg-heron.jpeg"}
+
+Trend w/ weekly seasonality
+
+## +/- 2 Standard Deviations Around the Mean {background-image="images/bg-heron.jpeg"}
+
+Shows...big, wide
+
+# Time-series decomposition does what our brain already wants to do {background-image="images/bg-heron.jpeg"}
+
+## The decomposition is into three components {background-image="images/bg-heron.jpeg"}
+
+Show time-series decomposition
+
+## The "variation" is really just the noise {background-image="images/bg-heron.jpeg"}
+
+## So, instead of a large variance {background-image="images/bg-heron.jpeg"}
+
+Original diagram
+
+## It's a pretty small variance! {background-image="images/bg-heron.jpeg"}
+
+Show the variance with seasonality
+
+# This is powerful! {background-image="images/bg-heron.jpeg"}
+
+# (Loosely) it's part of what's happening with our next example. {background-image="images/bg-heron.jpeg"}
+

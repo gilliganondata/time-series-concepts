@@ -1,5 +1,5 @@
 
-## Our Data Exists Over Time.
+## Our data exists over time. {transition="fade"}
 
 ```{r base_timeline}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -41,14 +41,14 @@ gg_base_timeline
 
 ```
 
-## So, what is our <span style = "text-decoration: underline;">population</span>?
+## So, what is our <span style = "text-decoration: underline;">population</span>? {transition="fade"}
 
 ```{r base_timeline_2, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
 gg_base_timeline
 ```
 
 
-## Is it the past to the present?
+## Is it the past to the present? {transition="fade"}
 
 ```{r base_timeline_past_present, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
 # Bracket lines for the label
@@ -75,7 +75,7 @@ gg_base_timeline_past_present
 
 # Maybe? Maybe not.
 
-## Maybe it's the past, present, and future?
+## Maybe it's the past, present, and future? {transition="fade"}
 
 ```{r base_timeline_alltime, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
 # Bracket lines for the label
@@ -101,7 +101,7 @@ gg_base_timeline_population
 ```
 
 
-## Or...just the future?
+## Or...just the future? {transition="fade"}
 
 ```{r base_timeline_future, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
 # Bracket lines for the label
@@ -128,7 +128,7 @@ gg_base_timeline_future
 
 # So...what is our sample?
 
-## Our sample is a sample <span style="text-decoration: underline;">timeframe</span>.
+## Our sample is a sample <span style="text-decoration: underline;">timeframe</span>. {transition="fade"}
 
 ```{r base_timeline_sample, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
 # Bracket lines for the label
@@ -154,7 +154,7 @@ gg_base_timeline_population
 ```
 
 
-## This is <span style="text-decoration: underline;">imperfect</span>.
+## This is <span style="text-decoration: underline;">imperfect</span>. {transition="fade"}
 
 ```{r base_timeline_sample_2, echo=FALSE, warning=FALSE, fig.width = 15, fig.height = 6}
 gg_base_timeline_population

@@ -1,6 +1,56 @@
-## Bayesian Structural Time-Series (CausalImpact) {background-image="images/bg-clouds.jpeg"}
+# And now...to Bayesian Things {background-image="images/bg-clouds.jpeg"}
+
+# Specifically, Bayesian Structural Time-Series {background-image="images/bg-clouds.jpeg"}
+
+# Think "time-series decomposition turned up to 11" {background-image="images/bg-clouds.jpeg"}
+
+## Mark Edmondson built a tool using this...in 2016 (check that) {background-image="images/bg-clouds.jpeg"}
+
+CausalImpact screen cap
+
+## At it's core: estimate the impact of an intervention {background-image="images/bg-clouds.jpeg"}
+
+## "We didn't test it, so can we just do a pre-/post- analysis?" {background-image="images/bg-clouds.jpeg"}
+
+## What the marketer expects happened {background-image="images/bg-clouds.jpeg"}
+
+Low noise, big change
+
+## Typically, the change isn't [that]{.underline} big... {background-image="images/bg-clouds.jpeg"}
+
+## ...and the data is a lot noisier {background-image="images/bg-clouds.jpeg"}
+
+## CausalImpact uses historical data to forecast what's expected {background-image="images/bg-clouds.jpeg"}
+
+## At its most basic, it simply uses the metric of interest {background-image="images/bg-clouds.jpeg"}
+
+## Look what happens the farther you get from the intervention! {background-image="images/bg-clouds.jpeg"}
+
+# But, it can also be a little smarter by putting one ore more [covariates]{.underline} to use. {background-image="images/bg-clouds.jpeg"}
+
+## What's a covariate? {background-image="images/bg-clouds.jpeg"}
+
+1. Correlated to the metric of interest
+2. NOT expected to be impacted by the intervention
+
+## Covariates require both [critical thought]{.underline} and [creativity]{.underline} {background-image="images/bg-clouds.jpeg"}
+
+Sessions
+Housing starts
+Google Trends
+
+## Back to our original example {background-image="images/bg-clouds.jpeg"}
+
+This is without any covariates included.
+
+(Include statistical measures...)
+
+## Let's add a covariate {background-image="images/bg-clouds.jpeg"}
+
+And, with one really solid covariate.
+
+(Include statistical measures...)
+
+# This is not a silver bullet! {background-image="images/bg-clouds.jpeg"}
 
 
-Basic...
-
-With covariates

@@ -1,44 +1,88 @@
 
-# Time-series data is often non-stationary. {background-image="images/bg-sidney-opera.jpeg"}
+# Time-series data is often [non-stationary]{.underline}. {background-image="images/bg-aerial-view.jpeg"}
 
-## Stationarity {background-image="images/bg-sidney-opera.jpeg"}
+## So, what is [stationarity]{.underline}? {background-image="images/bg-aerial-view.jpeg" transition="none"}
 
 > *A stationary time series is one whose statistical properties do not depend on the time at which the series is observed.* [^1]
 
 [^1]: *Forecasting Principles and Practice, 3rd Edition*, Rob J. Hyndman and George Athansopoulos
 
-. . .
-
 :::: {.columns}
 ::: {.column width="50%"}
+::: {.fragment}
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
 #| fig.width: 6
-#| fig.height: 4
+#| fig.height: 5
 
 ggplot(get_ts(start = Sys.Date()-45, end = Sys.Date() - 1,
               base = 20000, trend = 0.5), aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   labs(title = "Varying Mean") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
-  theme_main
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
 
 ```
 :::
+:::
 ::: {.column width="50%"}
+::: {.fragment}
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
 #| fig.width: 6
-#| fig.height: 4
+#| fig.height: 5
 
 ggplot(get_ts(start = Sys.Date()-45, end = Sys.Date() - 1,
               base = 20000, varying_variance = TRUE), aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   labs(title = "Varying Variance") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
-  theme_main
-
-
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
 ```
 :::
+:::
 ::::
+
+## So, what is [stationarity]{.underline}? {background-image="images/bg-aerial-view.jpeg" transition="none"}
+
+> *A stationary time series is one whose statistical properties do not depend on the time at which the series is observed.* [^1]
+
+[^1]: *Forecasting Principles and Practice, 3rd Edition*, Rob J. Hyndman and George Athansopoulos
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.width: 12
+#| fig.height: 4
+
+ggplot(get_ts(start = Sys.Date()-60, end = Sys.Date() - 1,
+              base = 20000), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+## So, what is [stationarity]{.underline}? {background-image="images/bg-aerial-view.jpeg" transition="none"}
+
+> *A stationary time series is one whose statistical properties do not depend on the time at which the series is observed.* [^1]
+
+[^1]: *Forecasting Principles and Practice, 3rd Edition*, Rob J. Hyndman and George Athansopoulos
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.width: 12
+#| fig.height: 4
+
+ggplot(get_ts(start = Sys.Date()-60, end = Sys.Date() - 1,
+              base = 20000, week_season = TRUE), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+```
