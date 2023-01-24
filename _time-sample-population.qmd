@@ -1,4 +1,3 @@
-
 ## Our data exists over time. {transition="fade"}
 
 ```{r base_timeline}
@@ -30,13 +29,13 @@ gg_base_timeline <- ggplot(timeline_data) +
   geom_text(data = labels_data,
             mapping = aes(x = x , y = y, label = label),
             family = "s_font",
-            size = 8, color = "white") +
+            size = 9, color = "white") +
   theme_void()
 gg_base_timeline
 
 ```
 
-## So, what is our <span style = "text-decoration: underline;">population</span>? {transition="fade"}
+## So, what is our [population]{style="text-decoration: underline;"}? {transition="fade"}
 
 ```{r base_timeline_2}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -44,94 +43,89 @@ gg_base_timeline
 gg_base_timeline
 ```
 
-
-## Is it the past to the present? {transition="fade"}
+## Is it the [past]{.underline} to the [present]{.underline}? {transition="fade"}
 
 ```{r base_timeline_past_present}
 #| dev.args: !expr 'list(bg="transparent")'
 
 # Bracket lines for the label
-bracket_lines <- data.frame(x = c(10, 10, 20),
-                            xend = c(10, 20, 20),
-                            y = c(8.5, 8, 8),
-                            yend = c(8, 8, 8.5))
+bracket_lines <- data.frame(x = c(10, 10, 20, 20),
+                            y = c(8.5, 8, 8, 8.5))
+
 gg_base_timeline_past_present <- gg_base_timeline +
-  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
-           data = data.frame(xmin = 10,
-                             ymin = 9,
-                             xmax = 20,
-                             ymax = 11),
-           fill = "blue",
-           alpha = .2) + 
-  xkcdline(mapping = aes(x = x, xend = xend,
-                         y = y, yend = yend),
-           data = bracket_lines,
-           yjitteramount = 0.5) +
-  geom_text(mapping = aes(x = 15, y = 7, label = "\"The Population\""),
-            family = "Humor Sans", size = 8)
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+            data = data.frame(xmin = 10,
+                              ymin = 9,
+                              xmax = 20,
+                              ymax = 11),
+            fill = "yellow",
+            color = NA,
+            alpha = .2) + 
+  geom_path(mapping = aes(x = x, y = y),
+            data = bracket_lines,
+            color = "white") +
+  geom_text(mapping = aes(x = 15, y = 6, label = "\"THE POPULATION\""),
+            family = "s_font", fontface = "bold", size = 10, color = "white")
 gg_base_timeline_past_present
 ```
 
-# Maybe? Maybe not.
+. . .
 
-## Maybe it's the past, present, and future? {transition="fade"}
+::: {.absolute top="500" left="300"}
+[Maybe. Maybe not.]{.h1-chars}
+:::
+
+## Maybe it's the [past]{.underline}, [present]{.underline}, and [future]{.underline}? {transition="fade"}
 
 ```{r base_timeline_alltime}
 #| dev.args: !expr 'list(bg="transparent")'
 
 # Bracket lines for the label
-bracket_lines <- data.frame(x = c(10, 10, 26.75),
-                            xend = c(10, 26.75, 26.75),
-                            y = c(8.5, 8, 8),
-                            yend = c(8, 8, 8.5))
+bracket_lines <- data.frame(x = c(10, 10, 26.75, 26.75),
+                            y = c(8.5, 8, 8, 8.5))
 gg_base_timeline_population <- gg_base_timeline +
-  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
-           data = data.frame(xmin = 10,
-                             ymin = 9,
-                             xmax = 26.75,
-                             ymax = 11),
-           fill = "blue",
-           alpha = .2) + 
-  xkcdline(mapping = aes(x = x, xend = xend,
-                         y = y, yend = yend),
-           data = bracket_lines,
-           yjitteramount = 0.5) +
-  geom_text(mapping = aes(x = 18, y = 7, label = "\"The Population\""),
-            family = "Humor Sans", size = 8)
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+            data = data.frame(xmin = 10,
+                              ymin = 9,
+                              xmax = 26.75,
+                              ymax = 11),
+            fill = "yellow",
+            alpha = .2) + 
+    geom_path(mapping = aes(x = x, y = y),
+            data = bracket_lines,
+            color = "white") +
+  geom_text(mapping = aes(x = 18, y = 6, label = "\"THE POPULATION\""),
+            family = "s_font", size = 10, color = "white")
 gg_base_timeline_population
 ```
 
-
-## Or...just the future? {transition="fade"}
+## Or...just the [future]{.underline}? {transition="fade"}
 
 ```{r base_timeline_future}
 #| dev.args: !expr 'list(bg="transparent")'
 
 # Bracket lines for the label
-bracket_lines <- data.frame(x = c(20, 20, 26.75),
-                            xend = c(20, 26.75, 26.75),
-                            y = c(8.5, 8, 8),
-                            yend = c(8, 8, 8.5))
+bracket_lines <- data.frame(x = c(20, 20, 26.75, 26.75),
+                            y = c(8.5, 8, 8, 8.5))
 gg_base_timeline_future <- gg_base_timeline +
-  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
            data = data.frame(xmin = 20,
                              ymin = 9,
                              xmax = 26.75,
                              ymax = 11),
-           fill = "blue",
+           fill = "yellow",
            alpha = .2) + 
-  xkcdline(mapping = aes(x = x, xend = xend,
-                         y = y, yend = yend),
-           data = bracket_lines,
-           yjitteramount = 0.5) +
-  geom_text(mapping = aes(x = 23.375, y = 7, label = "\"The Population\""),
-            family = "Humor Sans", size = 8)
+    geom_path(mapping = aes(x = x, y = y),
+            data = bracket_lines,
+            color = "white") +
+  geom_text(mapping = aes(x = 23.375, y = 6, label = "\"THE POPULATION\""),
+            family = "s_font", size = 10, color = "white")
 gg_base_timeline_future
 ```
 
 # So...what is our sample?
 
-## Our sample is a sample <span style="text-decoration: underline;">timeframe</span>. {transition="fade"}
+## Our sample is a sample [timeframe]{style="text-decoration: underline;"}. {transition="fade"}
 
 ```{r base_timeline_sample}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -158,7 +152,6 @@ gg_base_timeline_population <- gg_base_timeline +
 gg_base_timeline_population
 ```
 
-
 ## This is [imperfect]{.underline}. {transition="fade"}
 
 ```{r base_timeline_sample_2}
@@ -166,7 +159,6 @@ gg_base_timeline_population
 
 gg_base_timeline_population
 ```
-
 
 ## Because our reality is [constant change]{.underline}. {transition="fade"}
 
@@ -178,14 +170,14 @@ gg_base_timeline_population
 # each line as the "begin."
 
 diverge_lines_overall <- data.frame(x = c(10, 20, 20, 26.75, 20, 26.75, 10, 20),
-                            y = c(15, 11, 11, 15, 9, 5, 5, 9),
-                            group = c(1, 1, 2, 2, 3, 3, 4, 4))
+                                    y = c(15, 11, 11, 15, 9, 5, 5, 9),
+                                    group = c(1, 1, 2, 2, 3, 3, 4, 4))
 
 # Draw the plot
 gg_diverge <- gg_base_timeline_population +
-    geom_line(mapping = aes(x = x, y = y, group = group),
-           data = diverge_lines_overall, linetype = "dashed",
-           color = "white", size = 1) 
+  geom_line(mapping = aes(x = x, y = y, group = group),
+            data = diverge_lines_overall, linetype = "dashed",
+            color = "white", size = 1) 
 
 gg_diverge
 
