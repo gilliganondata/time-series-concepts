@@ -59,12 +59,11 @@ gg_base_timeline_past_present <- gg_base_timeline +
                               xmax = 20,
                               ymax = 11),
             fill = "yellow",
-            color = NA,
             alpha = .2) + 
   geom_path(mapping = aes(x = x, y = y),
             data = bracket_lines,
             color = "white") +
-  geom_text(mapping = aes(x = 15, y = 6, label = "\"THE POPULATION\""),
+  geom_text(mapping = aes(x = 15, y = 6, label = "\"THE POPULATION?\""),
             family = "s_font", fontface = "bold", size = 10, color = "white")
 gg_base_timeline_past_present
 ```
@@ -91,10 +90,10 @@ gg_base_timeline_population <- gg_base_timeline +
                               ymax = 11),
             fill = "yellow",
             alpha = .2) + 
-    geom_path(mapping = aes(x = x, y = y),
+  geom_path(mapping = aes(x = x, y = y),
             data = bracket_lines,
             color = "white") +
-  geom_text(mapping = aes(x = 18, y = 6, label = "\"THE POPULATION\""),
+  geom_text(mapping = aes(x = 18, y = 6, label = "\"THE POPULATION?\""),
             family = "s_font", size = 10, color = "white")
 gg_base_timeline_population
 ```
@@ -109,46 +108,43 @@ bracket_lines <- data.frame(x = c(20, 20, 26.75, 26.75),
                             y = c(8.5, 8, 8, 8.5))
 gg_base_timeline_future <- gg_base_timeline +
   geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
-           data = data.frame(xmin = 20,
-                             ymin = 9,
-                             xmax = 26.75,
-                             ymax = 11),
-           fill = "yellow",
-           alpha = .2) + 
-    geom_path(mapping = aes(x = x, y = y),
+            data = data.frame(xmin = 20,
+                              ymin = 9,
+                              xmax = 26.75,
+                              ymax = 11),
+            fill = "yellow",
+            alpha = .2) + 
+  geom_path(mapping = aes(x = x, y = y),
             data = bracket_lines,
             color = "white") +
-  geom_text(mapping = aes(x = 23.375, y = 6, label = "\"THE POPULATION\""),
+  geom_text(mapping = aes(x = 23.375, y = 6, label = "\"THE POPULATION?\""),
             family = "s_font", size = 10, color = "white")
 gg_base_timeline_future
 ```
 
 # So...what is our sample?
 
-## Our sample is a sample [timeframe]{style="text-decoration: underline;"}. {transition="fade"}
+## Our sample is a [sample timeframe]{style="text-decoration: underline;"}. {transition="fade"}
 
 ```{r base_timeline_sample}
 #| dev.args: !expr 'list(bg="transparent")'
 
 # Bracket lines for the label
-bracket_lines <- data.frame(x = c(18, 18, 20),
-                            xend = c(18, 20, 20),
-                            y = c(8.5, 8, 8),
-                            yend = c(8, 8, 8.5))
+bracket_lines <- data.frame(x = c(18, 18, 20, 20),
+                            y = c(8.5, 8, 8, 8.5))
 gg_base_timeline_population <- gg_base_timeline +
-  xkcdrect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
            data = data.frame(xmin = 18,
                              ymin = 9,
                              xmax = 20,
                              ymax = 11),
-           fill = "#0000ff",
+           fill = "yellow",
            alpha = .2) + 
-  xkcdline(mapping = aes(x = x, xend = xend,
-                         y = y, yend = yend),
+  geom_path(mapping = aes(x = x, y = y),
            data = bracket_lines,
-           yjitteramount = 0.3) +
-  geom_text(mapping = aes(x = 19, y = 7, label = "Our Sample"),
-            family = "Humor Sans", size = 8)
+           color = "white") +
+  geom_text(mapping = aes(x = 19, y = 6, label = "OUR SAMPLE"),
+            family = "s_font", size = 10, color = "white")
 gg_base_timeline_population
 ```
 
