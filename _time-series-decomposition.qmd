@@ -2,29 +2,214 @@
 
 # [Time-Series]{.underline} Decomposition, That Is {background-image="images/bg-heron.jpeg"}
 
-## Consider a fairly "clean" series {background-image="images/bg-heron.jpeg"}
+## Consider a fairly "clean" series {background-image="images/bg-heron.jpeg" transition="fade"}
 
-Trend w/ weekly seasonality
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
 
-## +/- 2 Standard Deviations Around the Mean {background-image="images/bg-heron.jpeg"}
+df_trend_weekly_orig <- get_ts(start = Sys.Date() - 51, base = 10000, week_season = TRUE, trend = 0.8)
 
-Shows...big, wide
+# This is just to not get caught up in weirdness in the explanation, but we're going to
+# remove the first 3 and last 3 rows in the plots—for the trend calculation, these become
+# NAs because it's a moving average.
+df_trend_weekly <- df_trend_weekly_orig[4:(nrow(df_trend_weekly_orig) - 3),]
+
+# Add the upper and lower bounds for geom_ribbon in next section
+sd_tw <- sd(df_trend_weekly$value)
+mean_tw <- mean(df_trend_weekly$value)
+df_trend_weekly <- df_trend_weekly |> 
+  mutate(u_bound_1 = mean_tw + sd_tw,
+         l_bound_1 = if_else(mean_tw - sd_tw < 0, 0, mean_tw - sd_tw),
+         u_bound_2 = mean_tw + 2*sd_tw,
+         l_bound_2 = if_else(mean_tw - 2*sd_tw < 0, 0, mean_tw - 2*sd_tw))
+
+gg_trend_weekly <- ggplot(df_trend_weekly, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, 22000), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+gg_trend_weekly
+
+```
+## The Mean...is Pretty Meaningless {background-image="images/bg-heron.jpeg" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_hline(aes(yintercept = mean_tw), linetype = "dashed", size = 3, color = "white") 
+
+```
+## And so is the variance {background-image="images/bg-heron.jpeg" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_ribbon(aes(ymin = l_bound_2, ymax = u_bound_2), 
+              fill = "yellow", alpha = 0.2) +
+  geom_ribbon(aes(ymin = l_bound_1, ymax = u_bound_1), 
+              fill = "red", alpha = 0.2) +
+  geom_hline(aes(yintercept = mean_tw), linetype = "dashed", size = 3, color = "white")
+
+```
 
 # Time-series decomposition does what our brain already wants to do {background-image="images/bg-heron.jpeg"}
 
-## The decomposition is into three components {background-image="images/bg-heron.jpeg"}
+## The "decomposition" is into three components {background-image="images/bg-heron.jpeg" auto-animate="true"}
 
-Show time-series decomposition
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
 
-## The "variation" is really just the noise {background-image="images/bg-heron.jpeg"}
+# Do the time-series decomposition. We're going to do this on the original
+# data...and then the first and last 3 rows will get dropped.
+ts_trend_weekly <- df_trend_weekly_orig |> 
+  pull(value) |> 
+  ts(frequency = 7) |> 
+  decompose()
 
-## So, instead of a large variance {background-image="images/bg-heron.jpeg"}
+# Make it a data frame
+df_decomposed <- tibble(date = df_trend_weekly_orig$date,
+                        original = as.numeric(ts_trend_weekly$x),
+                        seasonal = as.numeric(ts_trend_weekly$seasonal),
+                        trend = as.numeric(ts_trend_weekly$trend),
+                        random = as.numeric(ts_trend_weekly$random)) |> 
+  # Chop off the first 3 / last 3 to avoid confusion
+  filter(!is.na(trend))
 
-Original diagram
+# Set up some additional theming to make the "short" plots work
+theme_stl <- theme(axis.text.x = element_blank(),
+                   axis.title.y = element_blank(),
+                   axis.text.y = element_text(size = s_axis_text_size * .75),
+                   axis.line.x = element_blank())
 
-## It's a pretty small variance! {background-image="images/bg-heron.jpeg"}
+gg_trend_weekly
 
-Show the variance with seasonality
+```
+
+## The "decomposition" is into three components {background-image="images/bg-heron.jpeg" auto-animate="true"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_observed <- gg_trend_weekly +
+  theme_stl
+
+gg_stl_observed
+
+```
+
+. . .
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_seasonal <- ggplot(df_decomposed, aes(x = date, y = seasonal)) +
+  geom_hline(aes(yintercept = 0), color = "white") +
+  geom_line(color = s_line_2, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme_stl
+
+gg_stl_seasonal
+
+```
+::: {.absolute top="250" left="280" .h2-chars}
+The Seasonal Component
+:::
+. . .
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_trend <- ggplot(df_decomposed, aes(x = date, y = trend)) +
+  geom_hline(aes(yintercept = 0), color = "white") +
+  geom_line(color = s_line_2, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme_stl
+
+gg_stl_trend
+
+```
+
+::: {.absolute top="400" left="310" .h2-chars}
+The Trend Component
+:::
+. . .
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_random <- ggplot(df_decomposed, aes(x = date, y = random)) +
+  geom_hline(aes(yintercept = 0), color = "white") +
+  geom_line(color = s_line_2, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme_stl
+
+gg_stl_random
+
+```
+
+::: {.absolute top="550" left="370" .h2-chars}
+What's Left!
+:::
+
+## Our original mean and variance now seems...embarrassing? {background-image="images/bg-heron.jpeg"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_ribbon(aes(ymin = l_bound_2, ymax = u_bound_2), 
+              fill = "yellow", alpha = 0.2) +
+  geom_ribbon(aes(ymin = l_bound_1, ymax = u_bound_1), 
+              fill = "red", alpha = 0.2) +
+  geom_hline(aes(yintercept = mean_tw), linetype = "dashed", size = 3, color = "white")
+
+```
+
+## We can use the seasonal and trend components for the "mean" {background-image="images/bg-heron.jpeg"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Get the sd of the random
+random_sd <- sd(df_decomposed$random, na.rm = TRUE)
+
+df_trend_weekly_final <- df_decomposed |> 
+  # Calculate the "mean" by adding the seasonal and trend
+  mutate(mean = seasonal + trend) |> 
+  # Add in upper and lower bounds
+  mutate(bound_u = mean + 2 * random_sd,
+         bound_l = mean - 2 * random_sd)
+
+gg_trend_weekly +
+  geom_line(mapping = aes(x = date, y = mean), data = df_trend_weekly_final, 
+            color = "white", linetype = "dashed", size = 2)
+
+```
+
+## And the "variance" is [just]{.underline} based on "what's left" {background-image="images/bg-heron.jpeg"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_ribbon(mapping = aes(x = date, y = 0, ymin = bound_l, ymax = bound_u), 
+              data = df_trend_weekly_final, fill = "yellow", alpha = 0.2) +
+  geom_line(mapping = aes(x = date, y = mean), data = df_trend_weekly_final, 
+            color = "white", linetype = "dashed", size = 2)
+
+
+```
+
 
 # This is powerful! {background-image="images/bg-heron.jpeg"}
 

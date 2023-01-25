@@ -145,7 +145,7 @@ gg_base_timeline_population <- gg_base_timeline +
            color = "white") +
   geom_text(mapping = aes(x = 19, y = 6, label = "OUR SAMPLE"),
             family = "s_font", size = 10, color = "white")
-gg_base_timeline_population
+# gg_base_timeline_population
 ```
 
 ## This is [imperfect]{.underline}. {transition="fade"}

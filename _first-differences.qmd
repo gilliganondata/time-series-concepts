@@ -1,4 +1,4 @@
-# First Differences: Avoiding Seeing Correlation Where It Is Not {background-image="images/bg-muskrat.jpeg"}
+# First Differences: One Antidote to Non-Stationarity {background-image="images/bg-muskrat.jpeg"}
 
 ## Are these two metrics correlated? {background-image="images/bg-muskrat.jpeg"}
 
@@ -52,7 +52,7 @@ ggplot(df_fd_scatter, aes(x = social, y = orders)) +
 
 . . .
 
-::: {.absolute top="185" left="170"}
+::: {.absolute top="195" left="170" .h2-chars}
 R^2^ = `r cor(df_fd_scatter$social, df_fd_scatter$orders)^2 |> round(2)`
 :::
 
@@ -101,7 +101,7 @@ ggplot(df_fd_scatter, aes(x = social_diff, y = orders_diff)) +
 
 . . .
 
-::: {.absolute top="185" left="170"}
+::: {.absolute top="195" left="170" .h2-chars}
 R^2^ = `r cor(df_fd_scatter$orders_diff, df_fd_scatter$social_diff, use = "pairwise.complete.obs")^2 |> round(2)`
 :::
 

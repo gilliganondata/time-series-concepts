@@ -163,9 +163,9 @@ get_ts <- function(start = Sys.Date()-90,
   # Add the trending element. If it's 0, we want it to be flat. Otherwise
   # it's the % increase/decrease between the base (the starting point) and the
   # end point
-  trend_end <- base * (1 + trend)
-  trend_multiples <- seq(base, trend_end, length.out = length(dates)) / base
-  df$value = df$value * trend_multiples
+  trend_end <- base * (1 + trend) - base
+  trend_multiples <- seq(0, trend_end, length.out = length(dates)) 
+  df$value = df$value + trend_multiples
   
   # Add the intervention effect. This requires both an intervention date and
   # an effect of the intervention, which is the % increase or decrease from

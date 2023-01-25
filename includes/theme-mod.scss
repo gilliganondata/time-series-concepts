@@ -36,6 +36,11 @@ $link-color: #42affa;
   font-family: var(--prez_font), sans-serif;
   font-size: 0.9em;
   color: white;
+  margin-block: 4px;
+}
+
+.reveal img {
+  margin-block: 4px;
 }
 
 .reveal h1 {
