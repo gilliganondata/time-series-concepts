@@ -9,8 +9,8 @@ pacman::p_load(tidyverse,
                scales,
                lubridate,
                showtext,     # For using a custom font
-               patchwork,     # Chart layout
-               xkcd   # For the time diagram. May or may not use more broadly
+#               patchwork,   # Chart layout
+               CausalImpact  # Bayesian structural time-series forecasting
 )
 
 # See https://r-graph-gallery.com/custom-fonts-in-R-and-ggplot2.html

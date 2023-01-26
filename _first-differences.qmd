@@ -1,6 +1,6 @@
-# First Differences: One Antidote to Non-Stationarity {background-image="images/bg-muskrat.jpeg"}
+# First Differences: One Antidote to Non-Stationarity {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
-## Are these two metrics correlated? {background-image="images/bg-muskrat.jpeg"}
+## Are these two metrics correlated? {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -27,7 +27,7 @@ ggplot(df_first_diff, aes(x = date, y = value, color = metric)) +
 
 ```
 
-## A scatterplot, perhaps? {background-image="images/bg-muskrat.jpeg"}
+## A scatterplot, perhaps? {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -56,15 +56,15 @@ ggplot(df_fd_scatter, aes(x = social, y = orders)) +
 R^2^ = `r cor(df_fd_scatter$social, df_fd_scatter$orders)^2 |> round(2)`
 :::
 
-# If they're correlated, then when one *moves*, the other will *move similarly.* {background-image="images/bg-muskrat.jpeg"}
+# If they're correlated, then when one *moves*, the other will *move similarly.* {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
-# When one metric increases, the other should increase similarly. {background-image="images/bg-muskrat.jpeg"}
+# When one metric increases, the other should increase similarly. {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
-# When one metric decreases, the other should decrease similarly. {background-image="images/bg-muskrat.jpeg"}
+# When one metric decreases, the other should decrease similarly. {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
-# Let's look at the [changes]{.underline} rather than the [actual values]{.underline}. {background-image="images/bg-muskrat.jpeg"}
+# Let's look at the [changes]{.underline} rather than the [actual values]{.underline}. {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
-# This is called [first differences]{.underline}. {background-image="images/bg-muskrat.jpeg"}
+# This is called [first differences]{.underline}. {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -79,7 +79,7 @@ head(df_fd_scatter) |> gt()
 
 ```
 
-## The scatterplot of the first differences is...different! {background-image="images/bg-muskrat.jpeg"}
+## The scatterplot of the first differences is...different! {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -105,4 +105,4 @@ ggplot(df_fd_scatter, aes(x = social_diff, y = orders_diff)) +
 R^2^ = `r cor(df_fd_scatter$orders_diff, df_fd_scatter$social_diff, use = "pairwise.complete.obs")^2 |> round(2)`
 :::
 
-# These are both moving with time (but not directly with each other) {background-image="images/bg-muskrat.jpeg"}
+# These are both moving with time (but not directly with each other) {background-image="images/bg-muskrat.jpeg" background-opacity=0.5}

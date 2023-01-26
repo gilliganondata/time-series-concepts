@@ -4,29 +4,295 @@
 
 # Think "time-series decomposition turned up to 11" {background-image="images/bg-clouds.jpeg"}
 
-## Mark Edmondson built a tool using this...in 2016 (check that) {background-image="images/bg-clouds.jpeg"}
+## Mark Edmondson built a tool using this [7 years ago]{.underline}! {background-image="images/bg-clouds.jpeg"}
 
-CausalImpact screen cap
+![](images/ga_effect.png)
 
-## At it's core: estimate the impact of an intervention {background-image="images/bg-clouds.jpeg"}
+## At its core: estimate the impact of an intervention {background-image="images/bg-clouds.jpeg"}
 
 ## "We didn't test it, so can we just do a pre-/post- analysis?" {background-image="images/bg-clouds.jpeg"}
 
-## What the marketer expects happened {background-image="images/bg-clouds.jpeg"}
+## What the marketer expects happened {background-image="images/bg-clouds.jpeg" transition="fade"}
 
-Low noise, big change
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
 
-## Typically, the change isn't [that]{.underline} big... {background-image="images/bg-clouds.jpeg"}
+# Number of days in the "post" period
+num_days_post <- 20
+int_date <- Sys.Date()-num_days_post
 
-## ...and the data is a lot noisier {background-image="images/bg-clouds.jpeg"}
+df <- get_ts(base = 10000, noise = 0.05, intervention_date = int_date,
+                                     intervention_effect = 0.35) 
 
-## CausalImpact uses historical data to forecast what's expected {background-image="images/bg-clouds.jpeg"}
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1.5) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
 
-## At its most basic, it simply uses the metric of interest {background-image="images/bg-clouds.jpeg"}
+```
 
-## Look what happens the farther you get from the intervention! {background-image="images/bg-clouds.jpeg"}
+## Typically, the change isn't [that]{.underline} big... {background-image="images/bg-clouds.jpeg" transition="fade"}
 
-# But, it can also be a little smarter by putting one ore more [covariates]{.underline} to use. {background-image="images/bg-clouds.jpeg"}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.05, intervention_date = int_date,
+                                     intervention_effect = 0.15) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1.5) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main+
+  theme(axis.title.y = element_blank())
+
+```
+
+## ...and the data is a [lot noisier]{.underline}... {background-image="images/bg-clouds.jpeg" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
+                                     intervention_effect = 0.15) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1.5) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## ...and may have [seasonality]{.underline}... {background-image="images/bg-clouds.jpeg" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
+             week_season = TRUE, intervention_effect = 0.15) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1.5) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## ...and may [not be stationary]{.underline} to start with! {background-image="images/bg-clouds.jpeg" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
+             week_season = TRUE, intervention_effect = 0.15, trend = 0.3) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1.5) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+# CausalImpact uses [historical data]{.underline} to forecast [what's expected]{.underline} {background-image="images/bg-clouds.jpeg"}
+
+## Step 1: Look at the [pre-intervention] data {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df_ci <- df
+
+# Run the actual model
+ci_model <- CausalImpact(df_ci$value,
+                     pre.period = c(1, nrow(df_ci) - num_days_post),
+                     post.period = c(nrow(df_ci) - num_days_post + 1, nrow(df_ci)),
+                     model.args = list(nseasons = 7,
+                                       season.duration = 1))
+
+# Make the results a data frame and add the date column back in
+ci_df <- as.data.frame(ci_model$series)
+ci_df$date <- df$date 
+ci_df <- ci_df |> relocate(date) |> 
+  # Add column versions with the "post" wiped out for plotting
+  mutate(response_pre = ifelse(date > int_date, NA, response),
+         point.pred_pre = ifelse(date > int_date, NA, point.pred),
+         point.pred.lower_pre = ifelse(date > int_date, NA, point.pred.lower),
+         point.pred.upper_pre = ifelse(date > int_date, NA, point.pred.upper))
+
+# Plot just the base data up to the intervention
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 2: Build a best-fit model using this data {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Add the modeled estimate to it
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+## Step 3: That model can [quantify its uncertainty]{.underline} {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Add the confidence interval around it
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_ribbon(aes(ymin = point.pred.lower_pre, ymax = point.pred.upper_pre),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 4: Extend the model [post-intervention]{.underline} {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_ribbon(aes(ymin = point.pred.lower, ymax = point.pred.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 5: Compare the model to the [actual results]{.underline} {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = response)) +
+  geom_ribbon(aes(ymin = point.pred.lower, ymax = point.pred.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+# "Pointwise" is another way to look at the results {background-image="images/bg-clouds.jpeg"}
+
+## Set the [modeled prediction]{.underline} as the baseline {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+
+## Plot the [difference]{.underline} between the model & the actual {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+
+## Put the confidence interval around the [difference]{.underline} {background-image="images/bg-clouds.jpeg" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_ribbon(aes(ymin = point.effect.lower, ymax = point.effect.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+            linewidth = 1) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+# Or...by the numbers! {background-image="images/bg-clouds.jpeg"}
+
+# Posterior tail-area probability p: `r ci_model$summary$p[1]`
+
+# Estimated average (daily) effect: `r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")` with a 95% confidence interval of `r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")` 
+
+# But, wait! There's more! {background-image="images/bg-clouds.jpeg"}
+
+# Let's put [covariates]{.underline} to use. {background-image="images/bg-clouds.jpeg"}
 
 ## What's a covariate? {background-image="images/bg-clouds.jpeg"}
 
