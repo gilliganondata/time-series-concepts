@@ -1,8 +1,8 @@
-# Decomposition {background-image="images/bg-heron.jpeg"}
+# Decomposition {background-color="#04447B33"}
 
-# [Time-Series]{.underline} Decomposition, That Is {background-image="images/bg-heron.jpeg"}
+# [Time-Series]{.underline} Decomposition, That Is {background-color="#04447B33"}
 
-## Consider a fairly "clean" series {background-image="images/bg-heron.jpeg" transition="fade"}
+## Consider a fairly "clean" series {background-color="#04447B33" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -32,7 +32,7 @@ gg_trend_weekly <- ggplot(df_trend_weekly, aes(x = date, y = value)) +
 gg_trend_weekly
 
 ```
-## The Mean...is Pretty Meaningless {background-image="images/bg-heron.jpeg" transition="fade"}
+## The Mean...is Pretty Meaningless {background-color="#04447B33" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -41,7 +41,7 @@ gg_trend_weekly +
   geom_hline(aes(yintercept = mean_tw), linetype = "dashed", size = 3, color = "white") 
 
 ```
-## And so is the variance {background-image="images/bg-heron.jpeg" transition="fade"}
+## And so is the variance {background-color="#04447B33" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -55,9 +55,9 @@ gg_trend_weekly +
 
 ```
 
-# Time-series decomposition does what our brain already wants to do {background-image="images/bg-heron.jpeg"}
+# Time-series decomposition does what our brain already wants to do {background-color="#04447B33"}
 
-## The "decomposition" is into three components {background-image="images/bg-heron.jpeg" auto-animate="true"}
+## The "decomposition" is into three components {background-color="#04447B33" auto-animate="true"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -88,7 +88,7 @@ gg_trend_weekly
 
 ```
 
-## The "decomposition" is into three components {background-image="images/bg-heron.jpeg" auto-animate="true"}
+## The "decomposition" is into three components {background-color="#04447B33" auto-animate="true"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -161,7 +161,7 @@ gg_stl_random
 What's Left!
 :::
 
-## Our original mean and variance now seems...embarrassing? {background-image="images/bg-heron.jpeg"}
+## Our original mean and variance now seems...embarrassing? {background-color="#04447B33"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -175,7 +175,7 @@ gg_trend_weekly +
 
 ```
 
-## We can use the seasonal and trend components for the "mean" {background-image="images/bg-heron.jpeg"}
+## We can use the seasonal and trend components for the "mean" {background-color="#04447B33"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -196,7 +196,7 @@ gg_trend_weekly +
 
 ```
 
-## And the "variance" is [just]{.underline} based on "what's left" {background-image="images/bg-heron.jpeg"}
+## And the "variance" is [just]{.underline} based on "what's left" {background-color="#04447B33"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -211,7 +211,7 @@ gg_trend_weekly +
 ```
 
 
-# This is powerful! {background-image="images/bg-heron.jpeg"}
+# This is powerful! {background-color="#04447B33"}
 
-# (Loosely) it's part of what's happening with our next example. {background-image="images/bg-heron.jpeg"}
+# (Loosely) it's part of what's happening with our next example. {background-color="#04447B33"}
 

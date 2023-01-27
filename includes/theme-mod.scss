@@ -50,18 +50,38 @@ $link-color: #42affa;
 .reveal h2 {
 }
 
+.reveal blockquote {
+  font-size: 1.2em;
+  font-style: italic;
+}
+
 .reveal .slide figure>figcaption {
   margin: 0 0 20px 0;
-  font-size: 0.5em;
+  font-size: 0.4em;
+  text-align: center;
 }
 
 .reveal .footer > * {
   margin: 0 20px 0 0;
   text-align: right;
+  font-size: 1.2em;
+}
+
+.reveal .footer-left > * {
+  margin: 0 20px 0 0;
+  text-align: left;
+  font-size: 1.1em;
 }
 
 .reveal .underline {
   text-decoration: underline;
+}
+
+.reveal .large-chars {
+  font-family: var(--prez_font), sans-serif;
+  font-weight: 600;
+  color: var(--light_text_color);
+  font-size: 4em;
 }
 
 .reveal .h1-chars {
@@ -76,4 +96,12 @@ $link-color: #42affa;
   font-weight: 600;
   color: var(--light_text_color);
   font-size: 1.2em;
+}
+
+/* For vertically centering content */
+.reveal .v-center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
 }
