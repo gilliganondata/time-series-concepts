@@ -1,4 +1,4 @@
-## Our data exists over time. {background-color="#3F2D76&C" transition="fade"}
+## Our data exists over time. {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -35,7 +35,7 @@ gg_base_timeline
 
 ```
 
-## So, what is our [population]{style="text-decoration: underline;"}? {background-color="#3F2D76&C" transition="fade"}
+## So, what is our [population]{style="text-decoration: underline;"}? {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_2}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -43,7 +43,7 @@ gg_base_timeline
 gg_base_timeline
 ```
 
-## Is it the [past]{.underline} to the [present]{.underline}? {background-color="#3F2D76&C" transition="fade"}
+## Is it the [past]{.underline} to the [present]{.underline}? {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_past_present}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -74,7 +74,7 @@ gg_base_timeline_past_present
 [Maybe. Maybe not.]{.h1-chars}
 :::
 
-## Maybe it's the [past]{.underline}, [present]{.underline}, and [future]{.underline}? {background-color="#3F2D76&C" transition="fade"}
+## Maybe it's the [past]{.underline}, [present]{.underline}, and [future]{.underline}? {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_alltime}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -98,7 +98,7 @@ gg_base_timeline_population <- gg_base_timeline +
 gg_base_timeline_population
 ```
 
-## Or...just the [future]{.underline}? {background-color="#3F2D76&C" transition="fade"}
+## Or...just the [future]{.underline}? {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_future}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -124,13 +124,17 @@ gg_base_timeline_future
 
 . . .
 
-::: {.absolute top="500" left="200"}
+::: {.absolute top="450" left="200"}
 [But...we can't sample from the future!]{.h2-chars}
 :::
 
-# So...what is our [sample]{.underline}? {background-color="#3F2D76&C"}
+. . .
 
-## Our sample is a [sample timeframe]{style="text-decoration: underline;"}. {background-color="#3F2D76&C" transition="fade"}
+::: {.absolute top="550" left="220"}
+[So...what is our sample?]{.h1-chars}
+:::
+
+## Our sample is a [sample timeframe]{style="text-decoration: underline;"}. {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_sample}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -155,7 +159,7 @@ gg_base_timeline_population <- gg_base_timeline +
 gg_base_timeline_population
 ```
 
-## This is [imperfect]{.underline}. {background-color="#3F2D76&C" transition="fade"}
+## This is [imperfect]{.underline}. {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_sample_2}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -163,7 +167,7 @@ gg_base_timeline_population
 gg_base_timeline_population
 ```
 
-## Because our reality is [constant change]{.underline}. {background-color="#3F2D76&C" transition="fade"}
+## Because our reality is [constant change]{.underline}. {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_sample_diverge}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -186,9 +190,9 @@ gg_diverge
 
 ```
 
-# { background-image="images/puppies_mind_blown.png" background-opacity=0.5}
+## { background-image="images/puppies_mind_blown.png" background-opacity=0.5}
 
-::: {.absolute bottom=0 left=20}
+::: {.absolute bottom=0 left=20 style="font-size: 0.4em;"}
 DALL-E 2: "A room full of puppies who all have different astonished expressions on their faces, digital art"
 :::
 

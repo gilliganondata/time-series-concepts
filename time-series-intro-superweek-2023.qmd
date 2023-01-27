@@ -30,7 +30,7 @@ source("includes/setup.R")
 
 :::: {.columns .v-center-container}
 ::: {.column width="40%"}
-[This presentation:]{.h2-chars}
+[This presentation]{.h2-chars}
 
 ::: {.fragment}
 [40 minutes]{.h1-chars}
@@ -47,7 +47,7 @@ source("includes/setup.R")
 
 :::: {.columns .v-center-container}
 ::: {.column width="40%"}
-[Superweek:]{.h2-chars}
+[Superweek]{.h2-chars}
 
 ::: {.fragment}
 [5 days]{.h1-chars}
@@ -64,7 +64,7 @@ source("includes/setup.R")
 
 :::: {.columns .v-center-container}
 ::: {.column width="40%"}
-[My last job:]{.h2-chars}
+[My last job]{.h2-chars}
 
 ::: {.fragment}
 [5 years]{.h1-chars}
@@ -81,7 +81,7 @@ source("includes/setup.R")
 
 :::: {.columns .v-center-container}
 ::: {.column width="40%"}
-[Yehoshua's intros:]{.h2-chars}
+[Yehoshua's intros]{.h2-chars}
 :::
 
 ::: {.column width="60%"}
@@ -153,7 +153,7 @@ ggplot(get_ts(base = 50000, start = Sys.Date()-45, week_season = TRUE, trend = 0
 :::
 ::::
 
-# Statistics is all about estimating a [population]{.underline} from a [sample]{.underline}. {background-color="#3F2D7633"}
+# Statistics is all about estimating a [population]{.underline} from a [sample]{.underline}. {background-color="#3F2D767C"}
 
 {{< include _time-sample-population.qmd >}}
 
