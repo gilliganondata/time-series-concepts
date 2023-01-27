@@ -1,5 +1,5 @@
 
-# Time-series data is often [non-stationary]{.underline}. {background-color="#0816647C"}
+# Time-series data is often<br>[non-stationary]{.underline}. {background-color="#0816647C"}
 
 ## {background-color="#0816647C" transition="none" auto-animate=true}
 

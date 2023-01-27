@@ -192,7 +192,7 @@ gg_diverge
 
 ## { background-image="images/puppies_mind_blown.png" background-opacity=0.5}
 
-::: {.absolute bottom=0 left=20 style="font-size: 0.4em;"}
+::: {.absolute bottom=0 left=20 style="font-size: 0.6em;"}
 DALL-E 2: "A room full of puppies who all have different astonished expressions on their faces, digital art"
 :::
 

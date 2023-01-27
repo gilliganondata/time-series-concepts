@@ -105,3 +105,8 @@ $link-color: #42affa;
   align-items: center;
   height: 90%;
 }
+
+/* The default forces text-align to left, which means gt can't override it */
+.reveal table th, .reveal table td {
+  text-align: right;
+}
