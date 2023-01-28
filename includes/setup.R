@@ -42,7 +42,7 @@ theme_main <- theme_minimal() +
         plot.background = element_rect(fill = s_bgrnd, color = NA),
         panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(color = "gray60"),
+        panel.grid.major.y = element_line(color = "gray40"),
         panel.grid.minor.y = element_blank(),
         axis.title.x = element_blank(),
         axis.text.x = element_text(family = "s_font", size = s_axis_text_size, colour = s_labels),

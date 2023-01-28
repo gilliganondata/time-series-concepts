@@ -98,6 +98,13 @@ $link-color: #42affa;
   font-size: 1.2em;
 }
 
+.reveal .h3-chars {
+  font-family: var(--prez_font), sans-serif;
+  font-weight: 600;
+  color: var(--light_text_color);
+  font-size: 1em;
+}
+
 /* For vertically centering content */
 .reveal .v-center-container {
   display: flex;

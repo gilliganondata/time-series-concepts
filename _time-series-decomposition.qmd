@@ -1,8 +1,30 @@
-# Decomposition {background-color="#04447B7C"}
+## {background-color="#0816647C"}
 
-# [Time-Series]{.underline} Decomposition, That Is {background-color="#04447B7C"}
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A puppy driving a racecar with one paw on the gearshift, digital art"](images/puppy_gearshift.png)
+:::
 
-## Consider a fairly "clean" series {background-color="#04447B7C" transition="fade"}
+::: {.column width="40%"}
+[Let's shift gears]{.h1-chars}
+:::
+::::
+
+## {background-color="#0816647C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A partially decomposed puppy in a cemetery, digital art"](images/puppy_decomposed.png)
+:::
+
+::: {.column width="40%"}
+[Decomposition can be [amazing]{.underline}]{.h2-chars}
+:::
+::::
+
+# [Time-series]{.underline} decomposition, that is {background-color="#04447B7C"}
+
+## A fairly "clean" series {background-color="#04447B7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -32,7 +54,7 @@ gg_trend_weekly <- ggplot(df_trend_weekly, aes(x = date, y = value)) +
 gg_trend_weekly
 
 ```
-## The Mean...is Pretty Meaningless {background-color="#04447B7C" transition="fade"}
+## The mean...is pretty meaningless {background-color="#04447B7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -55,10 +77,11 @@ gg_trend_weekly +
 
 ```
 
-# Time-series decomposition does what our brain already wants to do {background-color="#04447B7C"}
+# Time-series decomposition does what our brain [already wants to do]{.underline} {background-color="#04447B7C"}
 
-## The "decomposition" is into three components {background-color="#04447B7C" auto-animate="true"}
+## It "decomposes" the data into three components {background-color="#04447B7C" auto-animate=true}
 
+::: {data-id="orig_data" auto-animate-duration=5}
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
 
@@ -87,9 +110,12 @@ theme_stl <- theme(axis.text.x = element_blank(),
 gg_trend_weekly
 
 ```
+:::
 
-## The "decomposition" is into three components {background-color="#04447B7C" auto-animate="true"}
 
+## It "decomposes" the data into three components {background-color="#04447B7C" auto-animate=true}
+
+:::{data-id="original" auto-animate-duration=5}
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
 #| fig.height: 1.3
@@ -100,7 +126,7 @@ gg_stl_observed <- gg_trend_weekly +
 gg_stl_observed
 
 ```
-
+:::
 . . .
 
 ```{r}
@@ -117,7 +143,7 @@ gg_stl_seasonal <- ggplot(df_decomposed, aes(x = date, y = seasonal)) +
 gg_stl_seasonal
 
 ```
-::: {.absolute top="250" left="280" .h2-chars}
+::: {.fragment .absolute top="260" left="70" .h3-chars style="padding-left: 10px; padding-right: 10px; background: #04447B7C;"}
 The Seasonal Component
 :::
 . . .
@@ -137,7 +163,7 @@ gg_stl_trend
 
 ```
 
-::: {.absolute top="400" left="310" .h2-chars}
+::: {.fragment .absolute top="410" left="70" .h3-chars style="padding-left: 10px; padding-right: 10px; background: #04447B7C;"}
 The Trend Component
 :::
 . . .
@@ -157,11 +183,31 @@ gg_stl_random
 
 ```
 
-::: {.absolute top="550" left="370" .h2-chars}
+::: {.absolute top="550" left="70" .h3-chars style="padding-left: 10px; padding-right: 10px; background: #04447B7C;"}
 What's Left!
 :::
 
-## Our original mean and variance now seems...embarrassing? {background-color="#04447B7C"}
+::: {.fragment}
+::: {.absolute top=215 left=1 style="width: 950px; height: 285px; background: black; opacity: 0.3;"}
+:::
+::: {.absolute top=215 left=1 style="width: 950px; height: 285px; border: 4px dashed #FFF;"}
+:::
+::: {.absolute top=315 left=320}
+["The Mean"]{.h1-chars}
+:::
+:::
+
+::: {.fragment}
+::: {.absolute top=510 left=1 style="width: 950px; height: 130px; background: black; opacity: 0.3;"}
+:::
+::: {.absolute top=510 left=1 style="width: 950px; height: 130px; border: 4px dashed #FFF;"}
+:::
+::: {.absolute top=530 left=280}
+["The Variance"]{.h1-chars}
+:::
+:::
+
+## The original mean+variance...embarrassing? {background-color="#04447B7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -175,7 +221,7 @@ gg_trend_weekly +
 
 ```
 
-## We can use the seasonal and trend components for the "mean" {background-color="#04447B7C"}
+## Seasonality + trend = the "mean" {background-color="#04447B7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -196,7 +242,7 @@ gg_trend_weekly +
 
 ```
 
-## And the "variance" is [just]{.underline} based on "what's left" {background-color="#04447B7C"}
+## And the "variance" is [just]{.underline} based on "what's left" {background-color="#04447B7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'

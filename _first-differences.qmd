@@ -270,7 +270,7 @@ R^2^ = `r cor(df_fd_scatter$orders_diff, df_fd_scatter$social_diff, use = "pairw
 
 :::: {.columns .v-center-container}
 ::: {.column width="40%"}
-[These are both moving with time...but not directly with each other]{.h2-chars}
+[These are both moving with time...but [not directly with each other]{.underline}]{.h2-chars}
 :::
 
 ::: {.column width="60%"}
