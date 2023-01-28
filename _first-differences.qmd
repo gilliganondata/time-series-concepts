@@ -120,11 +120,12 @@ df_fd_slice |> select(Date, Orders) |> mutate(`1st Diff: Orders` = "") |>
 #| dev.args: !expr 'list(bg="transparent")'
 
 # Start with just orders
-df_fd_slice |> select(Date, Orders) |> mutate(`1st Diff: Orders` = "") |> 
+df_fd_slice |> select(Date, Orders) |> 
+  mutate(`1st Diff: Orders` = "") |> 
   gt() |> 
   fmt_number(columns = Orders,
              decimals = 0) |> 
-    tab_style(
+  tab_style(
     style = list(cell_fill(color = "#FFFF007C")),
     locations = cells_body(
       columns = Orders,
@@ -136,10 +137,107 @@ df_fd_slice |> select(Date, Orders) |> mutate(`1st Diff: Orders` = "") |>
 :::
 ::::
 
+## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
 
+:::: {.columns}
+::: {.column width="60%"}
 
-## The scatterplot of the first differences is...different! {background-color="#0816647C"}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
 
+# Start with just orders
+df_fd_slice |> select(Date, Orders, `1st Diff: Orders`) |> 
+  mutate(`1st Diff: Orders` = if_else(row_number() == 4,
+                                     format(`1st Diff: Orders`, big.mark = ","), "")) |> 
+  gt() |> 
+  fmt_number(columns = Orders,
+             decimals = 0) |> 
+  tab_style(
+    style = list(cell_fill(color = "#FFFF007C")),
+    locations = cells_body(
+      columns = Orders,
+      rows = c(3,4)
+    )) |> 
+  tab_style(
+    style = list(cell_fill(color = "#FFFF007C")),
+    locations = cells_body(
+      columns = `1st Diff: Orders`,
+      rows = 4
+    ))
+  
+```
+
+:::
+::::
+
+## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
+
+:::: {.columns}
+::: {.column width="60%"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Start with just orders
+df_fd_slice |> select(Date, Orders, `1st Diff: Orders`) |> 
+  gt() |> 
+  fmt_number(columns = c(Orders, `1st Diff: Orders`),
+             decimals = 0) 
+  
+```
+
+:::
+::::
+  
+## From [non-stationary]{.underline} to [more stationary]{.underline} {background-color="#0816647C"}
+
+::: {.fragment}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 3
+
+ggplot(df_fd_scatter, aes(x = date, y = orders)) +
+  geom_line(linewidth = 1.1, color = s_line_1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  labs(title = "Orders") +
+  theme_main +
+  theme(axis.text.x = element_blank(),
+        axis.title.y = element_blank())
+```
+:::
+::: {.fragment}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 3
+
+ggplot(df_fd_scatter, aes(x = date, y = orders_diff)) +
+  geom_hline(aes(yintercept = 0), color="white") +
+  geom_line(linewidth = 1.1, color = s_line_1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  labs(title = "First Difference: Orders") +
+  theme_main +
+  theme(axis.text.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line.x = element_blank())
+```
+:::
+
+## We can calculate first differences for both metrics {background-color="#0816647C"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Start with just orders
+df_fd_slice |> 
+  gt() |> 
+  fmt_number(columns = !matches("Date"),
+             decimals = 0)
+
+```
+
+## And [then]{.underline} check the correlation! {background-color="#0816647C"}
+  
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
 #| fig.height: 6
@@ -168,4 +266,14 @@ ggplot(df_fd_scatter, aes(x = social_diff, y = orders_diff)) +
 R^2^ = `r cor(df_fd_scatter$orders_diff, df_fd_scatter$social_diff, use = "pairwise.complete.obs")^2 |> round(2) |> format(nsmall = 2)`
 :::
 
-# These are both moving with time (but not directly with each other) {background-color="#0816647C"}
+## {background-color="#0816647C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="40%"}
+[These are both moving with time...but not directly with each other]{.h2-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy running a race where the other runner is a clock, digital art"](images/puppy_race_clock.png)
+:::
+::::

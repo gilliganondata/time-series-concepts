@@ -1,18 +1,18 @@
-# And now...to Bayesian Things {background-color="#065CBC33"}
+# And now...to Bayesian Things {background-color="#065CBC7C"}
 
-# Specifically, Bayesian Structural Time-Series {background-color="#065CBC33"}
+# Specifically, Bayesian Structural Time-Series {background-color="#065CBC7C"}
 
-# Think "time-series decomposition turned up to 11" {background-color="#065CBC33"}
+# Think "time-series decomposition turned up to 11" {background-color="#065CBC7C"}
 
-## Mark Edmondson built a tool using this [7 years ago]{.underline}! {background-color="#065CBC33"}
+## Mark Edmondson built a tool using this [7 years ago]{.underline}! {background-color="#065CBC7C"}
 
 ![](images/ga_effect.png)
 
-## At its core: estimate the impact of an intervention {background-color="#065CBC33"}
+## At its core: estimate the impact of an intervention {background-color="#065CBC7C"}
 
-## "We didn't test it, so can we just do a pre-/post- analysis?" {background-color="#065CBC33"}
+## "We didn't test it, so can we just do a pre-/post- analysis?" {background-color="#065CBC7C"}
 
-## What the marketer expects happened {background-color="#065CBC33" transition="fade"}
+## What the marketer expects happened {background-color="#065CBC7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -34,7 +34,7 @@ ggplot(df, aes(x = date, y = value)) +
 
 ```
 
-## Typically, the change isn't [that]{.underline} big... {background-color="#065CBC33" transition="fade"}
+## Typically, the change isn't [that]{.underline} big... {background-color="#065CBC7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -52,7 +52,7 @@ ggplot(df, aes(x = date, y = value)) +
 
 ```
 
-## ...and the data is a [lot noisier]{.underline}... {background-color="#065CBC33" transition="fade"}
+## ...and the data is a [lot noisier]{.underline}... {background-color="#065CBC7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -70,7 +70,7 @@ ggplot(df, aes(x = date, y = value)) +
 
 ```
 
-## ...and may have [seasonality]{.underline}! {background-color="#065CBC33" transition="fade"}
+## ...and may have [seasonality]{.underline}! {background-color="#065CBC7C" transition="fade"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -96,9 +96,9 @@ ggplot(df, aes(x = date, y = value)) +
 
 ```
 
-# CausalImpact uses [historical data]{.underline} to forecast [what's expected]{.underline} {background-color="#065CBC33"}
+# CausalImpact uses [historical data]{.underline} to forecast [what's expected]{.underline} {background-color="#065CBC7C"}
 
-## Step 1: Look at the [pre-intervention] data {background-color="#065CBC33" transition="fade}
+## Step 1: Look at the [pre-intervention] data {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -143,7 +143,7 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
 
 ```
 
-## Step 2: Build a best-fit model using this data {background-color="#065CBC33" transition="fade}
+## Step 2: Build a best-fit model using this data {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -160,7 +160,7 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
   theme(axis.title.y = element_blank())
 
 ```
-## Step 3: That model can [quantify its uncertainty]{.underline} {background-color="#065CBC33" transition="fade}
+## Step 3: That model can [quantify its uncertainty]{.underline} {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -180,7 +180,7 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
 
 ```
 
-## Step 4: Extend the model [post-intervention]{.underline} {background-color="#065CBC33" transition="fade}
+## Step 4: Extend the model [post-intervention]{.underline} {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -200,7 +200,7 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
 
 ```
 
-## Step 5: Compare the model to the [actual results]{.underline} {background-color="#065CBC33" transition="fade}
+## Step 5: Compare the model to the [actual results]{.underline} {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -220,9 +220,9 @@ ggplot(ci_df, aes(x = date, y = response)) +
 
 ```
 
-# "Pointwise" is another way to look at the results {background-color="#065CBC33"}
+# "Pointwise" is another way to look at the results {background-color="#065CBC7C"}
 
-## Set the [modeled prediction]{.underline} as the baseline {background-color="#065CBC33" transition="fade}
+## Set the [modeled prediction]{.underline} as the baseline {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -241,7 +241,7 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
 
 ```
 
-## Plot the [difference]{.underline} between the model & the actual {background-color="#065CBC33" transition="fade}
+## Plot the [difference]{.underline} between the model & the actual {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -261,7 +261,7 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
 
 ```
 
-## Put the confidence interval around the [difference]{.underline} {background-color="#065CBC33" transition="fade}
+## Put the confidence interval around the [difference]{.underline} {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -283,39 +283,39 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
         axis.line.x = element_blank())
 
 ```
-# Or...by the numbers! {background-color="#065CBC33"}
+# Or...by the numbers! {background-color="#065CBC7C"}
 
 # Posterior tail-area probability p: `r ci_model$summary$p[1]`
 
 # Estimated average (daily) effect: `r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")` with a 95% confidence interval of `r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")` 
 
-# But, wait! There's more! {background-color="#065CBC33"}
+# But, wait! There's more! {background-color="#065CBC7C"}
 
-# Let's put [covariates]{.underline} to use. {background-color="#065CBC33"}
+# Let's put [covariates]{.underline} to use. {background-color="#065CBC7C"}
 
-## Two criteria for any covariates {background-color="#065CBC33"}
+## Two criteria for any covariates {background-color="#065CBC7C"}
 
 1. Their relationship to the metric of interest is stable
 2. They are not themselves affected by the intervention
 
-## Covariates require [critical thought]{.underline} and [creativity]{.underline} {background-color="#065CBC33"}
+## Covariates require [critical thought]{.underline} and [creativity]{.underline} {background-color="#065CBC7C"}
 
 Sessions
 Housing starts
 Google Trends
 
-## Back to our original example {background-color="#065CBC33"}
+## Back to our original example {background-color="#065CBC7C"}
 
 This is without any covariates included.
 
 (Include statistical measures...)
 
-## Let's add a covariate {background-color="#065CBC33"}
+## Let's add a covariate {background-color="#065CBC7C"}
 
 And, with one really solid covariate.
 
 (Include statistical measures...)
 
-# This is not a silver bullet! {background-color="#065CBC33"}
+# This is not a silver bullet! {background-color="#065CBC7C"}
 
 
