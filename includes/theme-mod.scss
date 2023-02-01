@@ -6,6 +6,7 @@
 :root {
   --prez_font: Dosis;
   --light_text_color: #eee8d5
+  --accent_text_color: #ffa600
 }
 
 /* SCSS theme details: https://quarto.org/docs/presentations/revealjs/themes.html */
@@ -15,7 +16,7 @@
 // fonts
 $font-family-sans-serif: var(--prez_font), sans-serif !default;
 $presentation-heading-font: var(--prez_font), sans-serif !default;
-$presentation-heading-color: var(light_text_color);
+$presentation-heading-color: var(--light_text_color);
 $presentation-heading-line-height: 1.1;
 $presentation-heading-letter-spacing: 0.02em;
 $presentation-heading-font-weight: 600;
@@ -57,7 +58,7 @@ $link-color: #42affa;
 
 .reveal .slide figure>figcaption {
   margin: 0 0 20px 0;
-  font-size: 0.4em;
+  font-size: 0.5em;
   text-align: center;
 }
 
@@ -75,6 +76,12 @@ $link-color: #42affa;
 
 .reveal .underline {
   text-decoration: underline;
+  color: var(--accent_text_color);
+}
+
+.reveal u {
+  text-decoration: underline;
+  color: #ffa600;
 }
 
 .reveal .large-chars {

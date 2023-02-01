@@ -303,6 +303,8 @@ ggplot(ci_df, aes(x = date, y = response)) +
 
 ggplot(ci_df, aes(x = date, y = point.effect)) +
   geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  # A hack... plotting the line but as invisible just so the x-axis labels will appear
+  geom_line(color = NA, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
@@ -367,7 +369,7 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
 
 # Posterior tail-area probability p: `r ci_model$summary$p[1]` {background-color="#065CBC7C"}
 
-# Estimated average (daily) effect: `r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")` with a 95% confidence interval of `r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")` {background-color="#065CBC7C"}
+# Estimated average (daily) effect: [`r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")`]{.underline} with a 95% confidence interval of [`r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")`]{.underline} {background-color="#065CBC7C"}
 
 # But, wait! There's more! {background-color="#065CBC7C"}
 

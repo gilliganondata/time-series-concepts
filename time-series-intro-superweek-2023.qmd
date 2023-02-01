@@ -5,7 +5,7 @@ author: "Tim Wilson<br>Superweek 2023"
 format:
   revealjs: 
     theme: [moon, includes/theme-mod.scss]
-    footer: \@tgwilson | tim@gilliganondata.com
+    footer: bit.ly/sw-time-series | \@tgwilson | tim@gilliganondata.com
     transition: zoom
     parallax-background-image: images/bg-mallards.jpeg
     parallax-background-size: "2048px 1152px"
@@ -244,23 +244,26 @@ Bayesian structural time-series
 
 ## {background-color="#5A3B727C"}
 
-:::: {.columns .v-center-container}
+:::: {.columns}
+::: {.column width="40%"}
+![Excellent, Excellent Resource](images/hyndman_book.png)
+:::
+
 ::: {.column width="60%"}
 [Thank you!]{.h1-chars}
 
-Email: tim@gilliganondata.com
+Presentation: bit.ly/sw-time-series
 
 Podcast: analyticshour.io
 
-LinkedIn (and Twitter): tgwilson
-
-![](images/tw_qr.png){width=300 fig-align=left}
-:::
-
-::: {.column width="40%"}
-![Excellent, Excellent Resource](images/hyndman_book.jpeg)
+<br><br>
+LinkedIn:
 :::
 ::::
+
+::: {.absolute top=300 left=600}
+![](images/tw_qr.png){width=300}
+:::
 
 ## {background-color="#5A3B727C"}
 

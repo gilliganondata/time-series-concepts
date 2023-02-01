@@ -35,7 +35,7 @@ gg_base_timeline
 
 ```
 
-## So, what is our [population]{style="text-decoration: underline;"}? {background-color="#3F2D767C" transition="fade"}
+## So, what is our [population]{.underline}? {background-color="#3F2D767C" transition="fade"}
 
 ```{r base_timeline_2}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -192,7 +192,7 @@ gg_diverge
 
 ## { background-image="images/puppies_mind_blown.png" background-opacity=0.5}
 
-::: {.absolute bottom=0 left=20 style="font-size: 0.6em;"}
+::: {.absolute bottom=20 left=20 style="font-size: 0.6em;"}
 DALL-E 2: "A room full of puppies who all have different astonished expressions on their faces, digital art"
 :::
 
