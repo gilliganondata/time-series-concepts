@@ -40,7 +40,9 @@
 
 ## Mark Edmondson built a tool using this [7 years ago]{.underline}! {background-color="#065CBC7C"}
 
-![](images/ga_effect.png)
+::: {style="text-align: center;"}
+![](images/ga_effect.png){width=850}
+:::
 
 ## {background-color="#065CBC7C"}
 
@@ -82,10 +84,10 @@ df <- get_ts(base = 10000, noise = 0.06, intervention_date = int_date,
 
 ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1.5) +
   geom_text(aes(x = int_date-1.5, y = 14000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main +
   theme(axis.title.y = element_blank())
@@ -102,10 +104,10 @@ df <- get_ts(base = 10000, noise = 0.05, intervention_date = int_date,
 
 ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1.5) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main+
   theme(axis.title.y = element_blank())
@@ -122,10 +124,10 @@ df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
 
 ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1.5) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main +
   theme(axis.title.y = element_blank())
@@ -150,10 +152,10 @@ df <- df |>
 
 ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1.5) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main +
   theme(axis.title.y = element_blank())
@@ -162,7 +164,7 @@ ggplot(df, aes(x = date, y = value)) +
 
 # CausalImpact uses [historical data]{.underline} to forecast [what's expected]{.underline} {background-color="#065CBC7C"}
 
-## Step 1: Look at the [pre-intervention] data {background-color="#065CBC7C" transition="fade}
+## Step 1: Look at the [pre-intervention]{.underline} data {background-color="#065CBC7C" transition="fade}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -198,10 +200,10 @@ ci_df <- ci_df |> relocate(date) |>
 # Plot just the base data up to the intervention
 ggplot(ci_df, aes(x = date, y = response_pre)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -218,10 +220,10 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
 ggplot(ci_df, aes(x = date, y = response_pre)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -239,10 +241,10 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
               fill = "yellow", alpha = 0.2) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -261,10 +263,10 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
               fill = "yellow", alpha = 0.2) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -283,10 +285,10 @@ ggplot(ci_df, aes(x = date, y = response)) +
               fill = "yellow", alpha = 0.2) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -305,10 +307,10 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
   geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
   # A hack... plotting the line but as invisible just so the x-axis labels will appear
   geom_line(color = NA, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
                                   max(ci_df$point.effect.upper) * 1.1), label = comma) +
@@ -327,10 +329,10 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
 ggplot(ci_df, aes(x = date, y = point.effect)) +
   geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
   geom_line(color = s_line_1, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
                                   max(ci_df$point.effect.upper) * 1.1), label = comma) +
@@ -352,10 +354,10 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
               fill = "yellow", alpha = 0.2) +
   geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
   geom_line(color = s_line_1, linewidth = 1.1) +
-  geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
             linewidth = 1) +
   geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
-            family = "s_font", hjust = 1, size = 9, color = "white") +
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
                                   max(ci_df$point.effect.upper) * 1.1), label = comma) +
@@ -367,7 +369,7 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
 ```
 # Or...by the numbers! {background-color="#065CBC7C"}
 
-# Posterior tail-area probability p: `r ci_model$summary$p[1]` {background-color="#065CBC7C"}
+# Posterior tail-area probability p: [`r ci_model$summary$p[1]`]{.underline} {background-color="#065CBC7C"}
 
 # Estimated average (daily) effect: [`r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")`]{.underline} with a 95% confidence interval of [`r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")`]{.underline} {background-color="#065CBC7C"}
 

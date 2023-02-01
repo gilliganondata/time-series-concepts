@@ -38,7 +38,7 @@ editor: visual
 ![](images/trip_maciek.jpg){width=370}
 :::
 
-::: {.fragment .absolute top=415 left=270}
+::: {.fragment .absolute top=405 left=270}
 ![](images/trip_fosca.jpeg){width=360}
 :::
 
@@ -274,7 +274,7 @@ LinkedIn:
 ::: {.column width="33%"}
 :::{.fragment}
 ![](images/logo_r.png){width=300}
-This presentation was 100% built with R (and Quarto)
+This presentation was 100% built with R (and Quarto w/ reveal.js)
 :::
 :::
 
@@ -288,7 +288,7 @@ The images are (almost) 100% DALL-E 2
 ::: {.column width="33%"}
 :::{.fragment}
 ![](images/logo_twitter.png){width=300}
-The background image is from my "daily diversion" on Twitter
+The background image is from my ["daily diversion"](https://gilliganondata.com/image-randomize/) on Twitter
 :::
 :::
 ::::

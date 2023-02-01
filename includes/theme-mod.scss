@@ -74,6 +74,10 @@ $link-color: #42affa;
   font-size: 1.1em;
 }
 
+.reveal .r-stretch, .reveal .stretch {
+  padding-top: 30px;
+}
+
 .reveal .underline {
   text-decoration: underline;
   color: var(--accent_text_color);

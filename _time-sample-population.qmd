@@ -124,7 +124,7 @@ gg_base_timeline_future
 
 . . .
 
-::: {.absolute top="450" left="200"}
+::: {.absolute top="465" left="200"}
 [But...we can't sample from the future!]{.h2-chars}
 :::
 

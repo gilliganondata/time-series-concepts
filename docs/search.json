@@ -388,8 +388,8 @@
     "objectID": "time-series-intro-superweek-2023.html#step-1-look-at-the-pre-intervention-data",
     "href": "time-series-intro-superweek-2023.html#step-1-look-at-the-pre-intervention-data",
     "title": "Time-Series Analysis",
-    "section": "Step 1: Look at the [pre-intervention] data",
-    "text": "Step 1: Look at the [pre-intervention] data"
+    "section": "Step 1: Look at the pre-intervention data",
+    "text": "Step 1: Look at the pre-intervention data"
   },
   {
     "objectID": "time-series-intro-superweek-2023.html#step-2-build-a-best-fit-model-using-this-data",
@@ -473,6 +473,6 @@
     "href": "time-series-intro-superweek-2023.html#section-26",
     "title": "Time-Series Analysis",
     "section": "",
-    "text": "This presentation was 100% built with R (and Quarto)\n\n\n\n The images are (almost) 100% DALL-E 2\n\n\n\n The background image is from my “daily diversion” on Twitter\n\n\n\n\n\nbit.ly/sw-time-series | @tgwilson | tim@gilliganondata.com"
+    "text": "This presentation was 100% built with R (and Quarto w/ reveal.js)\n\n\n\n The images are (almost) 100% DALL-E 2\n\n\n\n The background image is from my “daily diversion” on Twitter\n\n\n\n\n\nbit.ly/sw-time-series | @tgwilson | tim@gilliganondata.com"
   }
 ]
