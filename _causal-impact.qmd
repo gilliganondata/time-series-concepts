@@ -1,16 +1,72 @@
-# And now...to Bayesian Things {background-color="#065CBC7C"}
+## {background-color="#065CBC7C"}
 
-# Specifically, Bayesian Structural Time-Series {background-color="#065CBC7C"}
+:::: {.columns .v-center-container}
 
-# Think "time-series decomposition turned up to 11" {background-color="#065CBC7C"}
+::: {.column width="40%"}
+[And now...to Bayesian things!]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed up as Thomas Bayes, digital art"](images/puppy_bayes.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[Specifically, Bayesian Structural Time-Series]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed up as Thomas Bayes, digital art"](images/puppy_bsts.png)
+:::
+::::
+
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[Time-series decomposition turned up to 11]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed like nigel tufnel turning an amplifier up to eleven, digital art"](images/puppy_nigel.png)
+:::
+::::
 
 ## Mark Edmondson built a tool using this [7 years ago]{.underline}! {background-color="#065CBC7C"}
 
 ![](images/ga_effect.png)
 
-## At its core: estimate the impact of an intervention {background-color="#065CBC7C"}
+## {background-color="#065CBC7C"}
 
-## "We didn't test it, so can we just do a pre-/post- analysis?" {background-color="#065CBC7C"}
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[At its core: estimate the [impact of an intervention]{.underline}]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy looking through a telescope at a meteor crashing into the moon, digital art"](images/puppy_telescope.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+["We didn't test it, so can we just do a [pre-/post- analysis]{.underline}?"]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy looking through a telescope at a meteor crashing into the moon, digital art"](images/puppy_smacking_forehead.png)
+:::
+::::
 
 ## What the marketer expects happened {background-color="#065CBC7C" transition="fade"}
 
@@ -18,16 +74,18 @@
 #| dev.args: !expr 'list(bg="transparent")'
 
 # Number of days in the "post" period
-num_days_post <- 20
+num_days_post <- 30
 int_date <- Sys.Date()-num_days_post
 
-df <- get_ts(base = 10000, noise = 0.05, intervention_date = int_date,
-                                     intervention_effect = 0.35) 
+df <- get_ts(base = 10000, noise = 0.06, intervention_date = int_date,
+                                     intervention_effect = 0.38) 
 
 ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 14000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main +
   theme(axis.title.y = element_blank())
@@ -46,6 +104,8 @@ ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main+
   theme(axis.title.y = element_blank())
@@ -64,6 +124,8 @@ ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main +
   theme(axis.title.y = element_blank())
@@ -90,6 +152,8 @@ ggplot(df, aes(x = date, y = value)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
   theme_main +
   theme(axis.title.y = element_blank())
@@ -136,6 +200,8 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -154,6 +220,8 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
   geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -173,6 +241,8 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
   geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -193,6 +263,8 @@ ggplot(ci_df, aes(x = date, y = response_pre)) +
   geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -213,6 +285,8 @@ ggplot(ci_df, aes(x = date, y = response)) +
   geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
   theme_main +
@@ -231,6 +305,8 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
   geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
                                   max(ci_df$point.effect.upper) * 1.1), label = comma) +
@@ -251,6 +327,8 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
                                   max(ci_df$point.effect.upper) * 1.1), label = comma) +
@@ -274,6 +352,8 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
   geom_line(color = s_line_1, linewidth = 1.1) +
   geom_vline(aes(xintercept = int_date), color = "white", linetype = "dashed",
             linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "white") +
   scale_y_continuous(expand = c(0,0), 
                      limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
                                   max(ci_df$point.effect.upper) * 1.1), label = comma) +
@@ -285,37 +365,44 @@ ggplot(ci_df, aes(x = date, y = point.effect)) +
 ```
 # Or...by the numbers! {background-color="#065CBC7C"}
 
-# Posterior tail-area probability p: `r ci_model$summary$p[1]`
+# Posterior tail-area probability p: `r ci_model$summary$p[1]` {background-color="#065CBC7C"}
 
-# Estimated average (daily) effect: `r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")` with a 95% confidence interval of `r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")` 
+# Estimated average (daily) effect: `r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")` with a 95% confidence interval of `r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")` {background-color="#065CBC7C"}
 
 # But, wait! There's more! {background-color="#065CBC7C"}
 
-# Let's put [covariates]{.underline} to use. {background-color="#065CBC7C"}
+# Putting [covariates]{.underline} to use {background-color="#065CBC7C"}
 
-## Two criteria for any covariates {background-color="#065CBC7C"}
+## {background-color="#065CBC7C"}
 
-1. Their relationship to the metric of interest is stable
-2. They are not themselves affected by the intervention
+:::: {.columns .v-center-container}
 
-## Covariates require [critical thought]{.underline} and [creativity]{.underline} {background-color="#065CBC7C"}
+::: {.column width="40%"}
 
-Sessions
-Housing starts
-Google Trends
+::: {.fragment .h2-chars style="padding-bottom: 14px;"}
+Their relationship to the metric of interest is stable
+:::
 
-## Back to our original example {background-color="#065CBC7C"}
+::: {.fragment .h2-chars}
+They are not themselves affected by the intervention
+:::
 
-This is without any covariates included.
+:::
 
-(Include statistical measures...)
+::: {.column width="60%"}
+![DALL-E 2: "A puppy concentrating very hard while holding up two fingers, digital art"](images/puppy_two.png)
+:::
+::::
 
-## Let's add a covariate {background-color="#065CBC7C"}
+## {background-color="#065CBC7C"}
 
-And, with one really solid covariate.
+:::: {.columns .v-center-container}
 
-(Include statistical measures...)
+::: {.column width="40%"}
+[This is not a silver bullet!]{.h1-chars}
+:::
 
-# This is not a silver bullet! {background-color="#065CBC7C"}
-
-
+::: {.column width="60%"}
+![DALL-E 2: "A puppy pointing a gun, digital art"](images/puppy_fingergun.png)
+:::
+::::

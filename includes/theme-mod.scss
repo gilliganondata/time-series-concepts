@@ -105,6 +105,10 @@ $link-color: #42affa;
   font-size: 1em;
 }
 
+.reveal ul > li {
+  list-style-type: none
+}
+
 /* For vertically centering content */
 .reveal .v-center-container {
   display: flex;

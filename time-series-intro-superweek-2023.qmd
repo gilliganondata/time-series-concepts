@@ -20,6 +20,28 @@ execute:
 editor: visual
 ---
 
+## A travel tip...or Zoli as an unintentional travel agent?
+
+::: {.absolute top=200 left=10}
+![](images/trip_bb.jpg){width=400}
+:::
+
+::: {.fragment .absolute top=80 left=350}
+![](images/trip_simon.jpg){width=400}
+:::
+
+::: {.fragment .absolute top=120 left=700}
+![](images/trip_lukas.jpg){width=500}
+:::
+
+::: {.fragment .absolute top=300 left=570}
+![](images/trip_maciek.jpg){width=370}
+:::
+
+::: {.fragment .absolute top=415 left=270}
+![](images/trip_fosca.jpeg){width=360}
+:::
+
 # Let's think about time. {background-color="#5A3B727C"}
 
 ```{r setup}
@@ -81,7 +103,7 @@ source("includes/setup.R")
 
 :::: {.columns .v-center-container}
 ::: {.column width="40%"}
-[Yehoshua's intros]{.h2-chars}
+[Yehoshua's intros]{.h1-chars}
 :::
 
 ::: {.column width="60%"}
@@ -91,11 +113,9 @@ source("includes/setup.R")
 :::
 ::::
 
-# "Time" is tricky. {background-color="#5A3B727C"}
+# "Time" is a tricky thing, but it's at the [core of what we do]{.underline}. {background-color="#5A3B727C"}
 
-# But it's at the [core of what we do]{.underline}. {background-color="#5A3B727C"}
-
-## It rarely looks [quite]{.underline} like this {background-color="#5A3B727C" transition="fade"}
+## {.center background-color="#5A3B727C" transition="fade"}
 
 ::: {.v-center-container}
 ```{r base-ts}
@@ -109,6 +129,10 @@ ggplot(get_ts(), aes(x = date, y = value)) +
   theme_main
 
 ```
+:::
+
+::: {.fragment .absolute top=290 left=225}
+[It rarely looks [quite]{.underline} like this]{.h1-chars} 
 :::
 
 ## It often has a weekly cycle to it {background-color="#5A3B727C" transition="fade"}
@@ -165,24 +189,103 @@ ggplot(get_ts(base = 50000, start = Sys.Date()-45, week_season = TRUE, trend = 0
 
 {{< include _causal-impact.qmd >}}
 
-# Let's summarize
+# Let's review! {background-color="#5A3B727C"}
 
-## What we covered
+# {background-color="#5A3B727C"}
 
-Blew your mind about what the population is 
+:::: {.columns}
 
-Discussed stationarity
+::: {.column width="50%"}
 
-Explored first differences: avoiding seeing correlation in time-series data when there is not any 
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+What is "the population?"
+:::
 
-Looked at time-series decomposition 
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+Regardless..."the sample" is not ideal
+:::
 
-Briefly covered Bayesian structural time-series (with and without covariates)
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+Stationarity: constant mean, constant variance
+:::
 
-# Time...is hard.
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+First differences: don't jump to correlations
+:::
 
-## Learning more...
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+Time-series decomposition
+:::
 
-Hyndman book.
+::: {.fragment .fade-up}
+Bayesian structural time-series
+:::
 
-# Thank you!
+:::
+
+::: {.column width="50%"}
+![DALL-E 2: "A puppy doing homework, digital art"](images/puppy_homework.png)
+:::
+
+::::
+
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A puppy working very hard with sweat pouring down its face, digital art"](images/puppy_sweating.png)
+:::
+
+::: {.column width="40%"}
+[Time...is hard.]{.h1-chars}
+:::
+::::
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+[Thank you!]{.h1-chars}
+
+Email: tim@gilliganondata.com
+
+Podcast: analyticshour.io
+
+LinkedIn (and Twitter): tgwilson
+
+![](images/tw_qr.png){width=300 fig-align=left}
+:::
+
+::: {.column width="40%"}
+![Excellent, Excellent Resource](images/hyndman_book.jpeg)
+:::
+::::
+
+## {background-color="#5A3B727C"}
+
+<br>&nbsp;
+
+:::: {.columns}
+
+::: {.column width="33%"}
+:::{.fragment}
+![](images/logo_r.png){width=300}
+This presentation was 100% built with R (and Quarto)
+:::
+:::
+
+::: {.column width="34%"}
+:::{.fragment}
+![](images/logo_openai.png){width=300}
+The images are (almost) 100% DALL-E 2
+:::
+:::
+
+::: {.column width="33%"}
+:::{.fragment}
+![](images/logo_twitter.png){width=300}
+The background image is from my "daily diversion" on Twitter
+:::
+:::
+::::

@@ -85,7 +85,7 @@ R^2^ = `r cor(df_fd_scatter$social, df_fd_scatter$orders)^2 |> round(2)`
 ## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
 
 :::: {.columns}
-::: {.column width="60%"}
+::: {.column width="65%"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -114,7 +114,7 @@ df_fd_slice |> select(Date, Orders) |> mutate(`1st Diff: Orders` = "") |>
 ## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
 
 :::: {.columns}
-::: {.column width="60%"}
+::: {.column width="65%"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -140,7 +140,7 @@ df_fd_slice |> select(Date, Orders) |>
 ## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
 
 :::: {.columns}
-::: {.column width="60%"}
+::: {.column width="65%"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -173,7 +173,7 @@ df_fd_slice |> select(Date, Orders, `1st Diff: Orders`) |>
 ## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
 
 :::: {.columns}
-::: {.column width="60%"}
+::: {.column width="65%"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -232,7 +232,12 @@ ggplot(df_fd_scatter, aes(x = date, y = orders_diff)) +
 df_fd_slice |> 
   gt() |> 
   fmt_number(columns = !matches("Date"),
-             decimals = 0)
+             decimals = 0) |> 
+  tab_style(
+    style = list(cell_fill(color = "#FFFF007C")),
+    locations = cells_body(
+      columns = c(`1st Diff: Orders`, `1st Diff: Social`)
+    ))
 
 ```
 

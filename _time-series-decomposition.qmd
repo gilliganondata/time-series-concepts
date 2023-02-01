@@ -54,6 +54,7 @@ gg_trend_weekly <- ggplot(df_trend_weekly, aes(x = date, y = value)) +
 gg_trend_weekly
 
 ```
+
 ## The mean...is pretty meaningless {background-color="#04447B7C" transition="fade"}
 
 ```{r}
@@ -207,7 +208,16 @@ What's Left!
 :::
 :::
 
-## The original mean+variance...embarrassing? {background-color="#04447B7C" transition="fade"}
+## Back to the overall series {background-color="#04447B7C" transition="none"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly
+
+```
+
+## The original mean + variance...embarrassing? {background-color="#04447B7C" transition="none"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -221,7 +231,16 @@ gg_trend_weekly +
 
 ```
 
-## Seasonality + trend = the "mean" {background-color="#04447B7C" transition="fade"}
+## Let's try again {background-color="#04447B7C" transition="none"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly
+
+```
+
+## Seasonality + trend = the "mean" {background-color="#04447B7C" transition="none"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -242,7 +261,7 @@ gg_trend_weekly +
 
 ```
 
-## And the "variance" is [just]{.underline} based on "what's left" {background-color="#04447B7C" transition="fade"}
+## And the "variance" is [just]{.underline} based on "what's left" {background-color="#04447B7C" transition="none"}
 
 ```{r}
 #| dev.args: !expr 'list(bg="transparent")'
@@ -256,8 +275,17 @@ gg_trend_weekly +
 
 ```
 
+## {background-color="#0816647C"}
 
-# This is powerful! {background-color="#04447B7C"}
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A puppy with huge muscles lifting a barbell, digital art"](images/puppy_muscles.png)
+:::
+
+::: {.column width="40%"}
+[This is powerful!]{.h1-chars}
+:::
+::::
 
 # (Loosely) it's part of what's happening with our next example. {background-color="#04447B7C"}
 
