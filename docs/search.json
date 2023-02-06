@@ -172,28 +172,28 @@
     "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.",
     "title": "Time-Series Analysis",
     "section": "This is called first differences.",
-    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-18\n9,482\n\n    2022-12-19\n10,164\n\n    2022-12-20\n9,503\n\n    2022-12-21\n11,317\n\n    2022-12-22\n9,980\n\n    2022-12-23\n10,484\n\n    2022-12-24\n10,458"
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-23\n9,482\n\n    2022-12-24\n10,164\n\n    2022-12-25\n9,503\n\n    2022-12-26\n11,317\n\n    2022-12-27\n9,980\n\n    2022-12-28\n10,484\n\n    2022-12-29\n10,458"
   },
   {
     "objectID": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-1",
     "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-1",
     "title": "Time-Series Analysis",
     "section": "This is called first differences.",
-    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-18\n9,482\n\n    2022-12-19\n10,164\n\n    2022-12-20\n9,503\n\n    2022-12-21\n11,317\n\n    2022-12-22\n9,980\n\n    2022-12-23\n10,484\n\n    2022-12-24\n10,458"
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-23\n9,482\n\n    2022-12-24\n10,164\n\n    2022-12-25\n9,503\n\n    2022-12-26\n11,317\n\n    2022-12-27\n9,980\n\n    2022-12-28\n10,484\n\n    2022-12-29\n10,458"
   },
   {
     "objectID": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-2",
     "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-2",
     "title": "Time-Series Analysis",
     "section": "This is called first differences.",
-    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-18\n9,482\n\n    2022-12-19\n10,164\n\n    2022-12-20\n9,503\n\n    2022-12-21\n11,317\n 1,814\n    2022-12-22\n9,980\n\n    2022-12-23\n10,484\n\n    2022-12-24\n10,458"
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-23\n9,482\n\n    2022-12-24\n10,164\n\n    2022-12-25\n9,503\n\n    2022-12-26\n11,317\n 1,814\n    2022-12-27\n9,980\n\n    2022-12-28\n10,484\n\n    2022-12-29\n10,458"
   },
   {
     "objectID": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-3",
     "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-3",
     "title": "Time-Series Analysis",
     "section": "This is called first differences.",
-    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-18\n9,482\nNA\n    2022-12-19\n10,164\n682\n    2022-12-20\n9,503\n−661\n    2022-12-21\n11,317\n1,814\n    2022-12-22\n9,980\n−1,337\n    2022-12-23\n10,484\n504\n    2022-12-24\n10,458\n−26"
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2022-12-23\n9,482\nNA\n    2022-12-24\n10,164\n682\n    2022-12-25\n9,503\n−661\n    2022-12-26\n11,317\n1,814\n    2022-12-27\n9,980\n−1,337\n    2022-12-28\n10,484\n504\n    2022-12-29\n10,458\n−26"
   },
   {
     "objectID": "time-series-intro-superweek-2023.html#from-non-stationary-to-more-stationary",
@@ -207,7 +207,7 @@
     "href": "time-series-intro-superweek-2023.html#we-can-calculate-first-differences-for-both-metrics",
     "title": "Time-Series Analysis",
     "section": "We can calculate first differences for both metrics",
-    "text": "We can calculate first differences for both metrics\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n      Social\n      1st Diff: Social\n    \n  \n  \n    2022-12-18\n9,482\nNA\n5,754\nNA\n    2022-12-19\n10,164\n682\n6,181\n427\n    2022-12-20\n9,503\n−661\n5,650\n−531\n    2022-12-21\n11,317\n1,814\n6,265\n615\n    2022-12-22\n9,980\n−1,337\n6,603\n338\n    2022-12-23\n10,484\n504\n7,114\n511\n    2022-12-24\n10,458\n−26\n6,522\n−592"
+    "text": "We can calculate first differences for both metrics\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n      Social\n      1st Diff: Social\n    \n  \n  \n    2022-12-23\n9,482\nNA\n5,754\nNA\n    2022-12-24\n10,164\n682\n6,181\n427\n    2022-12-25\n9,503\n−661\n5,650\n−531\n    2022-12-26\n11,317\n1,814\n6,265\n615\n    2022-12-27\n9,980\n−1,337\n6,603\n338\n    2022-12-28\n10,484\n504\n7,114\n511\n    2022-12-29\n10,458\n−26\n6,522\n−592"
   },
   {
     "objectID": "time-series-intro-superweek-2023.html#and-then-check-the-correlation",
@@ -474,5 +474,12 @@
     "title": "Time-Series Analysis",
     "section": "",
     "text": "This presentation was 100% built with R (and Quarto w/ reveal.js)\n\n\n\n The images are (almost) 100% DALL-E 2\n\n\n\n The background image is from my “daily diversion” on Twitter\n\n\n\n\n\nbit.ly/sw-time-series | @tgwilson | tim@gilliganondata.com"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#a-travel-tipor-zoli-as-an-unintentional-travel-agent-background-image-imagesbg-mallards.jpeg",
+    "href": "time-series-intro-superweek-2023.html#a-travel-tipor-zoli-as-an-unintentional-travel-agent-background-image-imagesbg-mallards.jpeg",
+    "title": "Time-Series Analysis",
+    "section": "A travel tip…or Zoli as an unintentional travel agent? {background-image: “images/bg-mallards.jpeg”}",
+    "text": "A travel tip…or Zoli as an unintentional travel agent? {background-image: “images/bg-mallards.jpeg”}"
   }
 ]

@@ -20,7 +20,7 @@ execute:
 editor: visual
 ---
 
-## A travel tip...or Zoli as an unintentional travel agent?
+## A travel tip...or Zoli as an unintentional travel agent? {background-image="images/bg-mallards.jpeg"}
 
 ::: {.absolute top=200 left=10}
 ![](images/trip_bb.jpg){width=400}
