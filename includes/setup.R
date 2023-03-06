@@ -9,13 +9,14 @@ pacman::p_load(tidyverse,
                scales,
                lubridate,
                showtext,     # For using a custom font
+#               patchwork,   # Chart layout
                CausalImpact  # Bayesian structural time-series forecasting
 )
 
 # See https://r-graph-gallery.com/custom-fonts-in-R-and-ggplot2.html
 # The first argument can be changed to any Google font. The second argument
 # should not be changed.
-font_add_google("Raleway", family = "s_font")
+font_add_google("Dosis", family = "s_font")
 showtext_auto()
 
 # Bring in the xkcd font, Humor Sans (it needs to be installed on the system)

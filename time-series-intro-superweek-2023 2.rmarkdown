@@ -1,0 +1,1595 @@
+---
+title: "Time-Series Analysis"
+subtitle: "Important Concepts, Handy Techniques, and Some Cautionary Tales"
+author: "Tim Wilson<br>Superweek 2023"
+format:
+  revealjs: 
+    theme: [moon, includes/theme-mod.scss]
+    footer: bit.ly/sw-time-series | \@tgwilson | tim@gilliganondata.com
+    transition: zoom
+    background-image: images/bg-mallards.jpeg
+    background-transition: fade
+title-slide-attributes:
+  data-background-image: images/saliris.jpeg
+  data-background-size: cover
+  data-background-opacity: "0.2"
+execute:
+  echo: false
+  dev: "png"
+editor: visual
+---
+
+
+## A travel tip...or Zoli as an unintentional travel agent?
+
+::: {.absolute top=200 left=10}
+![](images/trip_bb.jpg){width=400}
+:::
+
+::: {.fragment .absolute top=80 left=350}
+![](images/trip_simon.jpg){width=400}
+:::
+
+::: {.fragment .absolute top=120 left=700}
+![](images/trip_lukas.jpg){width=500}
+:::
+
+::: {.fragment .absolute top=300 left=570}
+![](images/trip_maciek.jpg){width=370}
+:::
+
+::: {.fragment .absolute top=405 left=270}
+![](images/trip_fosca.jpeg){width=360}
+:::
+
+# Let's think about time. {background-color="#5A3B727C"}
+
+
+```{r setup}
+source("includes/setup.R")
+```
+
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="40%"}
+[This presentation]{.h2-chars}
+
+::: {.fragment}
+[40 minutes]{.h1-chars}
+:::
+
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy delivering a presentation that has a line chart on a slide, digital art"](images/puppy_presentation.png)
+:::
+::::
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="40%"}
+[Superweek]{.h2-chars}
+
+::: {.fragment}
+[5 days]{.h1-chars}
+:::
+
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy attending the Superweek analytics conference, digital art"](images/puppy_superweek.png)
+:::
+::::
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="40%"}
+[My last job]{.h2-chars}
+
+::: {.fragment}
+[5 years]{.h1-chars}
+:::
+
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy working as marketing analyst, digital art"](images/puppy_analyst.png)
+:::
+::::
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="40%"}
+[Yehoshua's intros]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+::: {.fragment}
+![DALL-E 2: "A puppy with eyes that look like the infinity symbol, digital art"](images/puppy_infinity.png)
+:::
+:::
+::::
+
+# "Time" is a tricky thing, but it's at the [core of what we do]{.underline}. {background-color="#5A3B727C"}
+
+## {.center background-color="#5A3B727C" transition="fade"}
+
+::: {.v-center-container}
+
+```{r base-ts}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 6
+
+ggplot(get_ts(), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  labs(y = "Sessions") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main
+
+```
+
+:::
+
+::: {.fragment .absolute top=290 left=225}
+[It rarely looks [quite]{.underline} like this]{.h1-chars} 
+:::
+
+## It often has a weekly cycle to it {background-color="#5A3B727C" transition="fade"}
+
+::: {data-id="plot1"}
+
+```{r trending}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 6
+
+ggplot(get_ts(base = 10000, start = Sys.Date()-45, week_season = TRUE), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  labs(y = "Sessions") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main
+
+```
+
+:::
+
+## And it may have a trend to it {background-color="#5A3B727C" transition="fade"}
+
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 6
+
+ggplot(get_ts(base = 50000, start = Sys.Date()-45, week_season = TRUE, trend = 0.5), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  labs(y = "Sessions") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main
+
+```
+
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A puppy running a linear regression on a computer, digital art"](images/puppy_chalkboard.png)
+:::
+
+::: {.column width="40%"}
+[Let's think about [statistics]{.underline}]{.h1-chars}
+:::
+::::
+
+# Statistics is all about estimating a [population]{.underline} from a [sample]{.underline}. {background-color="#3F2D767C"}
+
+## Our data exists over time. {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Set up data for the timeline. We basically have three segments:
+#     - "Beginning of time" to start of experiment
+#     - "Start of experiment to end of experiment" ("now")
+#     - "Now" to end of time (future) (dashed)
+timeline_data <- data.frame(x1 = c(10, 20),
+                            x2 = c(20, 26),
+                            y = c(10, 10))
+labels_data <- data.frame(x = c(15, 20, 23),
+                          y = rep(15, 3),
+                          label = c("Past", "Present", "Future"))
+gg_base_timeline <- ggplot(timeline_data) +
+  # Past
+  geom_line(mapping = aes(x = x1, y = y), color = "white", size = 1.5) +
+  # Future
+  geom_line(mapping = aes(x = x2, y = y), color = "white", size = 1.5, linetype = "dashed") +
+  # Present Tick Mark
+  geom_line(mapping = aes (x = x, y = y), data = data.frame(x = c(20, 20), y = c(9.5, 10.5)),
+            color = "white", size = 1.5) +
+  scale_y_continuous(limits = c(-2, 20)) +
+  scale_x_continuous(limits = c(9, 27)) +
+  geom_point(aes(x = 10, y = 10), size = 3, color = "white") +
+  geom_path(aes(x = c(26.4, 26.75), y = c(10,10)), arrow = arrow(), 
+            color = "white", size = 1.5) +
+  geom_text(data = labels_data,
+            mapping = aes(x = x , y = y, label = label),
+            family = "s_font",
+            size = 9, color = "white") +
+  theme_void()
+gg_base_timeline
+
+```
+
+## So, what is our [population]{.underline}? {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline_2}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_base_timeline
+```
+
+## Is it the [past]{.underline} to the [present]{.underline}? {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline_past_present}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(10, 10, 20, 20),
+                            y = c(8.5, 8, 8, 8.5))
+
+gg_base_timeline_past_present <- gg_base_timeline +
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+            data = data.frame(xmin = 10,
+                              ymin = 9,
+                              xmax = 20,
+                              ymax = 11),
+            fill = "yellow",
+            alpha = .2) + 
+  geom_path(mapping = aes(x = x, y = y),
+            data = bracket_lines,
+            color = "white") +
+  geom_text(mapping = aes(x = 15, y = 6, label = "\"THE POPULATION?\""),
+            family = "s_font", fontface = "bold", size = 10, color = "white")
+gg_base_timeline_past_present
+```
+
+. . .
+
+::: {.absolute top="500" left="300"}
+[Maybe. Maybe not.]{.h1-chars}
+:::
+
+## Maybe it's the [past]{.underline}, [present]{.underline}, and [future]{.underline}? {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline_alltime}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(10, 10, 26.75, 26.75),
+                            y = c(8.5, 8, 8, 8.5))
+gg_base_timeline_population <- gg_base_timeline +
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+            data = data.frame(xmin = 10,
+                              ymin = 9,
+                              xmax = 26.75,
+                              ymax = 11),
+            fill = "yellow",
+            alpha = .2) + 
+  geom_path(mapping = aes(x = x, y = y),
+            data = bracket_lines,
+            color = "white") +
+  geom_text(mapping = aes(x = 18, y = 6, label = "\"THE POPULATION?\""),
+            family = "s_font", size = 10, fontface = "bold", color = "white")
+gg_base_timeline_population
+```
+
+## Or...just the [future]{.underline}? {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline_future}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(20, 20, 26.75, 26.75),
+                            y = c(8.5, 8, 8, 8.5))
+gg_base_timeline_future <- gg_base_timeline +
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+            data = data.frame(xmin = 20,
+                              ymin = 9,
+                              xmax = 26.75,
+                              ymax = 11),
+            fill = "yellow",
+            alpha = .2) + 
+  geom_path(mapping = aes(x = x, y = y),
+            data = bracket_lines,
+            color = "white") +
+  geom_text(mapping = aes(x = 23.375, y = 6, label = "\"THE POPULATION?\""),
+            family = "s_font", size = 10, fontface = "bold", color = "white")
+gg_base_timeline_future
+```
+
+. . .
+
+::: {.absolute top="465" left="200"}
+[But...we can't sample from the future!]{.h2-chars}
+:::
+
+. . .
+
+::: {.absolute top="550" left="220"}
+[So...what is our sample?]{.h1-chars}
+:::
+
+## Our sample is a [sample timeframe]{style="text-decoration: underline;"}. {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline_sample}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Bracket lines for the label
+bracket_lines <- data.frame(x = c(18, 18, 20, 20),
+                            y = c(8.5, 8, 8, 8.5))
+gg_base_timeline_population <- gg_base_timeline +
+  geom_rect(mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax, size = NA),
+           data = data.frame(xmin = 18,
+                             ymin = 9,
+                             xmax = 20,
+                             ymax = 11),
+           fill = "yellow",
+           alpha = .2) + 
+  geom_path(mapping = aes(x = x, y = y),
+           data = bracket_lines,
+           color = "white") +
+  geom_text(mapping = aes(x = 19, y = 6, label = "OUR SAMPLE"),
+            family = "s_font", fontface = "bold", size = 10, color = "white")
+
+gg_base_timeline_population
+```
+
+## This is [imperfect]{.underline}. {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline_sample_2}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_base_timeline_population
+```
+
+## Because our reality is [constant change]{.underline}. {background-color="#3F2D767C" transition="fade"}
+
+```{r base_timeline_sample_diverge}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Set up values for "diverging from now" -- four lines that diverge forward and backwards
+# from the present. We're going to go clockwise from top left and define the left side of
+# each line as the "begin."
+
+diverge_lines_overall <- data.frame(x = c(10, 20, 20, 26.75, 20, 26.75, 10, 20),
+                                    y = c(15, 11, 11, 15, 9, 5, 5, 9),
+                                    group = c(1, 1, 2, 2, 3, 3, 4, 4))
+
+# Draw the plot
+gg_diverge <- gg_base_timeline_population +
+  geom_line(mapping = aes(x = x, y = y, group = group),
+            data = diverge_lines_overall, linetype = "dashed",
+            color = "white", size = 1) 
+
+gg_diverge
+
+```
+
+## { background-image="images/puppies_mind_blown.png" background-opacity=0.5}
+
+::: {.absolute bottom=20 left=20 style="font-size: 0.6em;"}
+DALL-E 2: "A room full of puppies who all have different astonished expressions on their faces, digital art"
+:::
+
+
+
+# Time-series data is often<br>[non-stationary]{.underline}. {background-color="#0816647C"}
+
+## {background-color="#0816647C" transition="none" auto-animate=true}
+
+::: {data-id="quote_1" .v-center-container}
+> A [stationary time series]{.underline} is one whose statistical properties do not depend on the time at which the series is observed. [^1] 
+:::
+
+[^1]: *Forecasting Principles and Practice, 3rd Edition*, Rob J. Hyndman and George Athansopoulos
+
+
+## {background-color="#0816647C" transition="none" auto-animate=true}
+
+::: {data-id="quote_1"}
+> A [stationary time series]{.underline} is one whose statistical properties do not depend on the time at which the series is observed. [^1] 
+:::
+
+:::: {.columns}
+::: {.column width="50%"}
+::: {.fragment}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.width: 6
+#| fig.height: 5
+
+ggplot(get_ts(start = Sys.Date()-45, end = Sys.Date() - 1,
+              base = 20000, trend = 0.5), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  labs(title = "Varying Mean") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+
+```
+
+::: {.fragment .absolute top=275 left=70 style="width: 75px; height: 100px; border: 2px dashed #FFF;"}
+:::
+
+::: {.fragment .absolute top=220 left=300 style="width: 75px; height: 100px; border: 2px dashed #FFF;"}
+:::
+
+:::
+:::
+::: {.column width="50%"}
+::: {.fragment}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.width: 6
+#| fig.height: 5
+
+ggplot(get_ts(start = Sys.Date()-45, end = Sys.Date() - 1,
+              base = 20000, varying_variance = TRUE), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  labs(title = "Varying Variance") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+::: {.fragment .absolute top=370 left=600 style="width: 75px; height: 75px; border: 2px dashed #FFF;"}
+:::
+
+::: {.fragment .absolute top=225 left=880 style="width: 75px; height: 340px; border: 2px dashed #FFF;"}
+:::
+
+:::
+:::
+::::
+
+## {background-color="#0816647C" transition="none"}
+
+> A [stationary time series]{.underline} is one whose statistical properties do not depend on the time at which the series is observed. [^1]
+
+[^1]: *Forecasting Principles and Practice, 3rd Edition*, Rob J. Hyndman and George Athansopoulos
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.width: 12
+#| fig.height: 5
+
+ggplot(get_ts(start = Sys.Date()-60, end = Sys.Date() - 1,
+              base = 20000), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+## {background-color="#0816647C" transition="none"}
+
+> A [stationary time series]{.underline} is one whose statistical properties do not depend on the time at which the series is observed. [^1]
+
+[^1]: *Forecasting Principles and Practice, 3rd Edition*, Rob J. Hyndman and George Athansopoulos
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.width: 12
+#| fig.height: 5
+
+ggplot(get_ts(start = Sys.Date()-60, end = Sys.Date() - 1,
+              base = 20000, week_season = TRUE), aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+# [One]{.underline} Antidote to Non-Stationarity: First Differences {background-color="#0816647C"}
+
+## Are these two metrics correlated? {background-color="#0816647C"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 6
+
+s1 <- get_ts(base = 10000, noise = 0.1, start = Sys.Date() - 45, trend = 0.5) |> 
+  mutate(value = round(value),
+         metric = "orders")
+s2 <- get_ts(base = 6000, noise = 0.1, start = Sys.Date() - 45, trend = 0.9) |> 
+  mutate(value = round(value),
+         metric = "social")
+
+# bind_rows() throws an error when trying to combine s1 and s2 as tsibbles
+df_first_diff <- bind_rows(as_tibble(s1), as_tibble(s2))
+
+ggplot(df_first_diff, aes(x = date, y = value, color = metric)) +
+  geom_line(linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  scale_color_manual(values = c(s_line_1, s_line_2), 
+                     labels = c("Orders", "Social Media Engagements")) +
+  theme_main +
+  theme(legend.position = "top",
+        legend.title = element_blank(),
+        axis.title.y = element_blank())
+
+```
+
+## To the scatterplot! {background-color="#0816647C"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 6
+
+df_fd_scatter <- df_first_diff |>
+  pivot_wider(names_from = metric, values_from = value)
+
+ggplot(df_fd_scatter, aes(x = social, y = orders)) +
+  geom_point(color = s_line_1, size = 2) +
+  scale_x_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05),
+                     label = comma) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05),
+                     label = comma) +
+  labs(x = "Social Media Engagements",
+       y = "Orders") +
+  theme_main +
+  theme(axis.title.x = element_text(family = "s_font", size = s_axis_title_size,
+                                    face = "bold", colour = s_labels,
+                                    margin = margin(8, 0, 0, 0, "pt")),
+        axis.line.y = element_line(color = "white"),
+        panel.grid.major.y = element_blank())
+
+```
+
+. . .
+
+::: {.absolute top="195" left="170" .h2-chars}
+R^2^ = `r cor(df_fd_scatter$social, df_fd_scatter$orders)^2 |> round(2)`
+:::
+
+#
+
+:::: {.columns}
+::: {.column width="50%"}
+![DALL-E 2: "A puppy nodding its head with a speech bubble saying "YES!", digital art"](images/puppy_yes.png)
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+![DALL-E 2: "A puppy shaking its head with a speech bubble that has the exact text "Maybe!", digital art"](images/puppy_maybe.png)
+:::
+:::
+::::
+
+# If they're correlated, then when one [moves]{.underline}, the other will [move similarly]{.underline}. {background-color="#0816647C"}
+
+# When one metric [increases]{.underline}, the other should [increase similarly]{.underline}. {background-color="#0816647C"}
+
+# When one metric [decreases]{.underline}, the other should [decrease similarly]{.underline}. {background-color="#0816647C"}
+
+# So, let's look at the [changes]{.underline} rather than the [actual values]{.underline}. {background-color="#0816647C"}
+
+## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
+
+:::: {.columns}
+::: {.column width="65%"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Calculate first differences
+df_fd_scatter <- df_fd_scatter |> 
+  mutate(orders_diff = orders - lag(orders, 1),
+         social_diff = social - lag(social, 1))
+
+df_fd_slice <- head(df_fd_scatter, 7) |> 
+  select(date, orders, orders_diff, social, social_diff) |> 
+  rename(Date = date, Orders = orders, `1st Diff: Orders` = orders_diff,
+         Social = social, `1st Diff: Social` = social_diff)
+
+# Start with just orders
+df_fd_slice |> select(Date, Orders) |> mutate(`1st Diff: Orders` = "") |> 
+  gt() |> 
+  fmt_number(columns = Orders,
+             decimals = 0) 
+
+```
+
+:::
+::::
+
+## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
+
+:::: {.columns}
+::: {.column width="65%"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Start with just orders
+df_fd_slice |> select(Date, Orders) |> 
+  mutate(`1st Diff: Orders` = "") |> 
+  gt() |> 
+  fmt_number(columns = Orders,
+             decimals = 0) |> 
+  tab_style(
+    style = list(cell_fill(color = "#FFFF007C")),
+    locations = cells_body(
+      columns = Orders,
+      rows = c(3,4)
+    ))
+
+```
+
+:::
+::::
+
+## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
+
+:::: {.columns}
+::: {.column width="65%"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Start with just orders
+df_fd_slice |> select(Date, Orders, `1st Diff: Orders`) |> 
+  mutate(`1st Diff: Orders` = if_else(row_number() == 4,
+                                     format(`1st Diff: Orders`, big.mark = ","), "")) |> 
+  gt() |> 
+  fmt_number(columns = Orders,
+             decimals = 0) |> 
+  tab_style(
+    style = list(cell_fill(color = "#FFFF007C")),
+    locations = cells_body(
+      columns = Orders,
+      rows = c(3,4)
+    )) |> 
+  tab_style(
+    style = list(cell_fill(color = "#FFFF007C")),
+    locations = cells_body(
+      columns = `1st Diff: Orders`,
+      rows = 4
+    ))
+  
+```
+
+:::
+::::
+
+## This is called [first differences]{.underline}. {background-color="#0816647C" transition="none"}
+
+:::: {.columns}
+::: {.column width="65%"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Start with just orders
+df_fd_slice |> select(Date, Orders, `1st Diff: Orders`) |> 
+  gt() |> 
+  fmt_number(columns = c(Orders, `1st Diff: Orders`),
+             decimals = 0) 
+  
+```
+
+:::
+::::
+  
+## From [non-stationary]{.underline} to [more stationary]{.underline} {background-color="#0816647C"}
+
+::: {.fragment}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 3
+
+ggplot(df_fd_scatter, aes(x = date, y = orders)) +
+  geom_line(linewidth = 1.1, color = s_line_1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  labs(title = "Orders") +
+  theme_main +
+  theme(axis.text.x = element_blank(),
+        axis.title.y = element_blank())
+```
+:::
+::: {.fragment}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 3
+
+ggplot(df_fd_scatter, aes(x = date, y = orders_diff)) +
+  geom_hline(aes(yintercept = 0), color="white") +
+  geom_line(linewidth = 1.1, color = s_line_1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  labs(title = "First Difference: Orders") +
+  theme_main +
+  theme(axis.text.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line.x = element_blank())
+```
+:::
+
+## We can calculate first differences for both metrics {background-color="#0816647C"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Start with just orders
+df_fd_slice |> 
+  gt() |> 
+  fmt_number(columns = !matches("Date"),
+             decimals = 0) |> 
+  tab_style(
+    style = list(cell_fill(color = "#FFFF007C")),
+    locations = cells_body(
+      columns = c(`1st Diff: Orders`, `1st Diff: Social`)
+    ))
+
+```
+
+## And [then]{.underline} check the correlation! {background-color="#0816647C"}
+  
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 6
+
+ggplot(df_fd_scatter, aes(x = social_diff, y = orders_diff)) +
+  geom_point(color = s_line_1, size = 2) +
+  labs(x = "Social Media Engagement First Difference",
+       y = "Orders First Difference") +
+  scale_x_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05), 
+                     label = comma) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 0.95, max(.x) * 1.05), 
+                     label = comma) +
+  theme_main +
+  theme(axis.title.x = element_text(family = "s_font", size = s_axis_title_size,
+                                    face = "bold", colour = s_labels,
+                                    margin = margin(8, 0, 0, 0, "pt")),
+        axis.line.y = element_line(color = "white"),
+        panel.grid.major.y = element_blank())
+
+
+```
+
+. . .
+
+::: {.absolute top="195" left="170" .h2-chars}
+R^2^ = `r cor(df_fd_scatter$orders_diff, df_fd_scatter$social_diff, use = "pairwise.complete.obs")^2 |> round(2) |> format(nsmall = 2)`
+:::
+
+## {background-color="#0816647C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="40%"}
+[These are both moving with time...but [not directly with each other]{.underline}]{.h2-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy running a race where the other runner is a clock, digital art"](images/puppy_race_clock.png)
+:::
+::::
+
+## {background-color="#0816647C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A puppy driving a racecar with one paw on the gearshift, digital art"](images/puppy_gearshift.png)
+:::
+
+::: {.column width="40%"}
+[Let's shift gears]{.h1-chars}
+:::
+::::
+
+## {background-color="#0816647C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A partially decomposed puppy in a cemetery, digital art"](images/puppy_decomposed.png)
+:::
+
+::: {.column width="40%"}
+[Decomposition can be [amazing]{.underline}]{.h2-chars}
+:::
+::::
+
+# [Time-series]{.underline} decomposition, that is {background-color="#04447B7C"}
+
+## A fairly "clean" series {background-color="#04447B7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df_trend_weekly_orig <- get_ts(start = Sys.Date() - 51, base = 10000, week_season = TRUE, trend = 0.8)
+
+# This is just to not get caught up in weirdness in the explanation, but we're going to
+# remove the first 3 and last 3 rows in the plots—for the trend calculation, these become
+# NAs because it's a moving average.
+df_trend_weekly <- df_trend_weekly_orig[4:(nrow(df_trend_weekly_orig) - 3),]
+
+# Add the upper and lower bounds for geom_ribbon in next section
+sd_tw <- sd(df_trend_weekly$value)
+mean_tw <- mean(df_trend_weekly$value)
+df_trend_weekly <- df_trend_weekly |> 
+  mutate(u_bound_1 = mean_tw + sd_tw,
+         l_bound_1 = if_else(mean_tw - sd_tw < 0, 0, mean_tw - sd_tw),
+         u_bound_2 = mean_tw + 2*sd_tw,
+         l_bound_2 = if_else(mean_tw - 2*sd_tw < 0, 0, mean_tw - 2*sd_tw))
+
+gg_trend_weekly <- ggplot(df_trend_weekly, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, 22000), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+gg_trend_weekly
+
+```
+
+## The mean...is pretty meaningless {background-color="#04447B7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_hline(aes(yintercept = mean_tw), linetype = "dashed", size = 3, color = "white") 
+
+```
+## And so is the variance {background-color="#04447B7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_ribbon(aes(ymin = l_bound_2, ymax = u_bound_2), 
+              fill = "yellow", alpha = 0.2) +
+  geom_ribbon(aes(ymin = l_bound_1, ymax = u_bound_1), 
+              fill = "red", alpha = 0.2) +
+  geom_hline(aes(yintercept = mean_tw), linetype = "dashed", size = 3, color = "white")
+
+```
+
+# Time-series decomposition does what our brain [already wants to do]{.underline} {background-color="#04447B7C"}
+
+## It "decomposes" the data into three components {background-color="#04447B7C" auto-animate=true}
+
+::: {data-id="orig_data" auto-animate-duration=5}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Do the time-series decomposition. We're going to do this on the original
+# data...and then the first and last 3 rows will get dropped.
+ts_trend_weekly <- df_trend_weekly_orig |> 
+  pull(value) |> 
+  ts(frequency = 7) |> 
+  decompose()
+
+# Make it a data frame
+df_decomposed <- tibble(date = df_trend_weekly_orig$date,
+                        original = as.numeric(ts_trend_weekly$x),
+                        seasonal = as.numeric(ts_trend_weekly$seasonal),
+                        trend = as.numeric(ts_trend_weekly$trend),
+                        random = as.numeric(ts_trend_weekly$random)) |> 
+  # Chop off the first 3 / last 3 to avoid confusion
+  filter(!is.na(trend))
+
+# Set up some additional theming to make the "short" plots work
+theme_stl <- theme(axis.text.x = element_blank(),
+                   axis.title.y = element_blank(),
+                   axis.text.y = element_text(size = s_axis_text_size * .75),
+                   axis.line.x = element_blank())
+
+gg_trend_weekly
+
+```
+:::
+
+
+## It "decomposes" the data into three components {background-color="#04447B7C" auto-animate=true}
+
+:::{data-id="original" auto-animate-duration=5}
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_observed <- gg_trend_weekly +
+  theme_stl
+
+gg_stl_observed
+
+```
+:::
+. . .
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_seasonal <- ggplot(df_decomposed, aes(x = date, y = seasonal)) +
+  geom_hline(aes(yintercept = 0), color = "white") +
+  geom_line(color = s_line_2, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme_stl
+
+gg_stl_seasonal
+
+```
+::: {.fragment .absolute top="260" left="70" .h3-chars style="padding-left: 10px; padding-right: 10px; background: #04447B7C;"}
+The Seasonal Component
+:::
+. . .
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_trend <- ggplot(df_decomposed, aes(x = date, y = trend)) +
+  geom_hline(aes(yintercept = 0), color = "white") +
+  geom_line(color = s_line_2, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme_stl
+
+gg_stl_trend
+
+```
+
+::: {.fragment .absolute top="410" left="70" .h3-chars style="padding-left: 10px; padding-right: 10px; background: #04447B7C;"}
+The Trend Component
+:::
+. . .
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+#| fig.height: 1.3
+
+gg_stl_random <- ggplot(df_decomposed, aes(x = date, y = random)) +
+  geom_hline(aes(yintercept = 0), color = "white") +
+  geom_line(color = s_line_2, linewidth = 1.1) +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(min(.x) * 1.1, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme_stl
+
+gg_stl_random
+
+```
+
+::: {.absolute top="550" left="70" .h3-chars style="padding-left: 10px; padding-right: 10px; background: #04447B7C;"}
+What's Left!
+:::
+
+::: {.fragment}
+::: {.absolute top=215 left=1 style="width: 950px; height: 285px; background: black; opacity: 0.3;"}
+:::
+::: {.absolute top=215 left=1 style="width: 950px; height: 285px; border: 4px dashed #FFF;"}
+:::
+::: {.absolute top=315 left=320}
+["The Mean"]{.h1-chars}
+:::
+:::
+
+::: {.fragment}
+::: {.absolute top=510 left=1 style="width: 950px; height: 130px; background: black; opacity: 0.3;"}
+:::
+::: {.absolute top=510 left=1 style="width: 950px; height: 130px; border: 4px dashed #FFF;"}
+:::
+::: {.absolute top=530 left=280}
+["The Variance"]{.h1-chars}
+:::
+:::
+
+## Back to the overall series {background-color="#04447B7C" transition="none"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly
+
+```
+
+## The original mean + variance...embarrassing? {background-color="#04447B7C" transition="none"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_ribbon(aes(ymin = l_bound_2, ymax = u_bound_2), 
+              fill = "yellow", alpha = 0.2) +
+  geom_ribbon(aes(ymin = l_bound_1, ymax = u_bound_1), 
+              fill = "red", alpha = 0.2) +
+  geom_hline(aes(yintercept = mean_tw), linetype = "dashed", size = 3, color = "white")
+
+```
+
+## Let's try again {background-color="#04447B7C" transition="none"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly
+
+```
+
+## Seasonality + trend = the "mean" {background-color="#04447B7C" transition="none"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Get the sd of the random
+random_sd <- sd(df_decomposed$random, na.rm = TRUE)
+
+df_trend_weekly_final <- df_decomposed |> 
+  # Calculate the "mean" by adding the seasonal and trend
+  mutate(mean = seasonal + trend) |> 
+  # Add in upper and lower bounds
+  mutate(bound_u = mean + 2 * random_sd,
+         bound_l = mean - 2 * random_sd)
+
+gg_trend_weekly +
+  geom_line(mapping = aes(x = date, y = mean), data = df_trend_weekly_final, 
+            color = "white", linetype = "dashed", size = 2)
+
+```
+
+## And the "variance" is [just]{.underline} based on "what's left" {background-color="#04447B7C" transition="none"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+gg_trend_weekly +
+  geom_ribbon(mapping = aes(x = date, y = 0, ymin = bound_l, ymax = bound_u), 
+              data = df_trend_weekly_final, fill = "yellow", alpha = 0.2) +
+  geom_line(mapping = aes(x = date, y = mean), data = df_trend_weekly_final, 
+            color = "white", linetype = "dashed", size = 2)
+
+
+```
+
+## {background-color="#0816647C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A puppy with huge muscles lifting a barbell, digital art"](images/puppy_muscles.png)
+:::
+
+::: {.column width="40%"}
+[This is powerful!]{.h1-chars}
+:::
+::::
+
+# (Loosely) it's part of what's happening with our next example. {background-color="#04447B7C"}
+
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[And now...to Bayesian things!]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed up as Thomas Bayes, digital art"](images/puppy_bayes.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[Specifically, Bayesian Structural Time-Series]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed up as Thomas Bayes, digital art"](images/puppy_bsts.png)
+:::
+::::
+
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[Time-series decomposition turned up to 11]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed like nigel tufnel turning an amplifier up to eleven, digital art"](images/puppy_nigel.png)
+:::
+::::
+
+## Mark Edmondson built a tool using this [7 years ago]{.underline}! {background-color="#065CBC7C"}
+
+::: {style="text-align: center;"}
+![](images/ga_effect.png){width=850}
+:::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[At its core: estimate the [impact of an intervention]{.underline}]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy looking through a telescope at a meteor crashing into the moon, digital art"](images/puppy_telescope.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+["We didn't test it, so can we just do a [pre-/post- analysis]{.underline}?"]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy looking through a telescope at a meteor crashing into the moon, digital art"](images/puppy_smacking_forehead.png)
+:::
+::::
+
+## What the marketer expects happened {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Number of days in the "post" period
+num_days_post <- 30
+int_date <- Sys.Date()-num_days_post
+
+df <- get_ts(base = 10000, noise = 0.06, intervention_date = int_date,
+                                     intervention_effect = 0.38) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 14000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Typically, the change isn't [that]{.underline} big... {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.05, intervention_date = int_date,
+                                     intervention_effect = 0.15) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main+
+  theme(axis.title.y = element_blank())
+
+```
+
+## ...and the data is a [lot noisier]{.underline}... {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
+                                     intervention_effect = 0.15) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## ...and may have [seasonality]{.underline}! {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
+             week_season = TRUE, intervention_effect = 0.15) 
+
+# Get a covariate
+df_cov <- get_ts(base = 3000, noise = 0.1, week_season = TRUE) |> 
+  rename(covariate = value)
+
+# Add the covariate to the data for later user
+df <- df |> 
+  left_join(df_cov)
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+# CausalImpact uses [historical data]{.underline} to forecast [what's expected]{.underline} {background-color="#065CBC7C"}
+
+## Step 1: Look at the [pre-intervention]{.underline} data {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df_ci <- df
+
+# Run the actual model
+ci_model <- CausalImpact(df_ci$value,
+                     pre.period = c(1, nrow(df_ci) - num_days_post),
+                     post.period = c(nrow(df_ci) - num_days_post + 1, nrow(df_ci)),
+                     model.args = list(nseasons = 7,
+                                       season.duration = 1,
+                                       dynamic.regression = TRUE))
+
+# Run it with a covariate
+ci_model_w_cov <- CausalImpact(df_ci[,2:3],
+                     pre.period = c(1, nrow(df_ci) - num_days_post),
+                     post.period = c(nrow(df_ci) - num_days_post + 1, nrow(df_ci)),
+                     model.args = list(nseasons = 7,
+                                       season.duration = 1,
+                                       dynamic.regression = TRUE))
+
+# Make the results a data frame and add the date column back in
+ci_df <- as.data.frame(ci_model$series)
+ci_df$date <- df$date 
+ci_df <- ci_df |> relocate(date) |> 
+  # Add column versions with the "post" wiped out for plotting
+  mutate(response_pre = ifelse(date > int_date, NA, response),
+         point.pred_pre = ifelse(date > int_date, NA, point.pred),
+         point.pred.lower_pre = ifelse(date > int_date, NA, point.pred.lower),
+         point.pred.upper_pre = ifelse(date > int_date, NA, point.pred.upper))
+
+# Plot just the base data up to the intervention
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 2: Build a best-fit model using this data {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Add the modeled estimate to it
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+## Step 3: That model can [quantify its uncertainty]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Add the confidence interval around it
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_ribbon(aes(ymin = point.pred.lower_pre, ymax = point.pred.upper_pre),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 4: Extend the model [post-intervention]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_ribbon(aes(ymin = point.pred.lower, ymax = point.pred.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 5: Compare the model to the [actual results]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = response)) +
+  geom_ribbon(aes(ymin = point.pred.lower, ymax = point.pred.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+# "Pointwise" is another way to look at the results {background-color="#065CBC7C"}
+
+## Set the [modeled prediction]{.underline} as the baseline {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  # A hack... plotting the line but as invisible just so the x-axis labels will appear
+  geom_line(color = NA, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+
+## Plot the [difference]{.underline} between the model & the actual {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+
+## Put the confidence interval around the [difference]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_ribbon(aes(ymin = point.effect.lower, ymax = point.effect.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+# Or...by the numbers! {background-color="#065CBC7C"}
+
+# Posterior tail-area probability p: [`r ci_model$summary$p[1]`]{.underline} {background-color="#065CBC7C"}
+
+# Estimated average (daily) effect: [`r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")`]{.underline} with a 95% confidence interval of [`r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")`]{.underline} {background-color="#065CBC7C"}
+
+# But, wait! There's more! {background-color="#065CBC7C"}
+
+# Putting [covariates]{.underline} to use {background-color="#065CBC7C"}
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+
+::: {.fragment .h2-chars style="padding-bottom: 14px;"}
+Their relationship to the metric of interest is stable
+:::
+
+::: {.fragment .h2-chars}
+They are not themselves affected by the intervention
+:::
+
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy concentrating very hard while holding up two fingers, digital art"](images/puppy_two.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[This is not a silver bullet!]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy pointing a gun, digital art"](images/puppy_fingergun.png)
+:::
+::::
+
+
+
+# Let's review! {background-color="#5A3B727C"}
+
+# {background-color="#5A3B727C"}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+What is "the population?"
+:::
+
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+Regardless..."the sample" is not ideal
+:::
+
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+Stationarity: constant mean, constant variance
+:::
+
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+First differences: don't jump to correlations
+:::
+
+::: {.fragment .fade-up style="padding-bottom: 14px;"}
+Time-series decomposition
+:::
+
+::: {.fragment .fade-up}
+Bayesian structural time-series
+:::
+
+:::
+
+::: {.column width="50%"}
+![DALL-E 2: "A puppy doing homework, digital art"](images/puppy_homework.png)
+:::
+
+::::
+
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns .v-center-container}
+::: {.column width="60%"}
+![DALL-E 2: "A puppy working very hard with sweat pouring down its face, digital art"](images/puppy_sweating.png)
+:::
+
+::: {.column width="40%"}
+[Time...is hard.]{.h1-chars}
+:::
+::::
+
+## {background-color="#5A3B727C"}
+
+:::: {.columns}
+::: {.column width="40%"}
+![Excellent, Excellent Resource](images/hyndman_book.png)
+:::
+
+::: {.column width="60%"}
+[Thank you!]{.h1-chars}
+
+Presentation: bit.ly/sw-time-series
+
+Podcast: analyticshour.io
+
+<br><br>
+LinkedIn:
+:::
+::::
+
+::: {.absolute top=300 left=600}
+![](images/tw_qr.png){width=300}
+:::
+
+## {background-color="#5A3B727C"}
+
+<br>&nbsp;
+
+:::: {.columns}
+
+::: {.column width="33%"}
+:::{.fragment}
+![](images/logo_r.png){width=300}
+This presentation was 100% built with R (and Quarto w/ reveal.js)
+:::
+:::
+
+::: {.column width="34%"}
+:::{.fragment}
+![](images/logo_openai.png){width=300}
+The images are (almost) 100% DALL-E 2
+:::
+:::
+
+::: {.column width="33%"}
+:::{.fragment}
+![](images/logo_twitter.png){width=300}
+The background image is from my ["daily diversion"](https://gilliganondata.com/image-randomize/) on Twitter
+:::
+:::
+::::

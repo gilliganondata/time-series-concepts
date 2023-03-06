@@ -1,0 +1,412 @@
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[And now...to Bayesian things!]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed up as Thomas Bayes, digital art"](images/puppy_bayes.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[Specifically, Bayesian Structural Time-Series]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed up as Thomas Bayes, digital art"](images/puppy_bsts.png)
+:::
+::::
+
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[Time-series decomposition turned up to 11]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy dressed like nigel tufnel turning an amplifier up to eleven, digital art"](images/puppy_nigel.png)
+:::
+::::
+
+## Mark Edmondson built a tool using this [7 years ago]{.underline}! {background-color="#065CBC7C"}
+
+::: {style="text-align: center;"}
+![](images/ga_effect.png){width=850}
+:::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[At its core: estimate the [impact of an intervention]{.underline}]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy looking through a telescope at a meteor crashing into the moon, digital art"](images/puppy_telescope.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+["We didn't test it, so can we just do a [pre-/post- analysis]{.underline}?"]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy looking through a telescope at a meteor crashing into the moon, digital art"](images/puppy_smacking_forehead.png)
+:::
+::::
+
+## What the marketer expects happened {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Number of days in the "post" period
+num_days_post <- 30
+int_date <- Sys.Date()-num_days_post
+
+df <- get_ts(base = 10000, noise = 0.06, intervention_date = int_date,
+                                     intervention_effect = 0.38) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 14000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Typically, the change isn't [that]{.underline} big... {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.05, intervention_date = int_date,
+                                     intervention_effect = 0.15) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main+
+  theme(axis.title.y = element_blank())
+
+```
+
+## ...and the data is a [lot noisier]{.underline}... {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
+                                     intervention_effect = 0.15) 
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## ...and may have [seasonality]{.underline}! {background-color="#065CBC7C" transition="fade"}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df <- get_ts(base = 10000, noise = 0.15, intervention_date = int_date,
+             week_season = TRUE, intervention_effect = 0.15) 
+
+# Get a covariate
+df_cov <- get_ts(base = 3000, noise = 0.1, week_season = TRUE) |> 
+  rename(covariate = value)
+
+# Add the covariate to the data for later user
+df <- df |> 
+  left_join(df_cov)
+
+ggplot(df, aes(x = date, y = value)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1.5) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), limits = ~ c(0, max(.x) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+# CausalImpact uses [historical data]{.underline} to forecast [what's expected]{.underline} {background-color="#065CBC7C"}
+
+## Step 1: Look at the [pre-intervention]{.underline} data {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+df_ci <- df
+
+# Run the actual model
+ci_model <- CausalImpact(df_ci$value,
+                     pre.period = c(1, nrow(df_ci) - num_days_post),
+                     post.period = c(nrow(df_ci) - num_days_post + 1, nrow(df_ci)),
+                     model.args = list(nseasons = 7,
+                                       season.duration = 1,
+                                       dynamic.regression = TRUE))
+
+# Run it with a covariate
+ci_model_w_cov <- CausalImpact(df_ci[,2:3],
+                     pre.period = c(1, nrow(df_ci) - num_days_post),
+                     post.period = c(nrow(df_ci) - num_days_post + 1, nrow(df_ci)),
+                     model.args = list(nseasons = 7,
+                                       season.duration = 1,
+                                       dynamic.regression = TRUE))
+
+# Make the results a data frame and add the date column back in
+ci_df <- as.data.frame(ci_model$series)
+ci_df$date <- df$date 
+ci_df <- ci_df |> relocate(date) |> 
+  # Add column versions with the "post" wiped out for plotting
+  mutate(response_pre = ifelse(date > int_date, NA, response),
+         point.pred_pre = ifelse(date > int_date, NA, point.pred),
+         point.pred.lower_pre = ifelse(date > int_date, NA, point.pred.lower),
+         point.pred.upper_pre = ifelse(date > int_date, NA, point.pred.upper))
+
+# Plot just the base data up to the intervention
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 2: Build a best-fit model using this data {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Add the modeled estimate to it
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+## Step 3: That model can [quantify its uncertainty]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Add the confidence interval around it
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_ribbon(aes(ymin = point.pred.lower_pre, ymax = point.pred.upper_pre),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred_pre), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 4: Extend the model [post-intervention]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = response_pre)) +
+  geom_ribbon(aes(ymin = point.pred.lower, ymax = point.pred.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+## Step 5: Compare the model to the [actual results]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = response)) +
+  geom_ribbon(aes(ymin = point.pred.lower, ymax = point.pred.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_line(aes(y = point.pred), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(0, max(ci_df$response) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank())
+
+```
+
+# "Pointwise" is another way to look at the results {background-color="#065CBC7C"}
+
+## Set the [modeled prediction]{.underline} as the baseline {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  # A hack... plotting the line but as invisible just so the x-axis labels will appear
+  geom_line(color = NA, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+
+## Plot the [difference]{.underline} between the model & the actual {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+
+## Put the confidence interval around the [difference]{.underline} {background-color="#065CBC7C" transition="fade}
+
+```{r}
+#| dev.args: !expr 'list(bg="transparent")'
+
+# Extend out post-intervention
+ggplot(ci_df, aes(x = date, y = point.effect)) +
+  geom_ribbon(aes(ymin = point.effect.lower, ymax = point.effect.upper),
+              fill = "yellow", alpha = 0.2) +
+  geom_hline(aes(yintercept = 0), color = "white", linewidth = 1.1, linetype = "dashed") +
+  geom_line(color = s_line_1, linewidth = 1.1) +
+  geom_vline(aes(xintercept = int_date), color = "yellow", linetype = "longdash",
+            linewidth = 1) +
+  geom_text(aes(x = int_date-1.5, y = 13000, label = "\"The Intervention\""),
+            family = "s_font", hjust = 1, size = 9, color = "yellow") +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = ~ c(min(ci_df$point.effect.lower) * 1.1, 
+                                  max(ci_df$point.effect.upper) * 1.1), label = comma) +
+  theme_main +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_blank())
+
+```
+# Or...by the numbers! {background-color="#065CBC7C"}
+
+# Posterior tail-area probability p: [`r ci_model$summary$p[1]`]{.underline} {background-color="#065CBC7C"}
+
+# Estimated average (daily) effect: [`r format(round(ci_model$summary$AbsEffect[1]), big.mark = ",")`]{.underline} with a 95% confidence interval of [`r format(round(ci_model$summary$AbsEffect.lower[1]), big.mark = ",")` to `r format(round(ci_model$summary$AbsEffect.upper[1]), big.mark = ",")`]{.underline} {background-color="#065CBC7C"}
+
+# But, wait! There's more! {background-color="#065CBC7C"}
+
+# Putting [covariates]{.underline} to use {background-color="#065CBC7C"}
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+
+::: {.fragment .h2-chars style="padding-bottom: 14px;"}
+Their relationship to the metric of interest is stable
+:::
+
+::: {.fragment .h2-chars}
+They are not themselves affected by the intervention
+:::
+
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy concentrating very hard while holding up two fingers, digital art"](images/puppy_two.png)
+:::
+::::
+
+## {background-color="#065CBC7C"}
+
+:::: {.columns .v-center-container}
+
+::: {.column width="40%"}
+[This is not a silver bullet!]{.h1-chars}
+:::
+
+::: {.column width="60%"}
+![DALL-E 2: "A puppy pointing a gun, digital art"](images/puppy_fingergun.png)
+:::
+::::
