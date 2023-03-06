@@ -22,24 +22,24 @@ editor: visual
 
 ## A travel tip...or Zoli as an unintentional travel agent? {background-image="images/bg-mallards.jpeg"}
 
-::: {.absolute top=200 left=10}
-![](images/trip_bb.jpg){width=400}
+::: {.absolute top="200" left="10"}
+![](images/trip_bb.jpg){width="400"}
 :::
 
-::: {.fragment .absolute top=80 left=350}
-![](images/trip_simon.jpg){width=400}
+::: {.fragment .absolute top="80" left="350"}
+![](images/trip_simon.jpg){width="400"}
 :::
 
-::: {.fragment .absolute top=120 left=700}
-![](images/trip_lukas.jpg){width=500}
+::: {.fragment .absolute top="120" left="700"}
+![](images/trip_lukas.jpg){width="500"}
 :::
 
-::: {.fragment .absolute top=300 left=570}
-![](images/trip_maciek.jpg){width=370}
+::: {.fragment .absolute top="300" left="570"}
+![](images/trip_maciek.jpg){width="370"}
 :::
 
-::: {.fragment .absolute top=405 left=270}
-![](images/trip_fosca.jpeg){width=360}
+::: {.fragment .absolute top="405" left="270"}
+![](images/trip_fosca.jpeg){width="360"}
 :::
 
 # Let's think about time. {background-color="#5A3B727C"}
@@ -48,76 +48,73 @@ editor: visual
 source("includes/setup.R")
 ```
 
-## {background-color="#5A3B727C"}
+##  {background-color="#5A3B727C"}
 
-:::: {.columns .v-center-container}
+::: {.columns .v-center-container}
 ::: {.column width="40%"}
 [This presentation]{.h2-chars}
 
-::: {.fragment}
+::: fragment
 [40 minutes]{.h1-chars}
 :::
-
 :::
 
 ::: {.column width="60%"}
 ![DALL-E 2: "A puppy delivering a presentation that has a line chart on a slide, digital art"](images/puppy_presentation.png)
 :::
-::::
+:::
 
-## {background-color="#5A3B727C"}
+##  {background-color="#5A3B727C"}
 
-:::: {.columns .v-center-container}
+::: {.columns .v-center-container}
 ::: {.column width="40%"}
 [Superweek]{.h2-chars}
 
-::: {.fragment}
+::: fragment
 [5 days]{.h1-chars}
 :::
-
 :::
 
 ::: {.column width="60%"}
 ![DALL-E 2: "A puppy attending the Superweek analytics conference, digital art"](images/puppy_superweek.png)
 :::
-::::
+:::
 
-## {background-color="#5A3B727C"}
+##  {background-color="#5A3B727C"}
 
-:::: {.columns .v-center-container}
+::: {.columns .v-center-container}
 ::: {.column width="40%"}
 [My last job]{.h2-chars}
 
-::: {.fragment}
+::: fragment
 [5 years]{.h1-chars}
 :::
-
 :::
 
 ::: {.column width="60%"}
 ![DALL-E 2: "A puppy working as marketing analyst, digital art"](images/puppy_analyst.png)
 :::
-::::
+:::
 
-## {background-color="#5A3B727C"}
+##  {background-color="#5A3B727C"}
 
-:::: {.columns .v-center-container}
+::: {.columns .v-center-container}
 ::: {.column width="40%"}
 [Yehoshua's intros]{.h1-chars}
 :::
 
 ::: {.column width="60%"}
-::: {.fragment}
+::: fragment
 ![DALL-E 2: "A puppy with eyes that look like the infinity symbol, digital art"](images/puppy_infinity.png)
 :::
 :::
-::::
+:::
 
 # "Time" is a tricky thing, but it's at the [core of what we do]{.underline}. {background-color="#5A3B727C"}
 
-## {.center background-color="#5A3B727C" transition="fade"}
+##  {.center background-color="#5A3B727C" transition="fade"}
 
-::: {.v-center-container}
+::: v-center-container
 ```{r base-ts}
 #| dev.args: !expr 'list(bg="transparent")'
 #| fig.height: 6
@@ -131,8 +128,8 @@ ggplot(get_ts(), aes(x = date, y = value)) +
 ```
 :::
 
-::: {.fragment .absolute top=290 left=225}
-[It rarely looks [quite]{.underline} like this]{.h1-chars} 
+::: {.fragment .absolute top="290" left="225"}
+[It rarely looks [quite]{.underline} like this]{.h1-chars}
 :::
 
 ## It often has a weekly cycle to it {background-color="#5A3B727C" transition="fade"}
@@ -165,9 +162,9 @@ ggplot(get_ts(base = 50000, start = Sys.Date()-45, week_season = TRUE, trend = 0
 
 ```
 
-## {background-color="#5A3B727C"}
+##  {background-color="#5A3B727C"}
 
-:::: {.columns .v-center-container}
+::: {.columns .v-center-container}
 ::: {.column width="60%"}
 ![DALL-E 2: "A puppy running a linear regression on a computer, digital art"](images/puppy_chalkboard.png)
 :::
@@ -175,7 +172,7 @@ ggplot(get_ts(base = 50000, start = Sys.Date()-45, week_season = TRUE, trend = 0
 ::: {.column width="40%"}
 [Let's think about [statistics]{.underline}]{.h1-chars}
 :::
-::::
+:::
 
 # Statistics is all about estimating a [population]{.underline} from a [sample]{.underline}. {background-color="#3F2D767C"}
 
@@ -191,12 +188,10 @@ ggplot(get_ts(base = 50000, start = Sys.Date()-45, week_season = TRUE, trend = 0
 
 # Let's review! {background-color="#5A3B727C"}
 
-# {background-color="#5A3B727C"}
+#  {background-color="#5A3B727C"}
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="50%"}
-
 ::: {.fragment .fade-up style="padding-bottom: 14px;"}
 What is "the population?"
 :::
@@ -220,19 +215,16 @@ Time-series decomposition
 ::: {.fragment .fade-up}
 Bayesian structural time-series
 :::
-
 :::
 
 ::: {.column width="50%"}
 ![DALL-E 2: "A puppy doing homework, digital art"](images/puppy_homework.png)
 :::
+:::
 
-::::
+##  {background-color="#5A3B727C"}
 
-
-## {background-color="#5A3B727C"}
-
-:::: {.columns .v-center-container}
+::: {.columns .v-center-container}
 ::: {.column width="60%"}
 ![DALL-E 2: "A puppy working very hard with sweat pouring down its face, digital art"](images/puppy_sweating.png)
 :::
@@ -240,11 +232,11 @@ Bayesian structural time-series
 ::: {.column width="40%"}
 [Time...is hard.]{.h1-chars}
 :::
-::::
+:::
 
-## {background-color="#5A3B727C"}
+##  {background-color="#5A3B727C"}
 
-:::: {.columns}
+::: columns
 ::: {.column width="40%"}
 ![Excellent, Excellent Resource](images/hyndman_book.png)
 :::
@@ -256,39 +248,34 @@ Presentation: bit.ly/sw-time-series
 
 Podcast: analyticshour.io
 
-<br><br>
-LinkedIn:
+<br><br> LinkedIn:
 :::
-::::
-
-::: {.absolute top=300 left=600}
-![](images/tw_qr.png){width=300}
 :::
 
-## {background-color="#5A3B727C"}
+::: {.absolute top="300" left="600"}
+![](images/tw_qr.png){width="300"}
+:::
 
-<br>&nbsp;
+##  {background-color="#5A3B727C"}
 
-:::: {.columns}
+<br> 
 
+::: columns
 ::: {.column width="33%"}
-:::{.fragment}
-![](images/logo_r.png){width=300}
-This presentation was 100% built with R (and Quarto w/ reveal.js)
+::: fragment
+![](images/logo_r.png){width="300"} This presentation was 100% built with R (and Quarto w/ reveal.js)
 :::
 :::
 
 ::: {.column width="34%"}
-:::{.fragment}
-![](images/logo_openai.png){width=300}
-The images are (almost) 100% DALL-E 2
+::: fragment
+![](images/logo_openai.png){width="300"} The images are (almost) 100% DALL-E 2
 :::
 :::
 
 ::: {.column width="33%"}
-:::{.fragment}
-![](images/logo_twitter.png){width=300}
-The background image is from my ["daily diversion"](https://gilliganondata.com/image-randomize/) on Twitter
+::: fragment
+![](images/logo_twitter.png){width="300"} The background image is from my ["daily diversion"](https://gilliganondata.com/image-randomize/) on Twitter
 :::
 :::
-::::
+:::
