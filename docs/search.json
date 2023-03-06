@@ -1,0 +1,478 @@
+[
+  {
+    "objectID": "time-series-intro-superweek-2023.html#a-travel-tipor-zoli-as-an-unintentional-travel-agent",
+    "href": "time-series-intro-superweek-2023.html#a-travel-tipor-zoli-as-an-unintentional-travel-agent",
+    "title": "Time-Series Analysis",
+    "section": "A travel tip…or Zoli as an unintentional travel agent?",
+    "text": "A travel tip…or Zoli as an unintentional travel agent?"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section",
+    "href": "time-series-intro-superweek-2023.html#section",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "This presentation\n\n40 minutes\n\n\n\n\n\nDALL-E 2: “A puppy delivering a presentation that has a line chart on a slide, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-1",
+    "href": "time-series-intro-superweek-2023.html#section-1",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "Superweek\n\n5 days\n\n\n\n\n\nDALL-E 2: “A puppy attending the Superweek analytics conference, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-2",
+    "href": "time-series-intro-superweek-2023.html#section-2",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "My last job\n\n5 years\n\n\n\n\n\nDALL-E 2: “A puppy working as marketing analyst, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-3",
+    "href": "time-series-intro-superweek-2023.html#section-3",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "Yehoshua’s intros\n\n\n\n\n\nDALL-E 2: “A puppy with eyes that look like the infinity symbol, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-4",
+    "href": "time-series-intro-superweek-2023.html#section-4",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "It rarely looks quite like this"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#it-often-has-a-weekly-cycle-to-it",
+    "href": "time-series-intro-superweek-2023.html#it-often-has-a-weekly-cycle-to-it",
+    "title": "Time-Series Analysis",
+    "section": "It often has a weekly cycle to it",
+    "text": "It often has a weekly cycle to it"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#and-it-may-have-a-trend-to-it",
+    "href": "time-series-intro-superweek-2023.html#and-it-may-have-a-trend-to-it",
+    "title": "Time-Series Analysis",
+    "section": "And it may have a trend to it",
+    "text": "And it may have a trend to it"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-5",
+    "href": "time-series-intro-superweek-2023.html#section-5",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "DALL-E 2: “A puppy running a linear regression on a computer, digital art”\n\n\n\nLet’s think about statistics"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#our-data-exists-over-time.",
+    "href": "time-series-intro-superweek-2023.html#our-data-exists-over-time.",
+    "title": "Time-Series Analysis",
+    "section": "Our data exists over time.",
+    "text": "Our data exists over time."
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#so-what-is-our-population",
+    "href": "time-series-intro-superweek-2023.html#so-what-is-our-population",
+    "title": "Time-Series Analysis",
+    "section": "So, what is our population?",
+    "text": "So, what is our population?"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#is-it-the-past-to-the-present",
+    "href": "time-series-intro-superweek-2023.html#is-it-the-past-to-the-present",
+    "title": "Time-Series Analysis",
+    "section": "Is it the past to the present?",
+    "text": "Is it the past to the present?\n\n\n\nMaybe. Maybe not."
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#maybe-its-the-past-present-and-future",
+    "href": "time-series-intro-superweek-2023.html#maybe-its-the-past-present-and-future",
+    "title": "Time-Series Analysis",
+    "section": "Maybe it’s the past, present, and future?",
+    "text": "Maybe it’s the past, present, and future?"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#orjust-the-future",
+    "href": "time-series-intro-superweek-2023.html#orjust-the-future",
+    "title": "Time-Series Analysis",
+    "section": "Or…just the future?",
+    "text": "Or…just the future?\n\n\n\nBut…we can’t sample from the future!\n\n\n\n\nSo…what is our sample?"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#our-sample-is-a-sample-timeframe.",
+    "href": "time-series-intro-superweek-2023.html#our-sample-is-a-sample-timeframe.",
+    "title": "Time-Series Analysis",
+    "section": "Our sample is a sample timeframe.",
+    "text": "Our sample is a sample timeframe."
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#this-is-imperfect.",
+    "href": "time-series-intro-superweek-2023.html#this-is-imperfect.",
+    "title": "Time-Series Analysis",
+    "section": "This is imperfect.",
+    "text": "This is imperfect."
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#because-our-reality-is-constant-change.",
+    "href": "time-series-intro-superweek-2023.html#because-our-reality-is-constant-change.",
+    "title": "Time-Series Analysis",
+    "section": "Because our reality is constant change.",
+    "text": "Because our reality is constant change."
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-6",
+    "href": "time-series-intro-superweek-2023.html#section-6",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "DALL-E 2: “A room full of puppies who all have different astonished expressions on their faces, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-7",
+    "href": "time-series-intro-superweek-2023.html#section-7",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "A stationary time series is one whose statistical properties do not depend on the time at which the series is observed. 1\n\n\nForecasting Principles and Practice, 3rd Edition, Rob J. Hyndman and George Athansopoulos"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-8",
+    "href": "time-series-intro-superweek-2023.html#section-8",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "A stationary time series is one whose statistical properties do not depend on the time at which the series is observed. 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nForecasting Principles and Practice, 3rd Edition, Rob J. Hyndman and George Athansopoulos"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-9",
+    "href": "time-series-intro-superweek-2023.html#section-9",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "A stationary time series is one whose statistical properties do not depend on the time at which the series is observed. 1\n\n\n\n\n\n\nForecasting Principles and Practice, 3rd Edition, Rob J. Hyndman and George Athansopoulos"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-10",
+    "href": "time-series-intro-superweek-2023.html#section-10",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "A stationary time series is one whose statistical properties do not depend on the time at which the series is observed. 1\n\n\n\n\n\n\nForecasting Principles and Practice, 3rd Edition, Rob J. Hyndman and George Athansopoulos"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#are-these-two-metrics-correlated",
+    "href": "time-series-intro-superweek-2023.html#are-these-two-metrics-correlated",
+    "title": "Time-Series Analysis",
+    "section": "Are these two metrics correlated?",
+    "text": "Are these two metrics correlated?"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#to-the-scatterplot",
+    "href": "time-series-intro-superweek-2023.html#to-the-scatterplot",
+    "title": "Time-Series Analysis",
+    "section": "To the scatterplot!",
+    "text": "To the scatterplot!\n\n\n\nR2 = 0.84"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#this-is-called-first-differences.",
+    "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.",
+    "title": "Time-Series Analysis",
+    "section": "This is called first differences.",
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2023-01-20\n9,482\n\n    2023-01-21\n10,164\n\n    2023-01-22\n9,503\n\n    2023-01-23\n11,317\n\n    2023-01-24\n9,980\n\n    2023-01-25\n10,484\n\n    2023-01-26\n10,458"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-1",
+    "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-1",
+    "title": "Time-Series Analysis",
+    "section": "This is called first differences.",
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2023-01-20\n9,482\n\n    2023-01-21\n10,164\n\n    2023-01-22\n9,503\n\n    2023-01-23\n11,317\n\n    2023-01-24\n9,980\n\n    2023-01-25\n10,484\n\n    2023-01-26\n10,458"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-2",
+    "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-2",
+    "title": "Time-Series Analysis",
+    "section": "This is called first differences.",
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2023-01-20\n9,482\n\n    2023-01-21\n10,164\n\n    2023-01-22\n9,503\n\n    2023-01-23\n11,317\n 1,814\n    2023-01-24\n9,980\n\n    2023-01-25\n10,484\n\n    2023-01-26\n10,458"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-3",
+    "href": "time-series-intro-superweek-2023.html#this-is-called-first-differences.-3",
+    "title": "Time-Series Analysis",
+    "section": "This is called first differences.",
+    "text": "This is called first differences.\n\n\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n    \n  \n  \n    2023-01-20\n9,482\nNA\n    2023-01-21\n10,164\n682\n    2023-01-22\n9,503\n−661\n    2023-01-23\n11,317\n1,814\n    2023-01-24\n9,980\n−1,337\n    2023-01-25\n10,484\n504\n    2023-01-26\n10,458\n−26"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#from-non-stationary-to-more-stationary",
+    "href": "time-series-intro-superweek-2023.html#from-non-stationary-to-more-stationary",
+    "title": "Time-Series Analysis",
+    "section": "From non-stationary to more stationary",
+    "text": "From non-stationary to more stationary"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#we-can-calculate-first-differences-for-both-metrics",
+    "href": "time-series-intro-superweek-2023.html#we-can-calculate-first-differences-for-both-metrics",
+    "title": "Time-Series Analysis",
+    "section": "We can calculate first differences for both metrics",
+    "text": "We can calculate first differences for both metrics\n\n\n\n\n\n\n  \n  \n    \n      Date\n      Orders\n      1st Diff: Orders\n      Social\n      1st Diff: Social\n    \n  \n  \n    2023-01-20\n9,482\nNA\n5,754\nNA\n    2023-01-21\n10,164\n682\n6,181\n427\n    2023-01-22\n9,503\n−661\n5,650\n−531\n    2023-01-23\n11,317\n1,814\n6,265\n615\n    2023-01-24\n9,980\n−1,337\n6,603\n338\n    2023-01-25\n10,484\n504\n7,114\n511\n    2023-01-26\n10,458\n−26\n6,522\n−592"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#and-then-check-the-correlation",
+    "href": "time-series-intro-superweek-2023.html#and-then-check-the-correlation",
+    "title": "Time-Series Analysis",
+    "section": "And then check the correlation!",
+    "text": "And then check the correlation!\n\n\n\nR2 = 0.00"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-12",
+    "href": "time-series-intro-superweek-2023.html#section-12",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "These are both moving with time…but not directly with each other\n\n\n\n\nDALL-E 2: “A puppy running a race where the other runner is a clock, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-13",
+    "href": "time-series-intro-superweek-2023.html#section-13",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "DALL-E 2: “A puppy driving a racecar with one paw on the gearshift, digital art”\n\n\n\nLet’s shift gears"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-14",
+    "href": "time-series-intro-superweek-2023.html#section-14",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "DALL-E 2: “A partially decomposed puppy in a cemetery, digital art”\n\n\n\nDecomposition can be amazing"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#a-fairly-clean-series",
+    "href": "time-series-intro-superweek-2023.html#a-fairly-clean-series",
+    "title": "Time-Series Analysis",
+    "section": "A fairly “clean” series",
+    "text": "A fairly “clean” series"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#the-meanis-pretty-meaningless",
+    "href": "time-series-intro-superweek-2023.html#the-meanis-pretty-meaningless",
+    "title": "Time-Series Analysis",
+    "section": "The mean…is pretty meaningless",
+    "text": "The mean…is pretty meaningless"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#and-so-is-the-variance",
+    "href": "time-series-intro-superweek-2023.html#and-so-is-the-variance",
+    "title": "Time-Series Analysis",
+    "section": "And so is the variance",
+    "text": "And so is the variance"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#it-decomposes-the-data-into-three-components",
+    "href": "time-series-intro-superweek-2023.html#it-decomposes-the-data-into-three-components",
+    "title": "Time-Series Analysis",
+    "section": "It “decomposes” the data into three components",
+    "text": "It “decomposes” the data into three components"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#it-decomposes-the-data-into-three-components-1",
+    "href": "time-series-intro-superweek-2023.html#it-decomposes-the-data-into-three-components-1",
+    "title": "Time-Series Analysis",
+    "section": "It “decomposes” the data into three components",
+    "text": "It “decomposes” the data into three components\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Seasonal Component\n\n\n\n\n\n\n\n\n\nThe Trend Component\n\n\n\n\n\n\n\n\n\nWhat’s Left!\n\n\n\n\n\n\n\n\n\n“The Mean”\n\n\n\n\n\n\n\n\n\n\n“The Variance”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#back-to-the-overall-series",
+    "href": "time-series-intro-superweek-2023.html#back-to-the-overall-series",
+    "title": "Time-Series Analysis",
+    "section": "Back to the overall series",
+    "text": "Back to the overall series"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#the-original-mean-varianceembarrassing",
+    "href": "time-series-intro-superweek-2023.html#the-original-mean-varianceembarrassing",
+    "title": "Time-Series Analysis",
+    "section": "The original mean + variance…embarrassing?",
+    "text": "The original mean + variance…embarrassing?"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#lets-try-again",
+    "href": "time-series-intro-superweek-2023.html#lets-try-again",
+    "title": "Time-Series Analysis",
+    "section": "Let’s try again",
+    "text": "Let’s try again"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#seasonality-trend-the-mean",
+    "href": "time-series-intro-superweek-2023.html#seasonality-trend-the-mean",
+    "title": "Time-Series Analysis",
+    "section": "Seasonality + trend = the “mean”",
+    "text": "Seasonality + trend = the “mean”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#and-the-variance-is-just-based-on-whats-left",
+    "href": "time-series-intro-superweek-2023.html#and-the-variance-is-just-based-on-whats-left",
+    "title": "Time-Series Analysis",
+    "section": "And the “variance” is just based on “what’s left”",
+    "text": "And the “variance” is just based on “what’s left”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-15",
+    "href": "time-series-intro-superweek-2023.html#section-15",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "DALL-E 2: “A puppy with huge muscles lifting a barbell, digital art”\n\n\n\nThis is powerful!"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-16",
+    "href": "time-series-intro-superweek-2023.html#section-16",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "And now…to Bayesian things!\n\n\n\n\nDALL-E 2: “A puppy dressed up as Thomas Bayes, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-17",
+    "href": "time-series-intro-superweek-2023.html#section-17",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "Specifically, Bayesian Structural Time-Series\n\n\n\n\nDALL-E 2: “A puppy dressed up as Thomas Bayes, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-18",
+    "href": "time-series-intro-superweek-2023.html#section-18",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "Time-series decomposition turned up to 11\n\n\n\n\nDALL-E 2: “A puppy dressed like nigel tufnel turning an amplifier up to eleven, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#mark-edmondson-built-a-tool-using-this-7-years-ago",
+    "href": "time-series-intro-superweek-2023.html#mark-edmondson-built-a-tool-using-this-7-years-ago",
+    "title": "Time-Series Analysis",
+    "section": "Mark Edmondson built a tool using this 7 years ago!",
+    "text": "Mark Edmondson built a tool using this 7 years ago!"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-19",
+    "href": "time-series-intro-superweek-2023.html#section-19",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "At its core: estimate the impact of an intervention\n\n\n\n\nDALL-E 2: “A puppy looking through a telescope at a meteor crashing into the moon, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-20",
+    "href": "time-series-intro-superweek-2023.html#section-20",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "“We didn’t test it, so can we just do a pre-/post- analysis?”\n\n\n\n\nDALL-E 2: “A puppy looking through a telescope at a meteor crashing into the moon, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#what-the-marketer-expects-happened",
+    "href": "time-series-intro-superweek-2023.html#what-the-marketer-expects-happened",
+    "title": "Time-Series Analysis",
+    "section": "What the marketer expects happened",
+    "text": "What the marketer expects happened"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#typically-the-change-isnt-that-big",
+    "href": "time-series-intro-superweek-2023.html#typically-the-change-isnt-that-big",
+    "title": "Time-Series Analysis",
+    "section": "Typically, the change isn’t that big…",
+    "text": "Typically, the change isn’t that big…"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#and-the-data-is-a-lot-noisier",
+    "href": "time-series-intro-superweek-2023.html#and-the-data-is-a-lot-noisier",
+    "title": "Time-Series Analysis",
+    "section": "…and the data is a lot noisier…",
+    "text": "…and the data is a lot noisier…"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#and-may-have-seasonality",
+    "href": "time-series-intro-superweek-2023.html#and-may-have-seasonality",
+    "title": "Time-Series Analysis",
+    "section": "…and may have seasonality!",
+    "text": "…and may have seasonality!"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#step-1-look-at-the-pre-intervention-data",
+    "href": "time-series-intro-superweek-2023.html#step-1-look-at-the-pre-intervention-data",
+    "title": "Time-Series Analysis",
+    "section": "Step 1: Look at the pre-intervention data",
+    "text": "Step 1: Look at the pre-intervention data"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#step-2-build-a-best-fit-model-using-this-data",
+    "href": "time-series-intro-superweek-2023.html#step-2-build-a-best-fit-model-using-this-data",
+    "title": "Time-Series Analysis",
+    "section": "Step 2: Build a best-fit model using this data",
+    "text": "Step 2: Build a best-fit model using this data"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#step-3-that-model-can-quantify-its-uncertainty",
+    "href": "time-series-intro-superweek-2023.html#step-3-that-model-can-quantify-its-uncertainty",
+    "title": "Time-Series Analysis",
+    "section": "Step 3: That model can quantify its uncertainty",
+    "text": "Step 3: That model can quantify its uncertainty"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#step-4-extend-the-model-post-intervention",
+    "href": "time-series-intro-superweek-2023.html#step-4-extend-the-model-post-intervention",
+    "title": "Time-Series Analysis",
+    "section": "Step 4: Extend the model post-intervention",
+    "text": "Step 4: Extend the model post-intervention"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#step-5-compare-the-model-to-the-actual-results",
+    "href": "time-series-intro-superweek-2023.html#step-5-compare-the-model-to-the-actual-results",
+    "title": "Time-Series Analysis",
+    "section": "Step 5: Compare the model to the actual results",
+    "text": "Step 5: Compare the model to the actual results"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#set-the-modeled-prediction-as-the-baseline",
+    "href": "time-series-intro-superweek-2023.html#set-the-modeled-prediction-as-the-baseline",
+    "title": "Time-Series Analysis",
+    "section": "Set the modeled prediction as the baseline",
+    "text": "Set the modeled prediction as the baseline"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#plot-the-difference-between-the-model-the-actual",
+    "href": "time-series-intro-superweek-2023.html#plot-the-difference-between-the-model-the-actual",
+    "title": "Time-Series Analysis",
+    "section": "Plot the difference between the model & the actual",
+    "text": "Plot the difference between the model & the actual"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#put-the-confidence-interval-around-the-difference",
+    "href": "time-series-intro-superweek-2023.html#put-the-confidence-interval-around-the-difference",
+    "title": "Time-Series Analysis",
+    "section": "Put the confidence interval around the difference",
+    "text": "Put the confidence interval around the difference"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-21",
+    "href": "time-series-intro-superweek-2023.html#section-21",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "Their relationship to the metric of interest is stable\n\n\nThey are not themselves affected by the intervention\n\n\n\n\n\nDALL-E 2: “A puppy concentrating very hard while holding up two fingers, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-22",
+    "href": "time-series-intro-superweek-2023.html#section-22",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "This is not a silver bullet!\n\n\n\n\nDALL-E 2: “A puppy pointing a gun, digital art”"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-24",
+    "href": "time-series-intro-superweek-2023.html#section-24",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "DALL-E 2: “A puppy working very hard with sweat pouring down its face, digital art”\n\n\n\nTime…is hard."
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-25",
+    "href": "time-series-intro-superweek-2023.html#section-25",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "Excellent, Excellent Resource\n\n\n\nThank you!\nPresentation: bit.ly/sw-time-series\nPodcast: analyticshour.io\n LinkedIn:"
+  },
+  {
+    "objectID": "time-series-intro-superweek-2023.html#section-26",
+    "href": "time-series-intro-superweek-2023.html#section-26",
+    "title": "Time-Series Analysis",
+    "section": "",
+    "text": "This presentation was 100% built with R (and Quarto w/ reveal.js)\n\n\n\n The images are (almost) 100% DALL-E 2\n\n\n\n The background image is from my “daily diversion” on Twitter\n\n\n\n\n\nbit.ly/sw-time-series | @tgwilson | tim@gilliganondata.com"
+  }
+]
