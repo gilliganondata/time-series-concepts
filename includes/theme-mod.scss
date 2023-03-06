@@ -1,10 +1,10 @@
 
 /* To change the font, update both the family in the @import url() call AND
     the prez_font value */
-@import url('https://fonts.googleapis.com/css?family=Dosis&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
 :root {
-  --prez_font: Dosis;
+  --prez_font: Raleway;
   --light_text_color: #eee8d5
   --accent_text_color: #ffa600
 }
@@ -22,8 +22,8 @@ $presentation-heading-letter-spacing: 0.02em;
 $presentation-heading-font-weight: 600;
 $presentation-heading-text-transform: none;
 $presentation-heading-text-shadow: none;
-$presentation-h1-font-size: 1.8em;
-$presentation-h2-font-size: 1.2em;
+$presentation-h1-font-size: 1.6em;
+$presentation-h2-font-size: 1em;
 $body-color: #fff;
 $link-color: #42affa;
 
@@ -58,7 +58,7 @@ $link-color: #42affa;
 
 .reveal .slide figure>figcaption {
   margin: 0 0 20px 0;
-  font-size: 0.5em;
+  font-size: 0.4em;
   text-align: center;
 }
 
